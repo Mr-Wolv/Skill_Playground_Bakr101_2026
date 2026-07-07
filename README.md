@@ -1,5 +1,9 @@
 # Skill Playground
 
+[![Validate Catalog](https://github.com/Mr-Wolv/Skill_Playground_Bakr101_2026/actions/workflows/validate.yml/badge.svg?branch=main)](https://github.com/Mr-Wolv/Skill_Playground_Bakr101_2026/actions/workflows/validate.yml)
+[![Mirror Parity Guidance](https://github.com/Mr-Wolv/Skill_Playground_Bakr101_2026/actions/workflows/mirror-parity.yml/badge.svg?branch=main)](https://github.com/Mr-Wolv/Skill_Playground_Bakr101_2026/actions/workflows/mirror-parity.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 > **A curated skill repository — 227 skills, bidirectionally synced.**
 > Install via `npx skills add <owner>/skill-playground`
 
