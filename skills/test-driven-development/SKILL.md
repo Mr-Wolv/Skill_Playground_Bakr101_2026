@@ -21,6 +21,14 @@ Write a failing test before writing the code that makes it pass. For bug fixes, 
 
 **Related:** For browser-based changes, combine TDD with runtime verification using Chrome DevTools MCP — see the Browser Testing section below.
 
+## Boundary
+
+Use this skill for the general workflow of behavior-changing work done test-first: write a failing test, make it pass minimally, then clean up safely.
+
+Use `tdd` instead when you specifically want the more opinionated seam-driven reference on what makes a good test and how to avoid shallow or implementation-coupled tests during red-green work.
+
+Do not use this skill when the request is merely to generate tests for existing code without driving the implementation approach. For that, use `unit-test-writer`, `integration-test-writer`, or `test-fixture-generator` as appropriate.
+
 ## The TDD Cycle
 
 ```

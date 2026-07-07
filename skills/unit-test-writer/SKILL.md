@@ -13,6 +13,14 @@ Generates unit tests for existing functions, classes, and modules. Use when you 
 - The project already has a test framework (Vitest, Jest, pytest, JUnit)
 - You want to follow existing test patterns in the codebase
 
+## Boundary
+
+Use this skill when the concrete deliverable is unit tests for existing code using the project's current test framework and conventions.
+
+Do not use this skill as the primary workflow for test-first implementation discipline. For that, use `test-driven-development` or `tdd`.
+
+Do not use this skill when the test should cross real boundaries such as HTTP, databases, or service integrations. For that, use `integration-test-writer`.
+
 ## Instructions
 
 1. **Read the target file** — understand its exports, types, and dependencies

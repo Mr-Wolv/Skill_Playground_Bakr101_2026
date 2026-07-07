@@ -9,6 +9,14 @@ TDD is the red → green loop. This skill is the reference that makes that loop 
 
 When exploring the codebase, read `CONTEXT.md` (if it exists) so test names and interface vocabulary match the project's domain language, and respect ADRs in the area you're touching.
 
+## Boundary
+
+Use this skill as the sharper reference and discipline layer for true red-green TDD: seam selection, test quality, tracer-bullet slices, and anti-pattern avoidance during a test-first workflow.
+
+Use `test-driven-development` instead when you want the broader workflow-oriented default for behavior-changing work and bug-fix proof via failing tests first.
+
+Do not use this skill when the request is simply to add unit or integration tests to existing code without running a full TDD loop. For that, use `unit-test-writer` or `integration-test-writer`.
+
 ## What a good test is
 
 Tests verify behavior through public interfaces, not implementation details. Code can change entirely; tests shouldn't. A good test reads like a specification — "user can checkout with valid cart" tells you exactly what capability exists — and survives refactors because it doesn't care about internal structure.

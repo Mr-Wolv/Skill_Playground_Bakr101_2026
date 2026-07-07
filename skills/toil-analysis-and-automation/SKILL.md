@@ -17,6 +17,14 @@ This skill is about identifying toil systematically and deciding what kind of au
 - a recurring support or maintenance task should probably be automated
 - you need to prioritize automation work instead of automating everything indiscriminately
 
+## Boundary
+
+Use this skill to decide whether recurring manual work is truly toil, quantify its cost, and choose the right intervention: automation, simplification, standardization, or removal.
+
+Do not use this skill when the real problem is launch planning, operational readiness, or change risk rather than repetitive low-value work.
+
+Do not use this skill when the main problem is ownership, policy, or stewardship ambiguity rather than repetitive effort. For those cases, use the ownership and operations skills.
+
 ## Do not use when
 
 - you already know the exact automation to implement and just want to build it

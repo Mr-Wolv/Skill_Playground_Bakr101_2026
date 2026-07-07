@@ -17,6 +17,14 @@ This skill is about deciding how risky a change is and what protections it needs
 - preparing a preflight checklist for a risky deploy
 - comparing rollout options based on risk
 
+## Boundary
+
+Use this skill before rollout when the key question is risk: blast radius, reversibility, detectability, failure modes, and which safeguards are justified.
+
+Use `shipping-and-launch` instead when you already intend to ship and need the practical rollout checklist, staged rollout sequence, monitoring plan, and rollback preparation.
+
+Use `operational-readiness-review` instead when the question is whether the service or feature is supportable and operable in production as a system, not just whether one change is risky.
+
 ## Do not use when
 
 - you are already actively responding to a failure — use `incident-response`

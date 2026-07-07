@@ -14,6 +14,14 @@ Structured approach to technical research and knowledge synthesis.
 - Analyzing RFCs, standards, or specification documents
 - Synthesizing information from multiple sources
 
+## Boundary
+
+Use this skill for the method of research: source hierarchy, credibility evaluation, RFC reading, literature review, and synthesis discipline.
+
+Do not use this skill when the user primarily wants the actual research carried out and written into the repository as a note or findings document. For that, use `research`.
+
+Do not use this skill as a post-incident causal analysis workflow. For that, use `failure-analysis`, `root-cause-analysis`, `five-whys-analysis`, or `postmortem`.
+
 ## Instructions
 
 1. **Define the research question** — what specifically do you need to know?

@@ -17,6 +17,16 @@ This is a cross-cutting review skill. It focuses on whether the system can be ru
 - evaluating operational maturity before handoff to another team
 - reviewing whether alerts, dashboards, runbooks, and rollback are truly in place
 
+## Boundary
+
+Use this skill when the question is whether a service, feature, or system is genuinely ready to be operated and supported in production.
+
+Use `shipping-and-launch` instead for the mechanics of preparing and executing a rollout.
+
+Use `change-risk-assessment` instead when the primary question is the risk profile of a particular change and the safeguards required before shipping it.
+
+Use `service-ownership-and-lifecycle-management` instead when the main need is to define durable ownership, stewardship, or lifecycle state beyond immediate operational readiness.
+
 ## Do not use when
 
 - you need a deployment plan and staged rollout sequence — use `shipping-and-launch`

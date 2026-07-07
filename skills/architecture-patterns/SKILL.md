@@ -19,6 +19,14 @@ Master proven backend architecture patterns including Clean Architecture, Hexago
 - Creating testable codebases where use-case tests do not require a running database
 - Implementing domain-driven design tactical patterns (aggregates, value objects, domain events)
 
+## Boundary
+
+Use this skill for architecture synthesis and implementation patterns: selecting and applying structural patterns such as Clean Architecture, Hexagonal Architecture, and DDD in real system design or refactoring work.
+
+Do not use this skill as the primary workflow for reviewing whether an existing architecture is good. For that, use `architecture-review`.
+
+Do not use this skill for reviewing a narrower proposed solution shape such as one interface, workflow, or module design. For that, use `design-review`.
+
 ## Core Concepts
 
 ### 1. Clean Architecture (Uncle Bob)

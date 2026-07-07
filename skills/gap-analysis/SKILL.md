@@ -20,6 +20,14 @@ description: >
 
 Gap analysis systematically compares current capabilities with desired future state, revealing what needs to change and what investments are required.
 
+## Boundary
+
+Use this skill when the core question is the distance between a current state and a desired future state across capabilities, process, technology, skills, organization, or operations.
+
+Do not use this skill as a root-cause workflow for investigating why a failure happened. For that, use `root-cause-analysis`, `five-whys-analysis`, `failure-analysis`, or `postmortem` depending on scope.
+
+Do not use this skill merely to research a topic or compare sources without an explicit current-vs-target framing. For that, use `research` or `research-methodology`.
+
 ## When to Use
 
 - Strategic planning and goal setting

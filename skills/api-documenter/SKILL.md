@@ -13,6 +13,14 @@ Generates comprehensive API documentation from code analysis and endpoint defini
 - You need to generate OpenAPI/Swagger specs from code
 - Onboarding integrators to use your API
 
+## Boundary
+
+Use this skill when the deliverable is API documentation derived from routes, schemas, specs, or endpoint definitions.
+
+Do not use this skill for general engineering documentation, ADR writing, or README authoring. Use `documentation-and-adrs`, `architecture-decision-records`, or `readme-writer` as appropriate.
+
+Do not use this skill for code-level docstrings or inline comments. Use `code-documenter` or `code-commenter` for that.
+
 ## Instructions
 
 1. **Analyze the codebase** — find route definitions, controllers, handlers, and request/response types

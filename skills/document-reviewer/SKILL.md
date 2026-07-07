@@ -13,6 +13,14 @@ Reviews technical documents for quality, clarity, and completeness.
 - An existing document needs improvement
 - You're establishing documentation standards for a project
 
+## Boundary
+
+Use this skill to review an existing document for clarity, structure, completeness, consistency, and audience fit.
+
+Do not use this skill as the primary workflow for authoring the document from scratch. Use the appropriate writer skill such as `documentation-and-adrs`, `readme-writer`, `api-documenter`, `code-documenter`, or `code-commenter`.
+
+Do not use this skill when the output must specifically be a formal ADR. For that, use `architecture-decision-records`.
+
 ## Instructions
 
 1. **Read the document** and assess:

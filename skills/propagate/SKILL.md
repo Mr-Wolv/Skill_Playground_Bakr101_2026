@@ -9,6 +9,14 @@ This skill generates tests from Allium specifications. Propagation is how plants
 
 Deterministic tools guarantee completeness (every spec construct maps to a test obligation). You handle the implementation bridge: correlating spec constructs with code, generating tests in the project's conventions.
 
+## Boundary
+
+Use this skill when tests should be derived from an Allium specification and the important question is coverage against spec obligations.
+
+Do not use this skill for ordinary hand-authored unit or integration tests in a project that is not being driven from an Allium spec. Use `unit-test-writer`, `integration-test-writer`, `test-driven-development`, or `tdd` as appropriate.
+
+Do not use this skill merely to generate reusable fixtures or builders. For that, use `test-fixture-generator`.
+
 ## Prerequisites
 
 Before propagating tests, you need:

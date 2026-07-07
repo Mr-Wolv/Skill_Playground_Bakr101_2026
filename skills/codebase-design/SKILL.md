@@ -7,6 +7,16 @@ description: Shared vocabulary for designing deep modules. Use when the user wan
 
 Design **deep modules**: a lot of behaviour behind a small interface, placed at a clean seam, testable through that interface. Use this language and these principles wherever code is being designed or restructured. The aim is leverage for callers, locality for maintainers, and testability for everyone.
 
+## Boundary
+
+Use this skill when the important design question is where a seam belongs, how deep a module should be, how to improve locality and leverage, or how to reshape a codebase around better interfaces.
+
+Do not use this skill as the primary workflow for designing an external API contract or endpoint surface in detail. For that, use `api-and-interface-design`.
+
+Do not use this skill as the primary workflow for generating several competing interface candidates on purpose. For that, use `design-an-interface`.
+
+Do not use this skill as the main review workflow for judging whether a proposed design or architecture is acceptable. For that, use `design-review` or `architecture-review`.
+
 ## Glossary
 
 Use these terms exactly — don't substitute "component," "service," "API," or "boundary." Consistent language is the whole point.

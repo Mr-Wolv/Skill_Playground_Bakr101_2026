@@ -17,6 +17,16 @@ Design stable, well-documented interfaces that are hard to misuse. Good interfac
 - Establishing database schema that informs API shape
 - Changing existing public interfaces
 
+## Boundary
+
+Use this skill to design stable interfaces and contracts: REST APIs, GraphQL schemas, module boundaries, component props, or other public surfaces between systems or modules.
+
+Do not use this skill as the primary workflow for reviewing a proposed design. For critique, use `design-review` or `architecture-review` depending on scope.
+
+Do not use this skill when the specific goal is to generate multiple radically different interface candidates for comparison. For that, use `design-an-interface`.
+
+Do not use this skill when the deeper question is where to place seams and how to create deep modules across a codebase. For that, use `codebase-design`.
+
 ## Core Principles
 
 ### Hyrum's Law

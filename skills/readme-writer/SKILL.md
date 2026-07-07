@@ -13,6 +13,14 @@ Generates comprehensive README files from project codebase analysis.
 - An existing README is outdated or incomplete
 - Onboarding new contributors to an unfamiliar project
 
+## Boundary
+
+Use this skill when the deliverable is a repository or package README.
+
+Do not use this skill for broader engineering context capture, decision logging, or ADR management. For that, use `documentation-and-adrs` or `architecture-decision-records` as appropriate.
+
+Do not use this skill for reviewing an existing README without primarily rewriting it. For review-focused feedback, use `document-reviewer`.
+
 ## Instructions
 
 1. **Scan the project** — determine project name, language, runtime, and key dependencies

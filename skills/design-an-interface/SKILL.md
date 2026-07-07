@@ -7,6 +7,16 @@ description: Generate multiple radically different interface designs for a modul
 
 Based on "Design It Twice" from "A Philosophy of Software Design": your first idea is unlikely to be the best. Generate multiple radically different designs, then compare.
 
+## Boundary
+
+Use this skill when you want to explore multiple competing interface shapes before choosing one.
+
+Do not use this skill for ordinary single-track interface design where one solid contract is enough. For that, use `api-and-interface-design`.
+
+Do not use this skill as the primary workflow for reviewing a proposed design after the options are already on the table. For that, use `design-review`.
+
+Do not use this skill when the real question is overall module depth, seam placement, and codebase structure rather than interface options alone. For that, use `codebase-design`.
+
 ## Workflow
 
 ### 1. Gather Requirements

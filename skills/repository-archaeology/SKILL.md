@@ -26,6 +26,14 @@ This skill helps reconstruct intent from evidence when explicit documentation is
 - Preparing refactors, migrations, or deprecations in poorly documented areas
 - Reconstructing decision eras across a long-lived repository
 
+## Boundary
+
+Use this skill when the central problem is historical understanding: how a subsystem got here, what eras or migrations shaped it, and what that history implies for future change.
+
+Do not use this skill for current-state catalog reconciliation, counts, or mirror parity. For that, use `catalog-consistency-auditor`.
+
+Do not use this skill as a general technical debt or dead code scanner. For those, use `tech-debt-tracker` or `dead-code-remover`.
+
 ## When not to use
 
 - General code reading when current structure is already clear

@@ -18,6 +18,14 @@ Use this skill to evaluate whether an existing or proposed architecture is a goo
 - Comparing architecture options against constraints like scale, reliability, cost, security, or team capacity
 - Preparing architecture feedback for a document, ADR, proposal, or technical review
 
+## Boundary
+
+Use this skill to evaluate an existing or proposed architecture as a whole-system or multi-boundary structure.
+
+Use `design-review` instead when the artifact under review is a more local solution shape such as a module design, workflow, interface, or feature proposal rather than the architecture of the wider system.
+
+Use synthesis skills such as `architecture-patterns`, `api-and-interface-design`, `design-an-interface`, or `codebase-design` when the primary need is to create or reshape a design rather than to review one.
+
 ## When not to use
 
 - Pure code-quality review of a diff; use code review skills instead

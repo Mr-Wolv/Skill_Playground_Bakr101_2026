@@ -13,6 +13,16 @@ Scans codebases for technical debt indicators and generates prioritized remediat
 - Before a major refactoring effort
 - As part of a regular codebase health review
 
+## Boundary
+
+Use this skill to identify and prioritize maintainability debt across a codebase: TODOs, complexity hotspots, code smells, legacy patterns, and structural cleanup opportunities.
+
+Do not use this skill when the task is specifically to prove code is unused and remove it safely. For that, use `dead-code-remover`.
+
+Do not use this skill when the main question is dependency security, outdated packages, or license risk. For that, use `dependency-auditor`.
+
+Do not use this skill for catalog and documentation drift in the skill repository itself. For that, use `catalog-consistency-auditor`.
+
 ## Instructions
 
 1. **Scan for TODOs/FIXMEs/HACKs** — search across all source files. Group by category (feature gaps, known bugs, performance hacks)

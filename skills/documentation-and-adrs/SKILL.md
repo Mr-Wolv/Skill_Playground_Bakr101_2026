@@ -20,6 +20,16 @@ Document decisions, not just code. The most valuable documentation captures the 
 
 **When NOT to use:** Don't document obvious code. Don't add comments that restate what the code already says. Don't write docs for throwaway prototypes.
 
+## Boundary
+
+Use this skill for broad, durable engineering documentation: contextual notes, docs that preserve decision rationale, public-behavior documentation, onboarding context, and documentation that future engineers and agents will need beyond the code itself.
+
+Do not use this skill when the output should be a formal ADR with explicit status, decision, consequences, and lifecycle management. For that, use `architecture-decision-records`.
+
+Do not use this skill for review-only feedback on an existing document. For that, use `document-reviewer`.
+
+Do not use this skill when the work is narrowly about generating one documentation artifact such as a README, API reference, docstrings, or inline comments. Use the specialist writer skill when one exists.
+
 ## Architecture Decision Records (ADRs)
 
 ADRs are one important part of durable engineering documentation, but this skill is not the ADR specialist.

@@ -13,6 +13,14 @@ Generates integration tests that exercise real components together — API endpo
 - You want to test database operations with a real or containerized database
 - You need to validate service-to-service communication
 
+## Boundary
+
+Use this skill when the deliverable is integration tests that exercise real components together across boundaries such as HTTP, databases, messaging, or service interactions.
+
+Do not use this skill for isolated unit tests of logic in one function, class, or module. For that, use `unit-test-writer`.
+
+Do not use this skill as the primary discipline guide for red-green-refactor workflow. For that, use `test-driven-development` or `tdd`.
+
 ## Instructions
 
 1. **Identify the surface** — API routes, GraphQL resolvers, message handlers, or database repositories

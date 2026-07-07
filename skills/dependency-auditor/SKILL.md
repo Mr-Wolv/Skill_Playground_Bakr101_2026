@@ -13,6 +13,14 @@ Audits project dependencies for security vulnerabilities, outdated versions, and
 - As part of a regular security review cycle
 - When a CVE is announced for a package you use
 
+## Boundary
+
+Use this skill when the dependency problem is security, freshness, deprecation risk, or license compliance.
+
+Do not use this skill when the main job is to remove dependencies because they are unused. For that, use `dead-code-remover`.
+
+Do not use this skill for a broad maintainability-debt scan of the codebase. For that, use `tech-debt-tracker`.
+
 ## Instructions
 
 1. **Scan lock files** — `package-lock.json`, `yarn.lock`, `pnpm-lock.yaml`, `requirements.txt`, `Cargo.lock`

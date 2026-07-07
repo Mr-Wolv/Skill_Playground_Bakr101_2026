@@ -17,6 +17,14 @@ This skill is for **catalog integrity**, not general code quality. Use it when t
 - You want a one-pass reconciliation of catalog artifacts after changing the skill set
 - You suspect documentation drift across skill indexes, manifests, and navigation docs
 
+## Boundary
+
+Use this skill for repository catalog coherence: source-of-truth discovery, count verification, mirror parity checks, and reconciliation of catalog-bearing documents and manifests.
+
+Do not use this skill for historical reconstruction of why a repository evolved the way it did. For that, use `repository-archaeology`.
+
+Do not use this skill for general codebase health, tech debt, dead code, or dependency audits. Use the repository-intelligence specialist skill that matches that problem.
+
 ## What this skill owns
 
 This skill focuses on:

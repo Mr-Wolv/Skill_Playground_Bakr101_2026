@@ -13,6 +13,14 @@ Performs structured analysis of incidents and outages using aerospace/nuclear-in
 - A postmortem needs deeper analysis beyond basic RCA
 - You need to identify systemic issues, not just surface causes
 
+## Boundary
+
+Use this skill when an incident or failure needs deeper systems-level analysis than a simple RCA: timeline reconstruction, causal network mapping, defense-in-depth breakdown, and prioritization of follow-up actions.
+
+Do not use this skill as the general blameless postmortem workflow for documenting lessons learned and action ownership. For that, use `postmortem`.
+
+Do not use this skill when a lighter-weight root-cause method is sufficient. Use `root-cause-analysis` for general RCA and `five-whys-analysis` when the 5 Whys method is the right fit.
+
 ## Instructions
 
 1. **Construct the timeline** — list all events in chronological order with timestamps and sources

@@ -13,6 +13,14 @@ Adds inline comments to explain complex logic, business rules, and non-obvious c
 - A workaround or hack needs explanation
 - The intent behind code is not obvious from reading it
 
+## Boundary
+
+Use this skill for targeted inline comments that explain non-obvious intent, constraints, workarounds, gotchas, or business rules inside implementation code.
+
+Do not use this skill to add full docstrings or public API contracts to functions, classes, and modules. For that, use `code-documenter`.
+
+Do not use this skill for broader project documentation such as READMEs, ADRs, or architecture notes. Use the relevant documentation skill instead.
+
 ## Instructions
 
 1. **Read the code** to understand what it does and why

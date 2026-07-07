@@ -13,6 +13,14 @@ Creates reusable test data factories, seed data for database-backed tests, and m
 - You need to populate a test database with realistic data
 - External services need to be mocked/stubbed consistently
 
+## Boundary
+
+Use this skill when the main output is reusable test data infrastructure: factories, builders, fixtures, seeds, and stable mock payloads.
+
+Do not use this skill as the primary workflow for writing the tests themselves unless fixture generation is the core blocker. Use `unit-test-writer` or `integration-test-writer` for the actual test files.
+
+Do not use this skill as the primary discipline guide for test-first development. For that, use `test-driven-development` or `tdd`.
+
 ## Instructions
 
 1. **Analyze the domain model** — read entity/type definitions to understand field types and constraints

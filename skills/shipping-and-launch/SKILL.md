@@ -17,6 +17,16 @@ Ship with confidence. The goal is not just to deploy — it's to deploy safely, 
 - Opening a beta or early access program
 - Any deployment that carries risk (all of them)
 
+## Boundary
+
+Use this skill to prepare and execute a safe production launch: pre-launch checklist, staged rollout, monitoring plan, rollback preparation, and post-launch verification.
+
+Do not use this skill when the main question is how risky a specific change is and what safeguards it needs before rollout. For that, use `change-risk-assessment`.
+
+Do not use this skill when the main question is whether the service is operationally supportable in steady state with sufficient ownership, runbooks, alerts, and support model. For that, use `operational-readiness-review`.
+
+Do not use this skill to define long-term service ownership or lifecycle state. For that, use `service-ownership-and-lifecycle-management`.
+
 ## The Pre-Launch Checklist
 
 ### Code Quality

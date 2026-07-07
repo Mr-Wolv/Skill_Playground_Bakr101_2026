@@ -68,6 +68,16 @@ Conduct rigorous 5 Whys analysis using a structured, Q&A-based approach with bui
 
 The 5 Whys is an iterative interrogative technique for exploring cause-and-effect relationships. The goal is to determine the root cause by repeatedly asking "Why?" until reaching a fundamental, actionable cause.
 
+## Boundary
+
+Use this skill when the explicit method should be 5 Whys: guided iterative questioning, answer validation, and progression toward an actionable root cause.
+
+Do not use this skill when you need a more general RCA workflow independent of the 5 Whys format. For that, use `root-cause-analysis`.
+
+Do not use this skill when the problem requires a richer systems-failure model with causal networks, layered defenses, and scored follow-up actions. For that, use `failure-analysis`.
+
+Do not use this skill as the overall post-incident learning and action-tracking workflow. For that, use `postmortem`.
+
 **Key Principle**: The number "5" is a guideline, not a rule. Continue asking until reaching a cause that, if addressed, prevents recurrence.
 
 ## Workflow

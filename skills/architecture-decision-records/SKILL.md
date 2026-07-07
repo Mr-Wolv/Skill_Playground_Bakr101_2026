@@ -16,6 +16,14 @@ Comprehensive patterns for creating, maintaining, and managing Architecture Deci
 - Reviewing historical decisions
 - Establishing decision-making processes
 
+## Boundary
+
+Use this skill when the output should be a formal Architecture Decision Record: a durable decision artifact with explicit context, decision, consequences, and lifecycle state.
+
+Do not use this skill for broader documentation work such as README refreshes, general architecture notes, onboarding context, or mixed documentation bundles. For that, use `documentation-and-adrs`.
+
+Do not use this skill merely to review whether an existing document is clear or complete. For that, use `document-reviewer`.
+
 ## Core Concepts
 
 ### 1. What is an ADR?

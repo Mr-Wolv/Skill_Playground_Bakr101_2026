@@ -19,6 +19,16 @@ description: >
 
 Root cause analysis (RCA) identifies underlying reasons for failures, enabling permanent solutions rather than temporary fixes.
 
+## Boundary
+
+Use this skill for general-purpose root cause analysis when you need a structured method to move from symptoms to underlying causes.
+
+Do not use this skill when you specifically want the 5 Whys method with its guided iterative questioning workflow. For that, use `five-whys-analysis`.
+
+Do not use this skill when you need a deeper systems-failure investigation with timeline reconstruction, causal networks, and defense-in-depth analysis. For that, use `failure-analysis`.
+
+Do not use this skill as the full blameless post-incident writeup and action-tracking workflow. For that, use `postmortem`.
+
 ## When to Use
 
 - Production incidents

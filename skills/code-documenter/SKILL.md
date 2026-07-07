@@ -13,6 +13,14 @@ Adds comprehensive inline documentation to source code following language-specif
 - You need to generate API docs from code
 - Improving code readability for maintainers
 
+## Boundary
+
+Use this skill for docstrings, API comments, and code-level documentation that describes the contract of functions, classes, modules, or exports.
+
+Do not use this skill for high-level repository docs, ADRs, or README authoring. Use `documentation-and-adrs`, `architecture-decision-records`, or `readme-writer` for those.
+
+Do not use this skill when the main need is a few targeted inline comments explaining tricky intent inside an implementation body. For that, use `code-commenter`.
+
 ## Instructions
 
 1. **Read the target file** — understand each export, its parameters, and return value

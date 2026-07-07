@@ -18,6 +18,14 @@ This skill is about sustained accountability for a system across its life: activ
 - deciding whether a system should be maintained, consolidated, or sunset
 - clarifying support expectations and stewardship boundaries
 
+## Boundary
+
+Use this skill for durable stewardship questions: who owns a system, what support obligations they carry, what lifecycle state the system is in, and when it should be invested in, transferred, consolidated, or retired.
+
+Use `operational-readiness-review` instead when the main question is whether a system is supportable and launch-ready right now.
+
+Use `codeowners-and-review-routing` instead when the need is limited to repository ownership and review paths rather than service stewardship.
+
 ## Do not use when
 
 - you only need `CODEOWNERS` and review assignment — use `codeowners-and-review-routing`

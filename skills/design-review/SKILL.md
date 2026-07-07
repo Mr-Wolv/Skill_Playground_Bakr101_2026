@@ -17,6 +17,14 @@ This skill evaluates whether a proposed design is clear, proportionate, and fit 
 - Reviewing internal interfaces, user flows, or technical proposals
 - Giving structured feedback on a design doc, PRD, proposal, or implementation plan
 
+## Boundary
+
+Use this skill to review the shape of a proposed solution before implementation: a module, interface, API surface, workflow, feature design, or technical proposal.
+
+Use `architecture-review` instead when the question is about the architecture of a whole system, service topology, or major structural boundaries across the system.
+
+Use synthesis skills such as `api-and-interface-design`, `design-an-interface`, `codebase-design`, or `architecture-patterns` when the main job is to generate the design rather than critique it.
+
 ## When not to use
 
 - Reviewing the architecture of a whole system; use `architecture-review`

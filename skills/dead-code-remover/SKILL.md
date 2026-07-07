@@ -13,6 +13,14 @@ Analyzes codebases to identify and safely remove dead code.
 - After a large refactoring that left orphaned modules
 - Reducing bundle size for frontend applications
 
+## Boundary
+
+Use this skill when the main job is to identify code, files, exports, or dependencies that are no longer used and remove them safely.
+
+Do not use this skill for a broad technical-debt survey where the output is prioritization rather than removal. For that, use `tech-debt-tracker`.
+
+Do not use this skill when the main concern is dependency vulnerability or license exposure rather than unusedness. For that, use `dependency-auditor`.
+
 ## Instructions
 
 1. **Find unused exports** — check for exported functions/classes/variables that have zero import references
