@@ -84,8 +84,6 @@ GitHub Actions validates repository coherence on pushes and pull requests. Full 
 
 ## Catalog Evolution Policy
 
-Use `To-do.md` as the architectural charter.
-
 Catalog growth is justified only when it improves one or more of:
 
 - capability coverage
@@ -96,3 +94,5 @@ Catalog growth is justified only when it improves one or more of:
 - engineering judgment
 
 Do not create skills merely because a technology exists.
+
+The repository is now in a governed maintenance phase: prefer improving boundaries, discovery, naming, examples, and validation discipline before adding net-new skills.

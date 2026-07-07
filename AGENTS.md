@@ -91,7 +91,7 @@ Or use the shortcut:
 
 ## Capability Architecture Guidance
 
-Use `To-do.md` as the governing intent for catalog evolution.
+Catalog evolution should be driven by demonstrated capability gaps, architectural coherence, and long-term maintainability rather than expansion for its own sake.
 
 When evaluating changes, ask:
 
