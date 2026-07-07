@@ -1,6 +1,6 @@
 # SDLC Skills Catalog — 233 Skills
 
-> **Bidirectionally synced with global skill store**
+> **Mirrored with the global skill store**
 > 🔄 Verified: 2026-07-08
 > Organized by SDLC phase
 > 📚 [Documentation Index](docs/index.md) | [Domain Catalog](SKILL-CATALOG-DOMAIN.md) | [Cheatsheet](SDLC-PHRASE-CHEATSHEET.md) | [Root SKILL.md](SKILL.md)
@@ -362,6 +362,6 @@ This repository includes workflow-oriented and orchestration-focused skills, but
 
 ---
 
-*Skills are bidirectionally synced between `skills/` (local) and `~/.agents/skills/` (global)*
+*Skills are treated as a mirrored pair between `skills/` (local) and `~/.agents/skills/` (global)*
 *Install via `npx skills add <owner>/skill-playground`*
 *📚 See [SKILL-CATALOG-DOMAIN.md](SKILL-CATALOG-DOMAIN.md) for domain-based organization and [SDLC-PHRASE-CHEATSHEET.md](SDLC-PHRASE-CHEATSHEET.md) for natural-language command reference*

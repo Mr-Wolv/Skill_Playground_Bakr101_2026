@@ -59,7 +59,7 @@ The catalog now has stronger separation between:
 
 ## Publication Readiness Improvements
 
-This repository is now better prepared for publication because it has:
+This repository is publication-ready because it now has:
 
 - coherent skill boundaries
 - synchronized mirrored skill stores
@@ -88,7 +88,7 @@ The validator checks:
 
 ## Remaining Work
 
-No major architectural cleanup is required for publication.
+No major architectural cleanup is required.
 
 The repository is now in a governed maintenance phase. Remaining work should generally focus on:
 

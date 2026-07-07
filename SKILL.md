@@ -1,6 +1,6 @@
 ---
 name: skill-playground
-description: Curated collection of 233 skills — testing, architecture, DevOps, documentation, code quality, and engineering mindset — bidirectionally synced with global skill store
+description: Curated collection of 233 skills — testing, architecture, DevOps, documentation, code quality, and engineering mindset — mirrored with global skill store
 ---
 
 # Skill Playground

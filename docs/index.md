@@ -1,6 +1,6 @@
 # Skill-Playground Documentation
 
-> Central navigation for all project artifacts.
+> Central navigation for the repository's catalogs, governance artifacts, templates, and maintenance helpers.
 > Last updated: 2026-07-08
 
 ---
@@ -81,7 +81,9 @@ See [SKILL-CATALOG.md](../SKILL-CATALOG.md) for the full repository listing and 
 
 See also [Catalog Governance and Sync Model](./catalog-governance.md) for maintenance rules, [Merge Proposal](./merge-proposal.md) for overlap-reduction planning, [Final Audit (2026-07-08)](./final-audit-2026-07-08.md) for the current architectural assessment, and [Publication Summary (2026-07-08)](./publication-summary-2026-07-08.md) for a publication-oriented overview.
 
-Useful local maintenance scripts:
+## Maintenance Commands
+
+Useful local maintenance commands:
 
 - `python scripts/validate_catalog.py`
 - `python scripts/check_skill_mirror_parity.py`
