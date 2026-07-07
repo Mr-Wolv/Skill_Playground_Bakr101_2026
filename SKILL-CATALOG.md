@@ -353,15 +353,15 @@ This repository includes workflow-oriented and orchestration-focused skills, but
 
 | Category | Count |
 |----------|-------|
-| Community skills | 179 |
-| Custom skills | 42 |
-| Meta-skills | 5 |
-| **Total** | **226** |
+| Community skills | 181 |
+| Custom skills | 52 |
+| Meta/workflow skills | present in repository but not exhaustively separated here |
+| **Total** | **233** |
 
-*Note: Community count may vary from original catalog as additional skills were discovered during global sync. All skills are present in both `skills/` and `~/.agents/skills/`.
+This catalog is the canonical SDLC-phase view of the full repository skill set.
 
 ---
 
-*Skills are treated as a mirrored pair between `skills/` (local) and `~/.agents/skills/` (global)*
-*Install via `npx skills add <owner>/skill-playground`*
-*📚 See [SKILL-CATALOG-DOMAIN.md](SKILL-CATALOG-DOMAIN.md) for domain-based organization and [SDLC-PHRASE-CHEATSHEET.md](SDLC-PHRASE-CHEATSHEET.md) for natural-language command reference*
+*Skills are treated as a mirrored pair between `skills/` (local) and `~/.agents/skills/` (global).*
+*Install via `npx skills add <owner>/skill-playground`.*
+*See [SKILL-CATALOG-DOMAIN.md](SKILL-CATALOG-DOMAIN.md) for the domain-organized custom-skill view and [SDLC-PHRASE-CHEATSHEET.md](SDLC-PHRASE-CHEATSHEET.md) for natural-language invocation guidance.*

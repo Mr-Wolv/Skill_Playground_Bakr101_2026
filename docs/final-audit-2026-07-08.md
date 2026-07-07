@@ -39,11 +39,14 @@ The skill catalog is now materially more coherent than at the start of this sess
 1. **Improved repository-intelligence coverage**
    - The catalog now covers consistency auditing and repository archaeology explicitly.
 
-2. **Improved architecture/design review coverage**
+2. **Improved architecture, delivery, and governance coverage**
    - The catalog now has distinct skills for:
      - architecture review
      - design review
-     - architecture improvement exploration
+     - compatibility/change management
+     - delivery risk assessment
+     - operational readiness review
+     - service ownership and lifecycle management
 
 3. **Better separation of workflow vs reference vs culture skills**
    - `research` vs `research-methodology`
@@ -131,6 +134,13 @@ These clusters are now in a good enough state that no immediate change is recomm
 - `tech-debt-tracker`
 - `dead-code-remover`
 - `dependency-auditor`
+
+### Delivery and operations cluster
+- `shipping-and-launch`
+- `change-risk-assessment`
+- `operational-readiness-review`
+- `service-ownership-and-lifecycle-management`
+- `toil-analysis-and-automation`
 
 ## Documentation Drift Observed During Audit
 

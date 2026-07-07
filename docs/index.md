@@ -71,7 +71,7 @@ Representative custom capability areas include:
 | Architecture and design | `architecture-review`, `design-review`, `clean-architecture-principles`, `backward-compatibility-and-change-management` |
 | Delivery and operations | `change-risk-assessment`, `operational-readiness-review`, `service-ownership-and-lifecycle-management`, `toil-analysis-and-automation` |
 | Code quality and repository intelligence | `tech-debt-tracker`, `dead-code-remover`, `catalog-consistency-auditor`, `repository-archaeology`, `codeowners-and-review-routing` |
-| Documentation and communication | `readme-writer`, `api-documenter`, `document-reviewer`, `pr-writer` |
+| Documentation and communication | `readme-writer`, `api-documenter`, `code-documenter`, `code-commenter`, `document-reviewer`, `pr-writer` |
 | Testing and verification | `unit-test-writer`, `integration-test-writer`, `test-fixture-generator`, `react-testing-library-patterns`, `java-testing-patterns` |
 | Analytical and engineering mindset | `analytical-thinking-patterns`, `adjacent-disciplines`, `autonomous-learner`, `long-term-engineering-mindset`, `computer-science-foundations` |
 

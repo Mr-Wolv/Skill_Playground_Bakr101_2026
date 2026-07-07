@@ -86,5 +86,7 @@ The catalog has moved from meaningful overlap to manageable boundary nuance. The
 - documentation freshness
 - wording cleanup
 - selective tightening of descriptions
+- trigger and discoverability improvements
+- careful enhancement of existing high-value workflow skills
 
 rather than from additional merges.

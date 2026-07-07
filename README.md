@@ -61,14 +61,14 @@ After installation, skills are available at `~/.agents/skills/<skill-name>/SKILL
 |----------|------------------------|
 | 🧪 **Testing** | `unit-test-writer`, `integration-test-writer`, `test-fixture-generator`, `react-testing-library-patterns`, `java-testing-patterns` |
 | 🏗️ **Architecture & Design** | `clean-architecture-principles`, `architecture-review`, `design-review`, `domain-driven-design-patterns`, `distributed-systems-patterns`, `backward-compatibility-and-change-management` |
-| ☸️ **DevOps & Delivery** | `docker-configurator`, `env-configurator`, `project-initializer`, `flyway-migration-patterns`, `db-migration-writer`, `shipping-and-launch`, `operational-readiness-review` |
+| ☸️ **Delivery & Operations** | `shipping-and-launch`, `change-risk-assessment`, `operational-readiness-review`, `service-ownership-and-lifecycle-management`, `toil-analysis-and-automation` |
 | 📖 **Documentation & Decisions** | `documentation-and-adrs`, `architecture-decision-records`, `readme-writer`, `api-documenter`, `document-reviewer`, `pr-writer` |
 | 🧹 **Code Quality & Review** | `code-review`, `code-review-and-quality`, `code-review-excellence`, `tech-debt-tracker`, `dead-code-remover`, `codeowners-and-review-routing` |
 | 🔍 **Repository Intelligence & Analysis** | `catalog-consistency-auditor`, `repository-archaeology`, `failure-analysis`, `research`, `research-methodology` |
 | 🧠 **Reasoning & Mindset** | `analytical-thinking-patterns`, `adjacent-disciplines`, `autonomous-learner`, `long-term-engineering-mindset`, `computer-science-foundations` |
 | 🔐 **Security** | `spring-security-patterns`, `dependency-auditor`, `security-and-hardening`, `owasp-security-check` |
 | 🗄️ **Data & Persistence** | `spring-data-jpa-patterns`, `spring-boot-patterns`, `data-modeler`, `db-migration-writer`, `data-transform` |
-| 🔧 **Git & Workflow** | `commit-writer`, `branch-manager`, `planning-and-task-breakdown`, `request-refactor-plan`, `api-tester`, `change-risk-assessment`, `toil-analysis-and-automation`, `service-ownership-and-lifecycle-management` |
+| 🔧 **Workflow Utilities** | `commit-writer`, `branch-manager`, `planning-and-task-breakdown`, `request-refactor-plan`, `api-tester`, `skills-browser` |
 
 ---
 
