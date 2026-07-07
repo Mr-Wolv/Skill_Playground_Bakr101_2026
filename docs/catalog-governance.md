@@ -97,6 +97,27 @@ Do not create skills merely because a technology exists.
 
 The repository is now in a governed maintenance phase: prefer improving boundaries, discovery, naming, examples, and validation discipline before adding net-new skills.
 
+## Evidence-Driven Refinement Policy
+
+Core boundary cleanup across the most overlapping skill clusters has already been completed.
+
+From this point onward, further boundary refactoring should usually be justified by evidence from real project use rather than speculative cleanup. Examples of useful evidence include:
+
+- repeated confusion about which skill to invoke
+- repeated overlap during actual task execution
+- prompts or trigger phrases that consistently route to the wrong skill
+- user or agent friction caused by unclear skill boundaries
+- recurring gaps observed while solving real engineering problems
+
+Prefer this order:
+
+1. use the current catalog in real projects
+2. observe confusion, misses, or repeated friction
+3. refine the smallest set of skills needed to address the observed problem
+4. stop once the practical confusion is reduced
+
+Do not keep harmonizing low-traffic or specialist skills purely for stylistic consistency when no real project usage suggests a problem.
+
 ## Expansion Control Policy
 
 The catalog is mature enough that net-new skill creation should now be treated as a high-bar exception rather than the default way to improve the repository.
