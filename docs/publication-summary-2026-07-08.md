@@ -31,9 +31,8 @@ This document summarizes the catalog architecture work completed to prepare this
 - merged `postmortem-writing` into `postmortem`
 - reduced ADR duplication in `documentation-and-adrs`
 - reduced operational duplication in `code-review-excellence`
-- tightened `incident-response` so it hands off into `postmortem`
-- tightened `incident-runbook-templates` so it is clearly a runbook-authoring skill
-- clarified the split between general planning and refactor-specific planning
+- documented the remaining boundary watchlist for `incident-response`, `postmortem`, and `incident-runbook-templates`
+- documented the current acceptable split between general planning and refactor-specific planning
 
 ### Documentation and catalog normalization completed
 - stale counts corrected across key top-level docs

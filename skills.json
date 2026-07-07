@@ -31,8 +31,10 @@
       "flyway-migration-patterns",
       "db-migration-writer",
       "capacitor-mobile-patterns",
+      "change-risk-assessment",
       "operational-readiness-review",
-      "service-ownership-and-lifecycle-management"
+      "service-ownership-and-lifecycle-management",
+      "toil-analysis-and-automation"
     ],
     "documentation": [
       "documentation-and-adrs",
@@ -62,11 +64,7 @@
       "skills-browser",
       "data-transform",
       "catalog-consistency-auditor",
-      "repository-archaeology",
-      "change-risk-assessment",
-      "toil-analysis-and-automation",
-      "operational-readiness-review",
-      "service-ownership-and-lifecycle-management"
+      "repository-archaeology"
     ],
     "engineering-mindset": [
       "adjacent-disciplines",
@@ -87,9 +85,7 @@
       "branch-manager",
       "api-tester",
       "regex-builder",
-      "codeowners-and-review-routing",
-      "change-risk-assessment",
-      "toil-analysis-and-automation"
+      "codeowners-and-review-routing"
     ]
   }
 }

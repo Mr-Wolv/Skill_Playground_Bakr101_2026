@@ -32,13 +32,13 @@
 
 | Phase | Skills |
 |-------|--------|
-| 🏗️ Architecture | `clean-architecture-principles`, `architecture-review`, `design-review`, `clean-code-principles`, `domain-driven-design-patterns`, `distributed-systems-patterns`, `resilience-patterns` |
+| 🏗️ Architecture | `clean-architecture-principles`, `architecture-review`, `design-review`, `clean-code-principles`, `domain-driven-design-patterns`, `distributed-systems-patterns`, `resilience-patterns`, `backward-compatibility-and-change-management` |
 | 💻 Implementation | `project-initializer`, `env-configurator`, `docker-configurator`, `db-migration-writer`, `data-modeler`, `spring-boot-patterns`, `spring-data-jpa-patterns`, `spring-security-patterns`, `flyway-migration-patterns`, `capacitor-mobile-patterns` |
 | 🧪 Testing | `unit-test-writer`, `integration-test-writer`, `test-fixture-generator`, `java-testing-patterns`, `react-testing-library-patterns` |
 | ✅ Code Review | `pr-writer`, `clean-code-principles`, `document-reviewer`, `codeowners-and-review-routing` |
 | 🔒 Security | `spring-security-patterns`, `dependency-auditor` |
 | 📖 Documentation | `readme-writer`, `api-documenter`, `code-documenter`, `code-commenter`, `document-reviewer`, `documentation-and-adrs`, `architecture-decision-records` |
-| 🔧 Maintenance | `tech-debt-tracker`, `dead-code-remover`, `dependency-auditor`, `catalog-consistency-auditor`, `repository-archaeology`, `change-risk-assessment`, `toil-analysis-and-automation` |
+| 🔧 Maintenance | `tech-debt-tracker`, `dead-code-remover`, `dependency-auditor`, `catalog-consistency-auditor`, `repository-archaeology`, `change-risk-assessment`, `operational-readiness-review`, `service-ownership-and-lifecycle-management`, `toil-analysis-and-automation` |
 | 🔄 Git | `commit-writer`, `branch-manager`, `codeowners-and-review-routing` |
 
 ## Domain 5: Software Architecture
@@ -146,6 +146,8 @@
 | `catalog-consistency-auditor` | Audit skill catalogs and repository docs for drift against the actual skill set |
 | `repository-archaeology` | Reconstruct how a codebase evolved using history, docs, naming drift, and structural clues |
 | `change-risk-assessment` | Assess delivery risk and recommend safeguards before rollout |
+| `operational-readiness-review` | Review whether a service or feature is ready for production operation |
+| `service-ownership-and-lifecycle-management` | Define ownership, stewardship, and lifecycle states for systems |
 | `toil-analysis-and-automation` | Identify repetitive low-value work and choose the right automation intervention |
 
 ## Domain 19: Code Quality
@@ -156,6 +158,7 @@
 | `clean-code-principles` | Teach Clean Code — naming, functions, DRY, KISS, smells |
 | `pr-writer` | Write structured PR descriptions from git diff |
 | `document-reviewer` | Review docs for clarity, structure, completeness |
+| `codeowners-and-review-routing` | Define ownership boundaries and review routing rules |
 
 ## Domain 20: Documentation
 *README, architecture docs, API docs, ADRs, runbooks, specs*
