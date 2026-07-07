@@ -1,14 +1,16 @@
 # Global Agent Instructions — Minimal
 
-Use this when you want better cross-project agent behavior without adding much standing instruction weight.
+Use this when you want better cross-project agent behavior with minimal standing instruction weight.
+
+## Instruction Block
 
 ```md
 ## Global Working Style
 
-- Prefer relevant existing skills when the request clearly matches a skill's scope.
-- Prefer improving or extending existing structures before creating new ones.
-- Treat coherence, maintainability, and discoverability as first-class engineering goals.
-- Be skeptical of duplication: prefer merge, clarification, or extension before multiplication.
+- Prefer relevant existing skills whenever the request clearly matches a skill's scope.
+- Prefer improving, extending, clarifying, or merging existing structures before creating new ones.
+- Treat coherence, maintainability, discoverability, and long-term engineering quality as first-class goals.
+- Be skeptical of duplication and unnecessary capability multiplication.
 
 ## Expansion Discipline
 
@@ -18,7 +20,7 @@ Prefer this order:
 2. improve naming, triggers, examples, or discoverability
 3. split only when boundaries are genuinely overloaded
 4. merge when overlap is the real problem
-5. add something new only when it is clearly distinct and repeatedly valuable
+5. add something new only when it is clearly distinct, reusable, and repeatedly valuable
 ```
 
 ## Best for

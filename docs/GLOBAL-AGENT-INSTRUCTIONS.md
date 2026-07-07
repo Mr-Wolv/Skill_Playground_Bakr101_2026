@@ -1,73 +1,48 @@
-# Global Agent Instructions Template
+# Global Agent Instructions
 
-Use this as a concise always-on instruction layer for agents across projects.
+Use this family of documents as a cross-project always-on instruction layer for agents.
 
-It is intentionally short: the goal is to improve skill usage and engineering discipline without overloading every session with repository-specific rules.
+The goal is to improve skill usage, engineering discipline, and long-term coherence without importing repository-specific maintenance rules into unrelated projects.
 
-## Recommended Global Instructions
+## Recommended Default
 
-This is the fuller cross-project template. If you want the shortest high-signal version to paste directly into a personal instruction field, use [GLOBAL-AGENT-INSTRUCTIONS-PERSONAL-COPYPASTE.md](./GLOBAL-AGENT-INSTRUCTIONS-PERSONAL-COPYPASTE.md).
+If you want one concise default for personal/global instructions, use:
 
-```md
-## Global Working Style
+- [Global Agent Instructions — Personal Copy-Paste Block](./GLOBAL-AGENT-INSTRUCTIONS-PERSONAL-COPYPASTE.md)
 
-- Prefer relevant existing skills when the user request clearly matches a skill's scope.
-- Do not invent a weaker ad hoc workflow when a stronger reusable skill already exists.
-- Prefer improving or extending existing structures before creating new ones.
-- Treat coherence, maintainability, and discoverability as first-class engineering goals.
-- Be skeptical of duplication: prefer merge, clarification, or extension before multiplication.
+## Available Variants
 
-## Skill Usage Policy
+- [Global Agent Instructions — Minimal](./GLOBAL-AGENT-INSTRUCTIONS-MINIMAL.md)
+  - best when you want lightweight guidance with minimal standing instruction weight
+- [Global Agent Instructions — Strict](./GLOBAL-AGENT-INSTRUCTIONS-STRICT.md)
+  - best when you want stronger discipline around skill usage, anti-duplication behavior, and workflow quality
+- [Global Agent Instructions — Personal Copy-Paste Block](./GLOBAL-AGENT-INSTRUCTIONS-PERSONAL-COPYPASTE.md)
+  - best when you want a single block to paste directly into a personal/global instruction field
 
-When a suitable skill exists, prefer using it especially for:
+## Design Principles
 
-- risk assessment
-- operational readiness
-- ownership and review routing
-- compatibility and change management
-- toil reduction and workflow automation
-- repository consistency and drift detection
-- architecture/design review
-- incident and postmortem workflows
+A good global instruction layer should:
 
-If multiple skills appear relevant:
+- shape defaults without overfitting to one repository
+- improve consistency across projects
+- increase the likelihood that relevant skills are actually used
+- reduce duplication and ad hoc workflow invention
+- stay short enough to avoid drowning out task-specific context
 
-1. choose the most specific skill that cleanly matches the task
-2. prefer a review skill for evaluation asks
-3. prefer an implementation skill for build/change asks
-4. prefer a governance/workflow skill for ownership, routing, readiness, or process asks
+## Scope Boundary
 
-## Expansion Discipline
+Keep project-specific rules in repository-local `AGENTS.md` files.
 
-Do not recommend creating something new by default.
+Use global instructions for:
 
-Prefer this order:
-1. improve an existing capability
-2. improve naming, triggers, examples, or discoverability
-3. split only when boundaries are genuinely overloaded
-4. merge when overlap is the real problem
-5. add something new only when it is clearly distinct and repeatedly valuable
+- default skill-usage behavior
+- anti-duplication posture
+- cross-project engineering discipline
+- decision heuristics that are broadly useful everywhere
 
-## Output Discipline
+Do not use global instructions for:
 
-- Be explicit when you are applying a specialized workflow.
-- Distinguish facts, inferences, and recommendations.
-- Prefer durable engineering reasoning over trendy or tool-specific advice.
-```
-
-## Notes
-
-This file is a template, not a live system setting by itself.
-
-To make it actually always-on, copy the relevant subset into your personal agent instructions or equivalent global `AGENTS.md` / rules mechanism supported by your environment.
-
-## Why this is short
-
-A global instruction layer should:
-
-- shape defaults
-- improve consistency
-- increase skill usage quality
-- avoid importing repo-specific maintenance rules into unrelated projects
-
-Keep project-specific details in repository-local `AGENTS.md` files.
+- repository-specific paths
+- mirror/sync rules tied to one repo
+- file inventories or catalog counts
+- local release or maintenance procedures specific to one project
