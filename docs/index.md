@@ -18,6 +18,7 @@
 | [Publication Summary (2026-07-08)](./publication-summary-2026-07-08.md) | Publication-oriented summary of the catalog cleanup, additions, and validation model |
 | [AGENTS Template](./AGENTS-template.md) | Reusable governance template for repositories that need source-of-truth, sync, and validation rules |
 | [AGENTS Example (Filled)](./AGENTS-example-filled.md) | Concrete copy-paste example based on this repository's finalized governance model |
+| [Global Agent Instructions Template](./GLOBAL-AGENT-INSTRUCTIONS.md) | Concise always-on instruction template for cross-project skill-aware agent behavior |
 | [Skill Playground Root](../SKILL.md) | Entry-point skill — loaded when repo is installed via `npx skills add` |
 
 ## 🏗️ Project Structure
@@ -44,6 +45,7 @@ Skill-Playground/
     ├── publication-summary-2026-07-08.md # Publication summary
     ├── AGENTS-template.md          # Reusable governance template
     ├── AGENTS-example-filled.md    # Concrete filled governance example
+    ├── GLOBAL-AGENT-INSTRUCTIONS.md # Cross-project always-on instruction template
 ```
 
 ## 🔗 Quick Links
