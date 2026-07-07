@@ -19,6 +19,9 @@
 | [AGENTS Template](./AGENTS-template.md) | Reusable governance template for repositories that need source-of-truth, sync, and validation rules |
 | [AGENTS Example (Filled)](./AGENTS-example-filled.md) | Concrete copy-paste example based on this repository's finalized governance model |
 | [Global Agent Instructions Template](./GLOBAL-AGENT-INSTRUCTIONS.md) | Concise always-on instruction template for cross-project skill-aware agent behavior |
+| [Global Agent Instructions (Minimal)](./GLOBAL-AGENT-INSTRUCTIONS-MINIMAL.md) | Lightweight always-on variant with minimal standing instruction weight |
+| [Global Agent Instructions (Strict)](./GLOBAL-AGENT-INSTRUCTIONS-STRICT.md) | Higher-discipline variant for stronger anti-sprawl and workflow enforcement |
+| [Global Agent Instructions (Personal Copy-Paste)](./GLOBAL-AGENT-INSTRUCTIONS-PERSONAL-COPYPASTE.md) | Copy-paste-ready block for personal/global instruction fields |
 | [Skill Playground Root](../SKILL.md) | Entry-point skill — loaded when repo is installed via `npx skills add` |
 
 ## 🏗️ Project Structure
@@ -46,6 +49,9 @@ Skill-Playground/
     ├── AGENTS-template.md          # Reusable governance template
     ├── AGENTS-example-filled.md    # Concrete filled governance example
     ├── GLOBAL-AGENT-INSTRUCTIONS.md # Cross-project always-on instruction template
+    ├── GLOBAL-AGENT-INSTRUCTIONS-MINIMAL.md # Lightweight always-on variant
+    ├── GLOBAL-AGENT-INSTRUCTIONS-STRICT.md # Stronger discipline variant
+    ├── GLOBAL-AGENT-INSTRUCTIONS-PERSONAL-COPYPASTE.md # Personal instruction block
 ```
 
 ## 🔗 Quick Links
