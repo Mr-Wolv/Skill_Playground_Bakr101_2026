@@ -19,6 +19,12 @@ The skill catalog is now materially more coherent than at the start of this sess
 - `architecture-review`
 - `repository-archaeology`
 - `design-review`
+- `codeowners-and-review-routing`
+- `change-risk-assessment`
+- `toil-analysis-and-automation`
+- `backward-compatibility-and-change-management`
+- `operational-readiness-review`
+- `service-ownership-and-lifecycle-management`
 
 #### Consolidation work completed
 - Merged `postmortem-writing` into `postmortem`
@@ -49,7 +55,7 @@ The skill catalog is now materially more coherent than at the start of this sess
 
 ### Remaining overlap candidates
 
-These are the best remaining consolidation candidates, ranked.
+These are the best remaining consolidation candidates still worth watching.
 
 #### 1. `incident-response` vs `postmortem`
 
@@ -130,18 +136,18 @@ These clusters are now in a good enough state that no immediate change is recomm
 
 The major stale count and merge-proposal issues identified during this audit have now been corrected.
 
-Remaining cleanup is minor wording polish rather than structural or count inconsistency.
+Remaining cleanup is now mostly wording polish, trigger quality, and evidence-based refinement rather than structural or count inconsistency.
 
 ## Recommended Next Actions
 
 ### Highest-value cleanup
-1. Refresh older planning/audit docs so they match the current 227-skill state and completed merges.
+1. Continue tightening wording, examples, and trigger clarity in the most-used skills.
 
 ### Best next consolidation candidate
-2. Tighten `incident-response` so it points to `postmortem` for the post-incident writeup phase rather than duplicating postmortem ownership.
+2. Keep watching the `incident-response` / `postmortem` boundary so post-incident ownership stays clean.
 
 ### Optional future taxonomy work
-3. Expand the domain catalog and summary text so it better reflects the added custom skills without stale historical framing.
+3. Refine discoverability and grouping further only if actual usage shows confusion.
 
 ## Conclusion
 

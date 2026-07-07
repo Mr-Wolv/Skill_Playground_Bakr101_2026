@@ -20,6 +20,12 @@ This document summarizes the catalog architecture work completed to prepare this
 - `architecture-review`
 - `repository-archaeology`
 - `design-review`
+- `codeowners-and-review-routing`
+- `change-risk-assessment`
+- `toil-analysis-and-automation`
+- `backward-compatibility-and-change-management`
+- `operational-readiness-review`
+- `service-ownership-and-lifecycle-management`
 
 ### Consolidation and boundary cleanup completed
 - merged `postmortem-writing` into `postmortem`
@@ -46,6 +52,10 @@ The catalog now has stronger separation between:
 - **research execution** vs **research method**
 - **general planning** vs **refactor-specific planning**
 - **repository consistency auditing** vs **historical repository analysis**
+- **deployment planning** vs **delivery risk assessment** vs **operational readiness review**
+- **review routing and ownership boundaries** vs **service-level operational stewardship**
+- **deprecation/migration** vs **backward-compatibility management during live evolution**
+- **manual repetitive work** vs **intentional toil reduction and automation design**
 
 ## Publication Readiness Improvements
 
@@ -55,7 +65,8 @@ This repository is now better prepared for publication because it has:
 - synchronized mirrored skill stores
 - refreshed top-level narratives
 - explicit governance rules
-- a validation workflow backed by a repository-local script
+- a validation workflow backed by repository-local scripts
+- explicit expansion control for a mature catalog
 
 ## Validation
 
@@ -79,12 +90,12 @@ The validator checks:
 
 No major architectural cleanup is required for publication.
 
-Remaining work is optional and editorial in nature:
+The repository is now in a governed maintenance phase. Remaining work should generally focus on:
 
-- further wording polish
-- expanded examples
-- release notes or changelog packaging
-- optional taxonomy refinements over time
+- wording and example quality
+- trigger and discoverability improvements
+- selective enhancement of existing skills
+- evidence-based future additions only when real gaps emerge
 
 ## Recommended Publication Message
 

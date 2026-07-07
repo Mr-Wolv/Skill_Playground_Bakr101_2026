@@ -62,22 +62,20 @@ Skill-Playground/
 
 ## Custom Skills at a Glance
 
-The repo includes 52 custom skills with expanded instruction bodies. Here are the categories:
+The repo includes 52 custom skills with expanded instruction bodies. These custom skills anchor the repo's most curated capability areas, while the broader repository also includes community and workflow-oriented skills.
 
-| Category | Skills |
-|----------|--------|
-| 🧪 **Testing** (5) | unit-test-writer, integration-test-writer, test-fixture-generator, react-testing-library-patterns, java-testing-patterns |
-| 🏗️ **Architecture** (7) | clean-architecture-principles, architecture-review, design-review, clean-code-principles, domain-driven-design-patterns, resilience-patterns, distributed-systems-patterns |
-| ☸️ **DevOps** (6) | docker-configurator, env-configurator, project-initializer, flyway-migration-patterns, db-migration-writer, capacitor-mobile-patterns |
-| 📖 **Documentation** (6) | readme-writer, api-documenter, code-documenter, code-commenter, document-reviewer, pr-writer |
-| 🧹 **Code Quality** (5) | tech-debt-tracker, dead-code-remover, dependency-auditor, clean-code-principles, regex-builder |
-| 🔍 **Analysis** (8) | failure-analysis, analytical-thinking-patterns, research, research-methodology, skills-browser, data-transform, catalog-consistency-auditor, repository-archaeology |
-| 🧠 **Mindset** (4) | adjacent-disciplines, autonomous-learner, long-term-engineering-mindset, computer-science-foundations |
-| 🔐 **Security** (2) | spring-security-patterns, dependency-auditor |
-| 🗄️ **Data** (5) | spring-data-jpa-patterns, spring-boot-patterns, data-modeler, db-migration-writer, data-transform |
-| 🔧 **Git & Workflow** (4) | commit-writer, branch-manager, api-tester, regex-builder |
+Representative custom capability areas include:
 
-Plus the remainder of the verified repository skills from community and workflow-oriented sources — see [SKILL-CATALOG.md](../SKILL-CATALOG.md) for the full listing.
+| Area | Representative Custom Skills |
+|------|-------------------------------|
+| Architecture and design | `architecture-review`, `design-review`, `clean-architecture-principles`, `backward-compatibility-and-change-management` |
+| Delivery and operations | `change-risk-assessment`, `operational-readiness-review`, `service-ownership-and-lifecycle-management`, `toil-analysis-and-automation` |
+| Code quality and repository intelligence | `tech-debt-tracker`, `dead-code-remover`, `catalog-consistency-auditor`, `repository-archaeology`, `codeowners-and-review-routing` |
+| Documentation and communication | `readme-writer`, `api-documenter`, `document-reviewer`, `pr-writer` |
+| Testing and verification | `unit-test-writer`, `integration-test-writer`, `test-fixture-generator`, `react-testing-library-patterns`, `java-testing-patterns` |
+| Analytical and engineering mindset | `analytical-thinking-patterns`, `adjacent-disciplines`, `autonomous-learner`, `long-term-engineering-mindset`, `computer-science-foundations` |
+
+See [SKILL-CATALOG.md](../SKILL-CATALOG.md) for the full repository listing and [SKILL-CATALOG-DOMAIN.md](../SKILL-CATALOG-DOMAIN.md) for the custom-skill domain view.
 
 ---
 

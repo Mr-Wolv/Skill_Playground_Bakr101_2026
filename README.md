@@ -4,7 +4,7 @@
 [![Mirror Parity Guidance](https://github.com/Mr-Wolv/Skill_Playground_Bakr101_2026/actions/workflows/mirror-parity.yml/badge.svg?branch=main)](https://github.com/Mr-Wolv/Skill_Playground_Bakr101_2026/actions/workflows/mirror-parity.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-> **A curated skill repository — 233 skills, bidirectionally synced.**
+> **A curated skill repository — 233 skills, mirrored with the global skill store.**
 > Install via `npx skills add <owner>/skill-playground`
 
 ---
