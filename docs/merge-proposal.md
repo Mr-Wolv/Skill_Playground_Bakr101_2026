@@ -13,12 +13,10 @@ It reflects both:
 
 ## Completed consolidations
 
-### Executed merge
-- `postmortem-writing` → merged into `postmortem`
-
 ### Executed boundary cleanups
 - `documentation-and-adrs` reduced ADR-specific duplication and now points formal ADR work to `architecture-decision-records`
 - `code-review-excellence` reduced operational review duplication and now focuses more clearly on review practice and team culture
+- core overlapping clusters were further clarified through explicit boundary sections in the relevant skill bodies
 
 ## Current recommendations by cluster
 

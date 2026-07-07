@@ -27,10 +27,10 @@ The skill catalog is now materially more coherent than at the start of this sess
 - `service-ownership-and-lifecycle-management`
 
 #### Consolidation work completed
-- Merged `postmortem-writing` into `postmortem`
 - Reduced ADR duplication inside `documentation-and-adrs`
 - Reduced operational-review duplication inside `code-review-excellence`
 - Clarified boundaries across the review and documentation clusters
+- Reduced remaining overlap to a small watchlist of boundary-polish candidates rather than severe duplication
 
 ## Architectural Assessment
 
@@ -168,4 +168,4 @@ The catalog is now significantly stronger in:
 - capability boundary clarity
 - sync/governance discipline
 
-The highest-risk duplication problem that remained during this session (`postmortem-writing`) has already been resolved. The remaining issues are now mostly boundary-polish and documentation freshness, not severe architectural duplication.
+The highest-risk overlap problems identified during this session have already been reduced. The remaining issues are now mostly boundary polish, wording freshness, and evidence-driven refinement rather than severe architectural duplication.

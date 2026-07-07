@@ -28,11 +28,11 @@ This document summarizes the catalog architecture work completed to prepare this
 - `service-ownership-and-lifecycle-management`
 
 ### Consolidation and boundary cleanup completed
-- merged `postmortem-writing` into `postmortem`
 - reduced ADR duplication in `documentation-and-adrs`
 - reduced operational duplication in `code-review-excellence`
 - documented the remaining boundary watchlist for `incident-response`, `postmortem`, and `incident-runbook-templates`
 - documented the current acceptable split between general planning and refactor-specific planning
+- added explicit boundary guidance across the main overlapping skill clusters so adjacent skills route more cleanly in real project use
 
 ### Documentation and catalog normalization completed
 - stale counts corrected across key top-level docs
