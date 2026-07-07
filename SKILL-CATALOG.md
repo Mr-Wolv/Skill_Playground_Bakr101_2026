@@ -1,4 +1,4 @@
-# SDLC Skills Catalog — 227 Skills
+# SDLC Skills Catalog — 230 Skills
 
 > **Bidirectionally synced with global skill store**
 > 🔄 Verified: 2026-07-08
@@ -160,6 +160,7 @@
 | `code-review` | community | Two-axis review (Standards + Spec) |
 | `code-review-and-quality` | community | Multi-axis code review |
 | `code-review-excellence` | community | Effective code review practices |
+| `codeowners-and-review-routing` | **custom** | Define ownership boundaries, CODEOWNERS rules, and review routing |
 | `typed-holes-refactor` | community | Design by Typed Holes refactoring |
 | `pr-writer` | **custom** | Write structured PR descriptions from git diff |
 | `code-simplification` | community | Simplify code for clarity |
@@ -222,6 +223,7 @@
 | `github-actions-templates` | community | Create production-ready GHA workflows |
 | `ci-cd-and-automation` | community | Automate CI/CD pipeline setup |
 | `shipping-and-launch` | community | Pre-launch checklists, staged rollouts |
+| `change-risk-assessment` | **custom** | Assess delivery risk and recommend rollout safeguards |
 | `gitops-workflow` | community | Implement GitOps with ArgoCD/Flux |
 
 ## 📊 Phase 16: Observability & Monitoring
@@ -249,6 +251,7 @@
 | `dependency-updater` | community | Auto-detect project type, apply safe updates |
 | `dependency-graph` | community | Generate Mermaid dependency graphs |
 | `monorepo-management` | community | Turborepo, Nx, pnpm workspaces |
+| `toil-analysis-and-automation` | **custom** | Identify repetitive manual work and design durable automation |
 | `tech-debt-tracker` | **custom** | Scan for TODOs, complexity, code smells |
 | `dead-code-remover` | **custom** | Find and remove unused exports, files, deps |
 | `dependency-auditor` | **custom** | Audit packages for CVEs, outdated, licenses |

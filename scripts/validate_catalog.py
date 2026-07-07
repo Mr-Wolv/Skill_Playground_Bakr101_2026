@@ -45,7 +45,7 @@ for file in skill_files:
 
 fs_skills = sorted(set(skill_names))
 fs_count = len(fs_skills)
-custom_count = 46
+custom_count = 49
 
 catalog_text = read_text(ROOT / "SKILL-CATALOG.md")
 domain_text = read_text(ROOT / "SKILL-CATALOG-DOMAIN.md")

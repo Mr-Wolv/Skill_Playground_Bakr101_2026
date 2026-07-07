@@ -30,6 +30,9 @@
 | ✅ **PR write** | *"Write a PR description"* / *"Summarize changes"* | `pr-writer` |
 | 🧹 **Tech debt** | *"Find tech debt"* / *"Scan for TODOs"* | `tech-debt-tracker` |
 | 🧹 **Dead code** | *"Clean up dead code"* / *"Remove unused"* | `dead-code-remover` |
+| ✅ **CODEOWNERS** | *"Set up CODEOWNERS"* / *"Who should review what"* / *"Route reviews automatically"* | `codeowners-and-review-routing` |
+| ⚠️ **Change risk** | *"How risky is this deploy"* / *"Do a preflight risk review"* / *"What safeguards should we add"* | `change-risk-assessment` |
+| 🤖 **Toil reduction** | *"Automate this repetitive process"* / *"This is too manual"* / *"Find toil in this workflow"* | `toil-analysis-and-automation` |
 | 🧭 **Catalog drift** | *"Audit catalog consistency"* / *"Find documentation drift"* / *"Reconcile skill indexes"* | `catalog-consistency-auditor` |
 | 🏺 **Repository archaeology** | *"Explain how this code evolved"* / *"Trace the history of this subsystem"* / *"Why is this shaped like this?"* | `repository-archaeology` |
 | 📖 **README** | *"Write a README"* / *"Generate project docs"* | `readme-writer` |

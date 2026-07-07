@@ -1,9 +1,9 @@
 {
   "version": 1,
   "name": "skill-playground",
-  "description": "Curated collection of 227 verified skills spanning testing, architecture, design review, repository intelligence, documentation, code quality, engineering workflow, and long-term engineering judgment.",
-  "total_skills": 227,
-  "custom_skills": 46,
+  "description": "Curated collection of 230 verified skills spanning testing, architecture, design review, repository intelligence, documentation, code quality, engineering workflow, and long-term engineering judgment.",
+  "total_skills": 230,
+  "custom_skills": 49,
   "community_skills": 181,
   "meta_skills": 0,
   "categories": {
@@ -49,7 +49,8 @@
       "dead-code-remover",
       "dependency-auditor",
       "clean-code-principles",
-      "regex-builder"
+      "regex-builder",
+      "codeowners-and-review-routing"
     ],
     "analysis": [
       "failure-analysis",
@@ -58,7 +59,9 @@
       "skills-browser",
       "data-transform",
       "catalog-consistency-auditor",
-      "repository-archaeology"
+      "repository-archaeology",
+      "change-risk-assessment",
+      "toil-analysis-and-automation"
     ],
     "engineering-mindset": [
       "adjacent-disciplines",
@@ -78,7 +81,10 @@
       "commit-writer",
       "branch-manager",
       "api-tester",
-      "regex-builder"
+      "regex-builder",
+      "codeowners-and-review-routing",
+      "change-risk-assessment",
+      "toil-analysis-and-automation"
     ]
   }
 }

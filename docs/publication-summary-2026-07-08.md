@@ -8,10 +8,10 @@ This document summarizes the catalog architecture work completed to prepare this
 
 ## Final Verified State
 
-- Repository skills: **227**
-- Global mirrored skills: **227**
+- Repository skills: **230**
+- Global mirrored skills: **230**
 - Repo/global parity: **exact**
-- Custom skills tracked in the domain catalog: **46**
+- Custom skills tracked in the domain catalog: **49**
 
 ## Major Outcomes
 

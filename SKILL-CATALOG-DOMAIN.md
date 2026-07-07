@@ -1,10 +1,10 @@
 # Domain Engineering Catalog — Custom Skills
 
-> **46 custom skills organized by engineering domain**
-> 📚 [Documentation Index](docs/index.md) | [SDLC Catalog](SKILL-CATALOG.md) (full 227-skill listing) | [Cheatsheet](SDLC-PHRASE-CHEATSHEET.md) | [Repo Root](SKILL.md)
+> **49 custom skills organized by engineering domain**
+> 📚 [Documentation Index](docs/index.md) | [SDLC Catalog](SKILL-CATALOG.md) (full 230-skill listing) | [Cheatsheet](SDLC-PHRASE-CHEATSHEET.md) | [Repo Root](SKILL.md)
 
-> This catalog lists the **46 custom skills** organized by engineering domain.
-> For the complete 227-skill listing, see [SKILL-CATALOG.md](SKILL-CATALOG.md).
+> This catalog lists the **49 custom skills** organized by engineering domain.
+> For the complete 230-skill listing, see [SKILL-CATALOG.md](SKILL-CATALOG.md).
 
 ---
 
@@ -25,6 +25,7 @@
 | `tech-debt-tracker` | Scan for TODOs, complexity, code smells |
 | `dead-code-remover` | Find and remove unused exports, files, deps |
 | `pr-writer` | Write structured PR descriptions from git diff |
+| `codeowners-and-review-routing` | Define repository ownership boundaries, CODEOWNERS rules, and review routing |
 
 ## Domain 3: Software Development Lifecycle
 *Every SDLC phase — conception through retirement*
@@ -34,11 +35,11 @@
 | 🏗️ Architecture | `clean-architecture-principles`, `architecture-review`, `design-review`, `clean-code-principles`, `domain-driven-design-patterns`, `distributed-systems-patterns`, `resilience-patterns` |
 | 💻 Implementation | `project-initializer`, `env-configurator`, `docker-configurator`, `db-migration-writer`, `data-modeler`, `spring-boot-patterns`, `spring-data-jpa-patterns`, `spring-security-patterns`, `flyway-migration-patterns`, `capacitor-mobile-patterns` |
 | 🧪 Testing | `unit-test-writer`, `integration-test-writer`, `test-fixture-generator`, `java-testing-patterns`, `react-testing-library-patterns` |
-| ✅ Code Review | `pr-writer`, `clean-code-principles`, `document-reviewer` |
+| ✅ Code Review | `pr-writer`, `clean-code-principles`, `document-reviewer`, `codeowners-and-review-routing` |
 | 🔒 Security | `spring-security-patterns`, `dependency-auditor` |
 | 📖 Documentation | `readme-writer`, `api-documenter`, `code-documenter`, `code-commenter`, `document-reviewer`, `documentation-and-adrs`, `architecture-decision-records` |
-| 🔧 Maintenance | `tech-debt-tracker`, `dead-code-remover`, `dependency-auditor`, `catalog-consistency-auditor`, `repository-archaeology` |
-| 🔄 Git | `commit-writer`, `branch-manager` |
+| 🔧 Maintenance | `tech-debt-tracker`, `dead-code-remover`, `dependency-auditor`, `catalog-consistency-auditor`, `repository-archaeology`, `change-risk-assessment`, `toil-analysis-and-automation` |
+| 🔄 Git | `commit-writer`, `branch-manager`, `codeowners-and-review-routing` |
 
 ## Domain 5: Software Architecture
 *Styles, patterns, DDD, Clean/Hex/Onion/Layered, Event-Driven, Microservices, architectural assessment*
@@ -102,6 +103,8 @@
 | `docker-configurator` | Generate Dockerfile, compose, .dockerignore |
 | `project-initializer` | Scaffold new projects with structure, config, tooling |
 | `env-configurator` | Set up .env files and environment config |
+| `change-risk-assessment` | Assess delivery risk and recommend rollout safeguards |
+| `toil-analysis-and-automation` | Identify repetitive manual work and design sustainable automation |
 
 ## Domain 14: Testing
 *Unit, integration, system, acceptance, performance, automation*
@@ -138,6 +141,8 @@
 | `dependency-auditor` | Audit packages for CVEs, outdated, licenses |
 | `catalog-consistency-auditor` | Audit skill catalogs and repository docs for drift against the actual skill set |
 | `repository-archaeology` | Reconstruct how a codebase evolved using history, docs, naming drift, and structural clues |
+| `change-risk-assessment` | Assess delivery risk and recommend safeguards before rollout |
+| `toil-analysis-and-automation` | Identify repetitive low-value work and choose the right automation intervention |
 
 ## Domain 19: Code Quality
 *Code reviews, refactoring, static analysis, linting, readability*
@@ -220,9 +225,9 @@ These operate as orchestration or guidance layers rather than narrow engineering
 
 | Category | Count |
 |----------|-------|
-| Domain catalog entries | 46 custom skills |
+| Domain catalog entries | 49 custom skills |
 | Meta/workflow skills | present in repository but not exhaustively enumerated here |
-| **Repository total** | **227 verified skills** |
+| **Repository total** | **230 verified skills** |
 
 ---
 

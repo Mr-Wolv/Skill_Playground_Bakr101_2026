@@ -10,8 +10,8 @@
 | Document | Description |
 |----------|-------------|
 | [SDLC Phrase Cheatsheet](../SDLC-PHRASE-CHEATSHEET.md) | Say-this-get-that mapping — natural language → skill invocation |
-| [Skill Catalog (SDLC Phases)](../SKILL-CATALOG.md) | 227 verified skills organized by SDLC phase |
-| [Skill Catalog (Domains)](../SKILL-CATALOG-DOMAIN.md) | 46 custom skills organized by engineering domain |
+| [Skill Catalog (SDLC Phases)](../SKILL-CATALOG.md) | 230 verified skills organized by SDLC phase |
+| [Skill Catalog (Domains)](../SKILL-CATALOG-DOMAIN.md) | 49 custom skills organized by engineering domain |
 | [Skills JSON Manifest](../skills.json) | Machine-readable index of all skills |
 | [Merge Proposal](./merge-proposal.md) | Recommended keep/merge/rename plan for overlapping skill clusters |
 | [Final Audit (2026-07-08)](./final-audit-2026-07-08.md) | Final architectural audit of the catalog, overlaps, and remaining cleanup candidates |
@@ -24,7 +24,7 @@
 
 ```
 Skill-Playground/
-├── skills/                       # 227 skills (each has SKILL.md)
+├── skills/                       # 230 skills (each has SKILL.md)
 ├── SKILL.md                      # Root skill — repo entry point
 ├── SKILL-CATALOG.md              # SDLC-phase organized catalog
 ├── SKILL-CATALOG-DOMAIN.md       # Domain-organized catalog
@@ -48,13 +48,13 @@ Skill-Playground/
 
 ## 🔗 Quick Links
 
-- **[Browse the skill catalog](../SKILL-CATALOG.md)** — see all 227 verified skills by SDLC phase
+- **[Browse the skill catalog](../SKILL-CATALOG.md)** — see all 230 verified skills by SDLC phase
 - **[Install skills](../SKILL.md)** — `npx skills add <owner>/skill-playground`
 - **[Contribute a new skill](../README.md#contributing)** — see contributing guidelines
 
 ## Custom Skills at a Glance
 
-The repo includes 46 custom skills with expanded instruction bodies. Here are the categories:
+The repo includes 49 custom skills with expanded instruction bodies. Here are the categories:
 
 | Category | Skills |
 |----------|--------|

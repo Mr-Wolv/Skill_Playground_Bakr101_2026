@@ -1,11 +1,11 @@
 ---
 name: skill-playground
-description: Curated collection of 227 skills — testing, architecture, DevOps, documentation, code quality, and engineering mindset — bidirectionally synced with global skill store
+description: Curated collection of 230 skills — testing, architecture, DevOps, documentation, code quality, and engineering mindset — bidirectionally synced with global skill store
 ---
 
 # Skill Playground
 
-A curated repository of **227 skills** for accelerating AI-assisted software development. These skills span testing patterns, architecture & design principles, DevOps automation, documentation generation, code quality tooling, engineering mindset practices, and much more.
+A curated repository of **230 skills** for accelerating AI-assisted software development. These skills span testing patterns, architecture & design principles, DevOps automation, documentation generation, code quality tooling, engineering mindset practices, and much more.
 
 All skills are **bidirectionally synced** between this project's `skills/` directory and your global `~/.agents/skills/` store.
 
@@ -35,6 +35,6 @@ npx skills add <owner>/skill-playground --skill docker-configurator
 | 🗄️ **Data** | spring-data-jpa-patterns, spring-boot-patterns, data-modeler, db-migration-writer, data-transform |
 | 🔧 **Git & Workflow** | commit-writer, branch-manager, planning-and-task-breakdown, request-refactor-plan, api-tester |
 
-> **227 verified skills — bidirectionally synced with the global store**
+> **230 verified skills — bidirectionally synced with the global store**
 
 See [SKILL-CATALOG.md](./SKILL-CATALOG.md) for the full SDLC-phase organization and [SKILL-CATALOG-DOMAIN.md](./SKILL-CATALOG-DOMAIN.md) for the domain-based organization.
