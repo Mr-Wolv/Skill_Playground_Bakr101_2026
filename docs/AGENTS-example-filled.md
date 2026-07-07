@@ -110,6 +110,27 @@ When evaluating changes, ask:
 
 Only add new skills when the answer is materially yes.
 
+## Evidence-Driven Refinement Policy
+
+The highest-value boundary and coherence refactors have already been completed across the most overlapping skill clusters.
+
+From here, prefer evidence-driven refinement over speculative cleanup. Use real project behavior to guide further changes. Strong evidence includes:
+
+- repeated uncertainty about which skill should be used
+- repeated invocation misses caused by naming or trigger ambiguity
+- recurring overlap encountered during actual engineering tasks
+- repeated user friction from unclear skill boundaries
+- demonstrated capability gaps in real project work
+
+Prefer this order:
+
+1. use the catalog in real project work
+2. observe where selection, invocation, or boundaries fail
+3. refine the smallest set of skills that resolves the observed problem
+4. stop when the practical confusion is gone
+
+Do not continue boundary refactoring indefinitely for stylistic consistency alone.
+
 ## Expansion Control Policy
 
 The catalog is now mature enough that net-new skill creation is no longer the default optimization path.

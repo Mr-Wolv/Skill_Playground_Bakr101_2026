@@ -22,19 +22,19 @@
 | [Global Agent Instructions (Minimal)](./GLOBAL-AGENT-INSTRUCTIONS-MINIMAL.md) | Lightweight always-on variant with minimal standing instruction weight |
 | [Global Agent Instructions (Strict)](./GLOBAL-AGENT-INSTRUCTIONS-STRICT.md) | Higher-discipline variant for stronger anti-sprawl and workflow enforcement |
 | [Global Agent Instructions (Personal Copy-Paste)](./GLOBAL-AGENT-INSTRUCTIONS-PERSONAL-COPYPASTE.md) | Copy-paste-ready block for personal/global instruction fields |
-| [Skill Playground Root](../SKILL.md) | Entry-point skill for this mirrored catalog and its global-store workflow |
+| [Skill Playground Root](../SKILL.md) | Root overview for the mirrored catalog and its global-store workflow |
 
 ## 🏗️ Project Structure
 
 ```
 Skill-Playground/
 ├── skills/                       # 233 skills (each has SKILL.md)
-├── SKILL.md                      # Root skill — repo entry point
+├── SKILL.md                      # Root overview for the mirrored catalog
 ├── SKILL-CATALOG.md              # SDLC-phase organized catalog
 ├── SKILL-CATALOG-DOMAIN.md       # Domain-organized catalog
 ├── SDLC-PHRASE-CHEATSHEET.md     # Natural language skill triggers
 ├── skills.json                   # Machine-readable manifest
-├── README.md                     # Repo overview + install + contributing
+├── README.md                     # Repo overview + operating model + contributing
 ├── .github/workflows/validate.yml  # CI: SKILL.md frontmatter + catalog sync
 ├── scripts/                      # Validation and mirror-maintenance helpers
 │   ├── validate_catalog.py       # Structural catalog validator
@@ -57,7 +57,7 @@ Skill-Playground/
 ## 🔗 Quick Links
 
 - **[Browse the skill catalog](../SKILL-CATALOG.md)** — see all 233 verified skills by SDLC phase
-- **[Use skills](../SKILL.md)** — sync this repo into `~/.agents/skills/`
+- **[Use skills](../SKILL.md)** — sync this repo into `~/.agents/skills/` and invoke skills from the global store
 - **[Contribute a new skill](../README.md#contributing)** — see contributing guidelines
 
 ## Custom Skills at a Glance
@@ -90,4 +90,4 @@ Useful local maintenance commands:
 - `python scripts/sync_skills_to_global.py`
 - `python scripts/sync_and_validate.py`
 
-*See [README.md](../README.md) for install instructions and contributing guidelines.*
+*See [README.md](../README.md) for operating-model details and contributing guidelines.*

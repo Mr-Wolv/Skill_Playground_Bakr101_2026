@@ -53,7 +53,7 @@ python scripts/sync_and_validate.py
 
 After sync, skills are available at `~/.agents/skills/<skill-name>/SKILL.md`.
 
-> `custom` and `community` are source/classification labels inside this repository. They are not install owners or package namespaces.
+> `custom` and `community` are source/classification labels inside this repository. They do not represent remote ownership, package identity, or namespace semantics.
 
 ---
 
@@ -144,7 +144,7 @@ Include:
 
 ```
 ├── skills/                       # 233 skills (each has SKILL.md)
-├── SKILL.md                      # Root skill — loaded when repo is added
+├── SKILL.md                      # Root overview for the mirrored skill catalog
 ├── SKILL-CATALOG.md              # Skills by SDLC phase (full listing)
 ├── SKILL-CATALOG-DOMAIN.md       # Custom skills by engineering domain
 ├── SDLC-PHRASE-CHEATSHEET.md     # Natural language → skill triggers
