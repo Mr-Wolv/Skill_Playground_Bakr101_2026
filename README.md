@@ -4,7 +4,7 @@
 [![Mirror Parity Guidance](https://github.com/Mr-Wolv/Skill_Playground_Bakr101_2026/actions/workflows/mirror-parity.yml/badge.svg?branch=main)](https://github.com/Mr-Wolv/Skill_Playground_Bakr101_2026/actions/workflows/mirror-parity.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-> **A curated skill repository — 230 skills, bidirectionally synced.**
+> **A curated skill repository — 233 skills, bidirectionally synced.**
 > Install via `npx skills add <owner>/skill-playground`
 
 ---
@@ -31,7 +31,7 @@ open SDLC-PHRASE-CHEATSHEET.md
 
 ## What is this?
 
-Skill Playground is a **skills repository** for the agent skills ecosystem. It currently contains **230 skills**, organized by both [SDLC phase](SKILL-CATALOG.md) and [engineering domain](SKILL-CATALOG-DOMAIN.md).
+Skill Playground is a **skills repository** for the agent skills ecosystem. It currently contains **233 skills**, organized by both [SDLC phase](SKILL-CATALOG.md) and [engineering domain](SKILL-CATALOG-DOMAIN.md).
 
 All skills are treated as a mirrored pair between this project's `skills/` directory and the global skill store at `~/.agents/skills/`.
 
@@ -60,15 +60,15 @@ After installation, skills are available at `~/.agents/skills/<skill-name>/SKILL
 | Category | Representative Skills |
 |----------|------------------------|
 | 🧪 **Testing** | `unit-test-writer`, `integration-test-writer`, `test-fixture-generator`, `react-testing-library-patterns`, `java-testing-patterns` |
-| 🏗️ **Architecture & Design** | `clean-architecture-principles`, `architecture-review`, `design-review`, `domain-driven-design-patterns`, `distributed-systems-patterns` |
-| ☸️ **DevOps & Delivery** | `docker-configurator`, `env-configurator`, `project-initializer`, `flyway-migration-patterns`, `db-migration-writer`, `shipping-and-launch` |
+| 🏗️ **Architecture & Design** | `clean-architecture-principles`, `architecture-review`, `design-review`, `domain-driven-design-patterns`, `distributed-systems-patterns`, `backward-compatibility-and-change-management` |
+| ☸️ **DevOps & Delivery** | `docker-configurator`, `env-configurator`, `project-initializer`, `flyway-migration-patterns`, `db-migration-writer`, `shipping-and-launch`, `operational-readiness-review` |
 | 📖 **Documentation & Decisions** | `documentation-and-adrs`, `architecture-decision-records`, `readme-writer`, `api-documenter`, `document-reviewer`, `pr-writer` |
 | 🧹 **Code Quality & Review** | `code-review`, `code-review-and-quality`, `code-review-excellence`, `tech-debt-tracker`, `dead-code-remover`, `codeowners-and-review-routing` |
 | 🔍 **Repository Intelligence & Analysis** | `catalog-consistency-auditor`, `repository-archaeology`, `failure-analysis`, `research`, `research-methodology` |
 | 🧠 **Reasoning & Mindset** | `analytical-thinking-patterns`, `adjacent-disciplines`, `autonomous-learner`, `long-term-engineering-mindset`, `computer-science-foundations` |
 | 🔐 **Security** | `spring-security-patterns`, `dependency-auditor`, `security-and-hardening`, `owasp-security-check` |
 | 🗄️ **Data & Persistence** | `spring-data-jpa-patterns`, `spring-boot-patterns`, `data-modeler`, `db-migration-writer`, `data-transform` |
-| 🔧 **Git & Workflow** | `commit-writer`, `branch-manager`, `planning-and-task-breakdown`, `request-refactor-plan`, `api-tester`, `change-risk-assessment`, `toil-analysis-and-automation` |
+| 🔧 **Git & Workflow** | `commit-writer`, `branch-manager`, `planning-and-task-breakdown`, `request-refactor-plan`, `api-tester`, `change-risk-assessment`, `toil-analysis-and-automation`, `service-ownership-and-lifecycle-management` |
 
 ---
 
@@ -141,7 +141,7 @@ Include:
 ## Project Structure
 
 ```
-├── skills/                       # 230 skills (each has SKILL.md)
+├── skills/                       # 233 skills (each has SKILL.md)
 ├── SKILL.md                      # Root skill — loaded when repo is added
 ├── SKILL-CATALOG.md              # Skills by SDLC phase (full listing)
 ├── SKILL-CATALOG-DOMAIN.md       # Custom skills by engineering domain

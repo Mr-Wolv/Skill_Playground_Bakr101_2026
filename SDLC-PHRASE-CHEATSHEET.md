@@ -13,6 +13,7 @@
 |-------|------------|--------------|
 | 🏗️ **Architecture** | *"Architect this"* / *"Design the architecture"* | `clean-architecture-principles` |
 | 🏗️ **Architecture review** | *"Review this architecture"* / *"Assess this architecture"* / *"Is this architecture sound?"* | `architecture-review` |
+| 🔁 **Compatibility review** | *"Is this a breaking change"* / *"Maintain backward compatibility"* / *"Compatibility review"* | `backward-compatibility-and-change-management` |
 | 📐 **Design review** | *"Review this design"* / *"Is this design too complex?"* / *"Evaluate this proposal"* | `design-review` |
 | 🏗️ **DDD** | *"Model this domain"* / *"Apply DDD patterns"* | `domain-driven-design-patterns` |
 | 💻 **Scaffold** | *"Set up a new project"* / *"Initialize a repo"* | `project-initializer` |
@@ -32,6 +33,8 @@
 | 🧹 **Dead code** | *"Clean up dead code"* / *"Remove unused"* | `dead-code-remover` |
 | ✅ **CODEOWNERS** | *"Set up CODEOWNERS"* / *"Who should review what"* / *"Route reviews automatically"* | `codeowners-and-review-routing` |
 | ⚠️ **Change risk** | *"How risky is this deploy"* / *"Do a preflight risk review"* / *"What safeguards should we add"* | `change-risk-assessment` |
+| 🚦 **Operational readiness** | *"Are we operationally ready"* / *"Production readiness review"* / *"Go-live readiness"* | `operational-readiness-review` |
+| 🧭 **Service ownership** | *"Who owns this service"* / *"Define service ownership"* / *"Set lifecycle policy"* | `service-ownership-and-lifecycle-management` |
 | 🤖 **Toil reduction** | *"Automate this repetitive process"* / *"This is too manual"* / *"Find toil in this workflow"* | `toil-analysis-and-automation` |
 | 🧭 **Catalog drift** | *"Audit catalog consistency"* / *"Find documentation drift"* / *"Reconcile skill indexes"* | `catalog-consistency-auditor` |
 | 🏺 **Repository archaeology** | *"Explain how this code evolved"* / *"Trace the history of this subsystem"* / *"Why is this shaped like this?"* | `repository-archaeology` |

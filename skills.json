@@ -1,9 +1,9 @@
 {
   "version": 1,
   "name": "skill-playground",
-  "description": "Curated collection of 230 verified skills spanning testing, architecture, design review, repository intelligence, documentation, code quality, engineering workflow, and long-term engineering judgment.",
-  "total_skills": 230,
-  "custom_skills": 49,
+  "description": "Curated collection of 233 verified skills spanning testing, architecture, design review, repository intelligence, documentation, code quality, engineering workflow, and long-term engineering judgment.",
+  "total_skills": 233,
+  "custom_skills": 52,
   "community_skills": 181,
   "meta_skills": 0,
   "categories": {
@@ -21,7 +21,8 @@
       "resilience-patterns",
       "distributed-systems-patterns",
       "architecture-review",
-      "design-review"
+      "design-review",
+      "backward-compatibility-and-change-management"
     ],
     "devops": [
       "docker-configurator",
@@ -29,7 +30,9 @@
       "project-initializer",
       "flyway-migration-patterns",
       "db-migration-writer",
-      "capacitor-mobile-patterns"
+      "capacitor-mobile-patterns",
+      "operational-readiness-review",
+      "service-ownership-and-lifecycle-management"
     ],
     "documentation": [
       "documentation-and-adrs",
@@ -61,7 +64,9 @@
       "catalog-consistency-auditor",
       "repository-archaeology",
       "change-risk-assessment",
-      "toil-analysis-and-automation"
+      "toil-analysis-and-automation",
+      "operational-readiness-review",
+      "service-ownership-and-lifecycle-management"
     ],
     "engineering-mindset": [
       "adjacent-disciplines",

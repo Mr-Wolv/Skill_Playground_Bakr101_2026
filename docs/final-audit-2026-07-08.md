@@ -8,8 +8,8 @@ The skill catalog is now materially more coherent than at the start of this sess
 
 ### Verified current state
 
-- Repository skills: **230**
-- Global mirrored skills: **230**
+- Repository skills: **233**
+- Global mirrored skills: **233**
 - Repo/global parity: **exact**
 
 ### Major improvements completed

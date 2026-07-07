@@ -1,10 +1,10 @@
 # Domain Engineering Catalog — Custom Skills
 
-> **49 custom skills organized by engineering domain**
-> 📚 [Documentation Index](docs/index.md) | [SDLC Catalog](SKILL-CATALOG.md) (full 230-skill listing) | [Cheatsheet](SDLC-PHRASE-CHEATSHEET.md) | [Repo Root](SKILL.md)
+> **52 custom skills organized by engineering domain**
+> 📚 [Documentation Index](docs/index.md) | [SDLC Catalog](SKILL-CATALOG.md) (full 233-skill listing) | [Cheatsheet](SDLC-PHRASE-CHEATSHEET.md) | [Repo Root](SKILL.md)
 
-> This catalog lists the **49 custom skills** organized by engineering domain.
-> For the complete 230-skill listing, see [SKILL-CATALOG.md](SKILL-CATALOG.md).
+> This catalog lists the **52 custom skills** organized by engineering domain.
+> For the complete 233-skill listing, see [SKILL-CATALOG.md](SKILL-CATALOG.md).
 
 ---
 
@@ -48,6 +48,7 @@
 |-------|-------------|
 | `clean-architecture-principles` | Clean Architecture layers, dependency rule |
 | `architecture-review` | Review an architecture against requirements, boundaries, risks, operability, and tradeoffs |
+| `backward-compatibility-and-change-management` | Review interface, schema, and behavior changes for compatibility impact |
 | `domain-driven-design-patterns` | DDD tactical + strategic patterns |
 | `distributed-systems-patterns` | CAP, consistency models, sagas, consensus |
 | `resilience-patterns` | Circuit breaker, retry, bulkhead, rate limiter |
@@ -104,6 +105,8 @@
 | `project-initializer` | Scaffold new projects with structure, config, tooling |
 | `env-configurator` | Set up .env files and environment config |
 | `change-risk-assessment` | Assess delivery risk and recommend rollout safeguards |
+| `operational-readiness-review` | Review whether a service or feature is ready to operate in production |
+| `service-ownership-and-lifecycle-management` | Define ownership, support expectations, and lifecycle states |
 | `toil-analysis-and-automation` | Identify repetitive manual work and design sustainable automation |
 
 ## Domain 14: Testing
@@ -130,6 +133,7 @@
 | Skill | What it does |
 |-------|-------------|
 | `resilience-patterns` | Circuit breaker, retry, bulkhead, rate limiter, graceful degradation |
+| `operational-readiness-review` | Review whether a service is truly ready for production operation |
 
 ## Domain 18: Repository Intelligence
 *Repository analysis, auditing, dependency analysis, tech debt, dead code, consistency drift, and historical reconstruction*
@@ -225,9 +229,9 @@ These operate as orchestration or guidance layers rather than narrow engineering
 
 | Category | Count |
 |----------|-------|
-| Domain catalog entries | 49 custom skills |
+| Domain catalog entries | 52 custom skills |
 | Meta/workflow skills | present in repository but not exhaustively enumerated here |
-| **Repository total** | **230 verified skills** |
+| **Repository total** | **233 verified skills** |
 
 ---
 

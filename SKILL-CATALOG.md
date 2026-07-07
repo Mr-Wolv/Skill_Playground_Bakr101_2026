@@ -1,4 +1,4 @@
-# SDLC Skills Catalog — 230 Skills
+# SDLC Skills Catalog — 233 Skills
 
 > **Bidirectionally synced with global skill store**
 > 🔄 Verified: 2026-07-08
@@ -33,6 +33,7 @@
 | `architecture-decision-records` | community | Write and maintain ADRs |
 | `architecture-patterns` | community | Clean Arch, Hexagonal, DDD patterns |
 | `architecture-review` | **custom** | Review an architecture against requirements, boundaries, risks, operability, and tradeoffs |
+| `backward-compatibility-and-change-management` | **custom** | Review changes for compatibility impact and safe evolution strategy |
 | `clean-architecture-principles` | **custom** | Teach Clean Architecture layers, dependency rule |
 | `clean-code-principles` | **custom** | Teach Clean Code: naming, functions, DRY, KISS, SOLID |
 | `domain-driven-design-patterns` | **custom** | DDD tactical + strategic patterns |
@@ -224,6 +225,7 @@
 | `ci-cd-and-automation` | community | Automate CI/CD pipeline setup |
 | `shipping-and-launch` | community | Pre-launch checklists, staged rollouts |
 | `change-risk-assessment` | **custom** | Assess delivery risk and recommend rollout safeguards |
+| `operational-readiness-review` | **custom** | Review whether a system is truly ready to operate in production |
 | `gitops-workflow` | community | Implement GitOps with ArgoCD/Flux |
 
 ## 📊 Phase 16: Observability & Monitoring
@@ -252,6 +254,7 @@
 | `dependency-graph` | community | Generate Mermaid dependency graphs |
 | `monorepo-management` | community | Turborepo, Nx, pnpm workspaces |
 | `toil-analysis-and-automation` | **custom** | Identify repetitive manual work and design durable automation |
+| `service-ownership-and-lifecycle-management` | **custom** | Define ownership, stewardship, and lifecycle states for systems |
 | `tech-debt-tracker` | **custom** | Scan for TODOs, complexity, code smells |
 | `dead-code-remover` | **custom** | Find and remove unused exports, files, deps |
 | `dependency-auditor` | **custom** | Audit packages for CVEs, outdated, licenses |
