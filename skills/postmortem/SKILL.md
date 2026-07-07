@@ -6,6 +6,14 @@ description: Conducts blameless postmortems that transform failures into learnin
 
 **When NOT to use:** Incident still ongoing (focus on resolution first), looking to assign blame (antithesis of blameless culture), or issue is trivial with no learning value.
 
+## Boundary
+
+Use this skill after an incident, failure, or negative outcome has been stabilized enough to analyze. Its job is to turn facts into learning: timeline reconstruction, root cause analysis, lessons, and corrective actions.
+
+Do not use this skill as the live incident command workflow. During an active outage or response effort, use `incident-response` first and bring its factual handoff here afterward.
+
+Do not use this skill to write generic response playbooks for future responders. For durable operational procedures, use `incident-runbook-templates`.
+
 ## Workflow
 
 Copy this checklist and track your progress:

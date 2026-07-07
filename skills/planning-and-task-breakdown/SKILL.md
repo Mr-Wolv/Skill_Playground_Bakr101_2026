@@ -19,6 +19,14 @@ Decompose work into small, verifiable tasks with explicit acceptance criteria. G
 
 **When NOT to use:** Single-file changes with obvious scope, or when the spec already contains well-defined tasks.
 
+## Boundary
+
+Use this skill for general implementation planning once the requirements are already clear enough to decompose into ordered tasks.
+
+If the work is specifically a refactor and the main need is to interview for scope, evaluate alternatives, define what will and will not change, and produce a tiny-commit refactor plan for issue tracking, use `request-refactor-plan` instead.
+
+This skill is about decomposition and execution order, not about turning an ambiguous refactor concern into a formally scoped refactor request.
+
 ## The Planning Process
 
 ### Step 1: Enter Plan Mode

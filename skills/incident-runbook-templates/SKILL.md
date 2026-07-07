@@ -7,6 +7,14 @@ description: Create structured incident response runbooks with step-by-step proc
 
 Production-ready templates for incident response runbooks covering detection, triage, mitigation, resolution, and communication.
 
+## Boundary
+
+Use this skill to author, standardize, and improve the reusable runbooks responders will follow in future incidents.
+
+Do not use this skill as the command workflow for a live incident. For active triage, coordination, and status updates during an outage, use `incident-response`.
+
+Do not use this skill as the full post-incident learning workflow. After the incident is resolved, use `postmortem` for root cause analysis and corrective actions.
+
 ## When to Use This Skill
 
 - Creating incident response procedures
@@ -131,5 +139,6 @@ WHERE state = 'idle' AND query_start < now() - interval '10 minutes';
 
 ## Related Skills
 
+- `incident-response` - Use this during a live incident for triage, coordination, mitigation tracking, and communications
 - `postmortem` - After resolving an incident, use the postmortem workflow to capture root cause and preventive actions
 - `on-call-handoff-patterns` - Structure shift handoffs so the incoming responder has full context on active incidents

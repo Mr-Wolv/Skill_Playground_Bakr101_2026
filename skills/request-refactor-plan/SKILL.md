@@ -3,6 +3,20 @@ name: request-refactor-plan
 description: Create a refactor-specific implementation plan with tiny commits via user interview, then file it as a GitHub issue. Use when the work is a refactor rather than general feature planning.
 ---
 
+# Request Refactor Plan
+
+Use this skill when the work is specifically a refactor and the main need is to turn a loosely described improvement concern into a tightly scoped refactor plan.
+
+## Boundary
+
+Use this skill for refactor-specific discovery and planning: interview the user, verify the current state in the repo, compare alternatives, define scope and non-scope, and produce a tiny-commit plan suitable for issue tracking.
+
+Do not use this skill for ordinary feature planning when the requirements are already clear and the main need is just task decomposition. For that, use `planning-and-task-breakdown`.
+
+This skill is refactor-oriented and issue-oriented. It should produce a defensible plan for changing existing structure without silently expanding into unrelated feature work.
+
+## Workflow
+
 This skill will be invoked when the user wants to create a refactor request. You should go through the steps below. You may skip steps if you don't consider them necessary.
 
 1. Ask the user for a long, detailed description of the problem they want to solve and any potential ideas for solutions.

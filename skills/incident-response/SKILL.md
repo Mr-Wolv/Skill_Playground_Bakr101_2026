@@ -8,7 +8,7 @@ argument-hint: "<incident description or alert>"
 
 > If you see unfamiliar placeholders or need to check which tools are connected, see [CONNECTORS.md](../../CONNECTORS.md).
 
-Manage an active incident from detection through resolution, then hand off into the dedicated postmortem workflow.
+Manage an active incident from detection through resolution, then hand off the factual incident record into the dedicated postmortem workflow.
 
 ## Usage
 
@@ -25,6 +25,14 @@ Manage an active incident from detection through resolution, then hand off into 
 ```
 
 If no mode is specified, ask what phase the incident is in.
+
+## Boundary
+
+Use this skill for live incident command work: triage, coordination, communications, mitigation tracking, and resolution.
+
+Do not use this skill to run the full learning and corrective-action process after the incident is over. For that, hand off into `postmortem`.
+
+Do not use this skill to author the runbooks responders should follow in future incidents. For that, use `incident-runbook-templates`.
 
 ## How It Works
 
@@ -142,4 +150,5 @@ If **~~chat** is connected:
 1. **Start writing immediately** — Don't wait for complete information. Update as you learn more.
 2. **Keep updates factual** — What we know, what we've done, what's next. No speculation.
 3. **Postmortems are blameless** — Focus on systems and processes, not individuals.
-4. **Use `postmortem` for the full writeup** — This skill should hand off facts and timeline rather than duplicating the whole postmortem workflow.
+4. **Use `postmortem` for the full writeup** — This skill should hand off facts, timeline, and unresolved questions rather than duplicating the full postmortem workflow.
+5. **Use `incident-runbook-templates` for durable procedures** — This skill coordinates the current incident; it does not author the reusable runbook library.
