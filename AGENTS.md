@@ -102,3 +102,25 @@ When evaluating changes, ask:
 - does the change improve reuse, discoverability, maintainability, or engineering quality?
 
 Only add new skills when the answer is materially yes.
+
+## Expansion Control Policy
+
+The catalog is now mature enough that net-new skill creation is no longer the default optimization path.
+
+From this point onward, prefer the following order of operations:
+
+1. improve an existing skill
+2. improve naming, triggers, examples, or discoverability
+3. split an overloaded skill if the boundaries are truly unclear
+4. merge overlapping skills if duplication is diluting clarity
+5. add a new skill only if the capability is both genuinely distinct and repeatedly valuable
+
+A new skill should be added only when it clearly beats the alternatives above on:
+
+- distinctness
+- reuse
+- discoverability
+- maintainability
+- engineering value
+
+If the case is ambiguous, do not add the skill yet. Capture the gap, observe real usage, and revisit later.

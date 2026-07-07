@@ -96,3 +96,25 @@ Catalog growth is justified only when it improves one or more of:
 Do not create skills merely because a technology exists.
 
 The repository is now in a governed maintenance phase: prefer improving boundaries, discovery, naming, examples, and validation discipline before adding net-new skills.
+
+## Expansion Control Policy
+
+The catalog is mature enough that net-new skill creation should now be treated as a high-bar exception rather than the default way to improve the repository.
+
+Before adding a new skill, prefer this order:
+
+1. enhance an existing skill
+2. improve descriptions, triggers, examples, or cross-references
+3. split an overloaded skill only if boundary clarity materially improves
+4. merge overlapping skills when duplication is the real problem
+5. add a new skill only when the capability is clearly distinct, reusable, and repeatedly valuable
+
+A proposed new skill should beat the alternatives above on all or most of:
+
+- distinctness
+- reuse
+- discoverability
+- maintainability
+- engineering value
+
+If the case is ambiguous, defer creation and gather evidence from real usage.

@@ -176,7 +176,7 @@ It is intended to be reusable, modifiable, and shareable as a skill collection f
 
 ---
 
-For catalog governance and sync rules, see [docs/catalog-governance.md](docs/catalog-governance.md).
+For catalog governance and sync rules, see [docs/catalog-governance.md](docs/catalog-governance.md). The catalog is now in a mature maintenance phase, so new skills are expected to clear a higher bar than improvements to existing ones.
 
 If you want to apply a similar governance model in another repository, start from [docs/AGENTS-template.md](docs/AGENTS-template.md). If you want a near-copy of this repo's exact policy model, use [docs/AGENTS-example-filled.md](docs/AGENTS-example-filled.md).
 
