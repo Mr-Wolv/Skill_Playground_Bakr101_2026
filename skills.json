@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "name": "skill-playground",
+  "description": "Curated collection of 227 verified skills spanning testing, architecture, design review, repository intelligence, documentation, code quality, engineering workflow, and long-term engineering judgment.",
+  "total_skills": 227,
+  "custom_skills": 46,
+  "community_skills": 181,
+  "meta_skills": 0,
+  "categories": {
+    "testing": [
+      "unit-test-writer",
+      "integration-test-writer",
+      "test-fixture-generator",
+      "react-testing-library-patterns",
+      "java-testing-patterns"
+    ],
+    "architecture": [
+      "clean-architecture-principles",
+      "clean-code-principles",
+      "domain-driven-design-patterns",
+      "resilience-patterns",
+      "distributed-systems-patterns",
+      "architecture-review",
+      "design-review"
+    ],
+    "devops": [
+      "docker-configurator",
+      "env-configurator",
+      "project-initializer",
+      "flyway-migration-patterns",
+      "db-migration-writer",
+      "capacitor-mobile-patterns"
+    ],
+    "documentation": [
+      "documentation-and-adrs",
+      "architecture-decision-records",
+      "readme-writer",
+      "api-documenter",
+      "code-documenter",
+      "code-commenter",
+      "document-reviewer",
+      "pr-writer"
+    ],
+    "code-quality": [
+      "code-review",
+      "code-review-and-quality",
+      "code-review-excellence",
+      "tech-debt-tracker",
+      "dead-code-remover",
+      "dependency-auditor",
+      "clean-code-principles",
+      "regex-builder"
+    ],
+    "analysis": [
+      "failure-analysis",
+      "analytical-thinking-patterns",
+      "research-methodology",
+      "skills-browser",
+      "data-transform",
+      "catalog-consistency-auditor",
+      "repository-archaeology"
+    ],
+    "engineering-mindset": [
+      "adjacent-disciplines",
+      "autonomous-learner",
+      "long-term-engineering-mindset",
+      "computer-science-foundations"
+    ],
+    "security": ["spring-security-patterns", "dependency-auditor"],
+    "data": [
+      "spring-data-jpa-patterns",
+      "spring-boot-patterns",
+      "data-modeler",
+      "db-migration-writer",
+      "data-transform"
+    ],
+    "git-workflow": [
+      "commit-writer",
+      "branch-manager",
+      "api-tester",
+      "regex-builder"
+    ]
+  }
+}

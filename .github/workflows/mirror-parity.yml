@@ -1,0 +1,27 @@
+name: Mirror Parity Guidance
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate-repo-catalog:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate catalog coherence
+        run: python scripts/validate_catalog.py
+
+      - name: Explain mirror parity requirement
+        run: |
+          echo "Mirror parity with C:\Users\GIGABYTE\.agents\skills is enforced locally, not in GitHub Actions."
+          echo "After any catalog change, run:"
+          echo "  python scripts/sync_skills_to_global.py"
+          echo "  python scripts/check_skill_mirror_parity.py"
