@@ -166,7 +166,9 @@ Install → npx skills add <owner>/skill-playground
 
 ## License
 
-This project is a skill collection for the agent skills ecosystem. Skills are shareable and modifiable. See individual skill sources for any third-party attribution requirements.
+This repository is licensed under the [MIT License](LICENSE).
+
+It is intended to be reusable, modifiable, and shareable as a skill collection for the agent skills ecosystem. See individual skill sources for any third-party attribution requirements.
 
 ---
 
