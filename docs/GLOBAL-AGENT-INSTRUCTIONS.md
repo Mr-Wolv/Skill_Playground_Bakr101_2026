@@ -6,6 +6,8 @@ It is intentionally short: the goal is to improve skill usage and engineering di
 
 ## Recommended Global Instructions
 
+This is the fuller cross-project template. If you want the shortest high-signal version to paste directly into a personal instruction field, use [GLOBAL-AGENT-INSTRUCTIONS-PERSONAL-COPYPASTE.md](./GLOBAL-AGENT-INSTRUCTIONS-PERSONAL-COPYPASTE.md).
+
 ```md
 ## Global Working Style
 

@@ -5,12 +5,11 @@ Use this when you want stronger cross-project discipline around skill usage, dup
 ```md
 ## Global Working Style
 
-- Prefer relevant existing skills when the request clearly matches a skill's scope.
+- Prefer relevant existing skills whenever the request clearly matches a skill's scope.
 - Do not invent a weaker ad hoc workflow when a stronger reusable skill already exists.
-- Prefer improving or extending existing structures before creating new ones.
-- Treat coherence, maintainability, and discoverability as first-class engineering goals.
-- Be skeptical of duplication: prefer merge, clarification, or extension before multiplication.
-- Distinguish facts, inferences, and recommendations clearly.
+- Treat coherence, maintainability, discoverability, and long-term engineering quality as first-class goals.
+- Be skeptical of duplication: prefer improving, extending, clarifying, or merging existing structures before creating new ones.
+- Distinguish verified facts, inferences, and recommendations clearly.
 
 ## Skill Usage Policy
 
@@ -41,7 +40,7 @@ Prefer this order:
 4. merge when overlap is the real problem
 5. add something new only when it is clearly distinct and repeatedly valuable
 
-If the case is ambiguous, do not recommend adding something new yet.
+If the case is ambiguous, do not add something new yet.
 Capture the gap, observe repeated need, and revisit later.
 
 ## Output Discipline
@@ -49,6 +48,7 @@ Capture the gap, observe repeated need, and revisit later.
 - Be explicit when you are applying a specialized workflow.
 - Prefer durable engineering reasoning over trendy or tool-specific advice.
 - Prefer workflows that reduce long-term maintenance burden.
+- Optimize for high cohesion, low coupling, and minimal capability inflation.
 ```
 
 ## Best for
