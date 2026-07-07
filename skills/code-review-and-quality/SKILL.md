@@ -19,6 +19,14 @@ Multi-dimensional code review with quality gates. Every change gets reviewed bef
 - When refactoring existing code
 - After any bug fix (review both the fix and the regression test)
 
+## Boundary
+
+Use this skill for a broad quality-oriented review of code itself: correctness, readability, architecture, security, and performance.
+
+Use `code-review` instead when the job is specifically to review a diff against a fixed point with two intentionally separate outputs: standards compliance and spec conformance.
+
+Use `code-review-excellence` instead when the goal is to improve how reviews are conducted across a team rather than to evaluate a particular change.
+
 ## The Five-Axis Review
 
 Every review evaluates code across these dimensions:

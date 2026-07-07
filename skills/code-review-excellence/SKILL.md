@@ -9,7 +9,6 @@ Transform code reviews from gatekeeping to knowledge sharing through constructiv
 
 ## When to Use This Skill
 
-- Reviewing pull requests and code changes
 - Establishing code review standards for teams
 - Mentoring junior developers through reviews
 - Improving how reviews are run across the team
@@ -17,6 +16,14 @@ Transform code reviews from gatekeeping to knowledge sharing through constructiv
 - Improving team collaboration
 - Reducing code review cycle time
 - Maintaining code quality standards
+
+## Boundary
+
+Use this skill to improve review practice as a system: reviewer behavior, author experience, feedback quality, checklists, SLAs, and team culture.
+
+Do not use this skill as the primary workflow for evaluating a specific code diff. For an actual diff review against a fixed point, use `code-review`.
+
+Do not use this skill as the primary workflow for a broad technical assessment of one code change across correctness, architecture, security, and performance. For that, use `code-review-and-quality`.
 
 ## Core Principles
 

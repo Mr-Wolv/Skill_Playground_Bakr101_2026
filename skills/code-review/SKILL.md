@@ -12,6 +12,17 @@ Both axes run as **parallel sub-agents** so they don't pollute each other's cont
 
 The issue tracker should have been provided to you — run `/setup-matt-pocock-skills` if `docs/agents/issue-tracker.md` is missing.
 
+## Boundary
+
+Use this skill when the review target is a diff against a specific fixed point and the user wants a deliberately separated verdict on two axes:
+
+- **Standards** — does the change follow repo standards and avoid important smells?
+- **Spec** — does the change match the originating issue, PRD, or specification?
+
+Do not use this as the general-purpose repository quality review for code that is not primarily being judged as a diff against a fixed point. For that, use `code-review-and-quality`.
+
+Do not use this skill to design team review culture, review checklists, or reviewer norms. For that, use `code-review-excellence`.
+
 ## Process
 
 ### 1. Pin the fixed point
