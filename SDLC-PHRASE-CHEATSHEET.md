@@ -3,7 +3,7 @@
 > **How to talk to me so I load the right skill.**
 > Just say what you want in plain English — I match your intent automatically.
 > 📚 [Documentation Index](docs/index.md) | [SDLC Catalog](SKILL-CATALOG.md) | [Domain Catalog](SKILL-CATALOG-DOMAIN.md) | [Repo Root](SKILL.md)
-> 📦 Install via `npx skills add <owner>/skill-playground`
+> 📦 Use by syncing this repo into `~/.agents/skills/` with `python scripts/sync_skills_to_global.py`
 
 ---
 
@@ -77,4 +77,4 @@
 - *"Make this resilient"* → I add circuit breakers
 - *"Design the architecture"* → I apply Clean Architecture
 
-These skills are available via `npx skills add <owner>/skill-playground`
+These skills are available through the repo/global mirror model (`skills/` ↔ `~/.agents/skills/`)

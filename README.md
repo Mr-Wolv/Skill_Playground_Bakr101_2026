@@ -5,20 +5,20 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 > **A curated skill repository — 233 skills, mirrored with the global skill store.**
-> Install via `npx skills add <owner>/skill-playground`
+> Current supported operating model: manage `skills/` in this repo and sync into `~/.agents/skills/`.
 
 ---
 
 ## Quick Start
 
 ```bash
-# 1. Install all skills from this repo
-npx skills add <owner>/skill-playground
+# 1. Sync repository skills into the global skill store
+python scripts/sync_skills_to_global.py
 
-# 2. List available skills
-npx skills list
+# 2. Validate catalogs and mirror parity
+python scripts/sync_and_validate.py
 
-# 3. Pick a skill — say what you want in plain English
+# 3. Use the skills from your global store
 #    "Write unit tests for this function" → loads unit-test-writer
 #    "Set up Docker for this app"        → loads docker-configurator
 #    "Find tech debt in this codebase"   → loads tech-debt-tracker
@@ -37,21 +37,23 @@ All skills are treated as a mirrored pair between this project's `skills/` direc
 
 ---
 
-## Install
+## Operating Model
+
+This repository is currently managed as a **source-controlled local mirror** of your global skill store.
+
+The supported workflow is:
 
 ```bash
-# Install all skills from this repo
-npx skills add <owner>/skill-playground
+# Sync repo skills into the global skill store
+python scripts/sync_skills_to_global.py
 
-# Or install individual skills by name
-npx skills add <owner>/skill-playground --skill unit-test-writer
-npx skills add <owner>/skill-playground --skill docker-configurator
-
-# List available skills
-npx skills list
+# Validate docs/manifests and verify full recursive parity
+python scripts/sync_and_validate.py
 ```
 
-After installation, skills are available at `~/.agents/skills/<skill-name>/SKILL.md`.
+After sync, skills are available at `~/.agents/skills/<skill-name>/SKILL.md`.
+
+> `custom` and `community` are source/classification labels inside this repository. They are not install owners or package namespaces.
 
 ---
 
@@ -163,7 +165,7 @@ Manifest → skills.json
 Mirror → python scripts/sync_skills_to_global.py
 Verify → python scripts/validate_catalog.py + python scripts/check_skill_mirror_parity.py
 Shortcut → python scripts/sync_and_validate.py
-Install → npx skills add <owner>/skill-playground
+Use → sync to `~/.agents/skills/` and invoke by natural language
 ```
 
 ---

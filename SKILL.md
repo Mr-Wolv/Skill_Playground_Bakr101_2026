@@ -12,12 +12,11 @@ All skills are treated as a mirrored pair between this project's `skills/` direc
 ## Quick Start
 
 ```bash
-# Install all skills from this repo
-npx skills add <owner>/skill-playground
+# Sync this repository's skills into the global skill store
+python scripts/sync_skills_to_global.py
 
-# Or install individual skills by name
-npx skills add <owner>/skill-playground --skill unit-test-writer
-npx skills add <owner>/skill-playground --skill docker-configurator
+# Or run the full maintenance shortcut
+python scripts/sync_and_validate.py
 ```
 
 ## Skill Categories

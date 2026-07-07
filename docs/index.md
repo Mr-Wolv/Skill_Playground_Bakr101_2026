@@ -22,7 +22,7 @@
 | [Global Agent Instructions (Minimal)](./GLOBAL-AGENT-INSTRUCTIONS-MINIMAL.md) | Lightweight always-on variant with minimal standing instruction weight |
 | [Global Agent Instructions (Strict)](./GLOBAL-AGENT-INSTRUCTIONS-STRICT.md) | Higher-discipline variant for stronger anti-sprawl and workflow enforcement |
 | [Global Agent Instructions (Personal Copy-Paste)](./GLOBAL-AGENT-INSTRUCTIONS-PERSONAL-COPYPASTE.md) | Copy-paste-ready block for personal/global instruction fields |
-| [Skill Playground Root](../SKILL.md) | Entry-point skill — loaded when repo is installed via `npx skills add` |
+| [Skill Playground Root](../SKILL.md) | Entry-point skill for this mirrored catalog and its global-store workflow |
 
 ## 🏗️ Project Structure
 
@@ -57,7 +57,7 @@ Skill-Playground/
 ## 🔗 Quick Links
 
 - **[Browse the skill catalog](../SKILL-CATALOG.md)** — see all 233 verified skills by SDLC phase
-- **[Install skills](../SKILL.md)** — `npx skills add <owner>/skill-playground`
+- **[Use skills](../SKILL.md)** — sync this repo into `~/.agents/skills/`
 - **[Contribute a new skill](../README.md#contributing)** — see contributing guidelines
 
 ## Custom Skills at a Glance

@@ -238,5 +238,5 @@ These operate as orchestration or guidance layers rather than narrow engineering
 
 ---
 
-*Skills in this catalog are available via `npx skills add <owner>/skill-playground`*
+*Skills in this catalog are managed through the repo/global mirror model and synced into `~/.agents/skills/`.*
 *📚 See [SKILL-CATALOG.md](SKILL-CATALOG.md) for SDLC-phase organization and [SDLC-PHRASE-CHEATSHEET.md](SDLC-PHRASE-CHEATSHEET.md) for natural-language command reference*

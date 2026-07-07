@@ -363,5 +363,5 @@ This catalog is the canonical SDLC-phase view of the full repository skill set.
 ---
 
 *Skills are treated as a mirrored pair between `skills/` (local) and `~/.agents/skills/` (global).*
-*Install via `npx skills add <owner>/skill-playground`.*
+*Current supported operating model: sync this repository into the global skill store with `python scripts/sync_skills_to_global.py`.*
 *See [SKILL-CATALOG-DOMAIN.md](SKILL-CATALOG-DOMAIN.md) for the domain-organized custom-skill view and [SDLC-PHRASE-CHEATSHEET.md](SDLC-PHRASE-CHEATSHEET.md) for natural-language invocation guidance.*
