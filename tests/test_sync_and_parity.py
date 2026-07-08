@@ -102,6 +102,18 @@ class TestSyncPlan:
         assert p["only_in_repo_left_untouched"] == ["local-extra"]
 
 
+class TestAllowedImportsParser:
+    def test_parser_skips_comments_and_blanks(self, tmp_path, monkeypatch):
+        allow = tmp_path / "import.allow"
+        allow.write_text("# a comment\n\n  \nreal-skill\nanother\n# trailing comment\n", encoding="utf-8")
+        monkeypatch.setattr(sync, "ALLOW_FILE", allow)
+        assert sync.allowed_imports() == {"real-skill", "another"}
+
+    def test_parser_empty_when_file_absent(self, tmp_path, monkeypatch):
+        monkeypatch.setattr(sync, "ALLOW_FILE", tmp_path / "does-not-exist")
+        assert sync.allowed_imports() == set()
+
+
 class TestCheckParity:
     def test_identical_trees(self, tmp_path):
         _make_skill(tmp_path / "global", "a", "x")
