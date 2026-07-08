@@ -67,3 +67,39 @@ L0->L2 over the **script-bearing cluster** (skills that ship an executable
 `scripts/` dir): highest blast radius because embedded code can be
 destructive, exfiltrate, or leak secrets. After it closes, ascend L3->L8
 incrementally, re-verifying parents at each step.
+
+## Harness commands (full ladder)
+
+- `python scripts/deep_audit.py categories` — **L3**: every `skills.json`
+  category member exists on disk; no phantom members.
+- `python scripts/deep_audit.py all` — **L4**: L0/L1 over **all 238**
+  skills (unit) + L2 overlap (e2e) + parent re-verify.
+- `python scripts/deep_audit.py topology` — **L6/L7/L8**: repo<->B mirror
+  parity, B<->C derived-copy parity, four-store boundary + privacy-leak scan.
+- `python scripts/deep_audit.py climb` — run L3, L4, L6/L7/L8 in order,
+  re-running the L5 canonical gates (`validate_catalog.py`,
+  `check_skill_mirror_parity.py`) after each level.
+
+## Last full pass (2026-07-09)
+
+`python scripts/deep_audit.py climb` -> **0 CRITICAL** across L3/L4/L6/L7/L8.
+
+Genuine defects found and remediated this pass:
+- **L4 (real, in source-of-truth B):** `sast-configuration` referenced
+  `./scripts/run-sast.sh` and `references/semgrep-rules.md` that did not
+  exist. Created both files (additive, non-destructive wrapper + rule
+  examples). Re-exported B->repo and re-derived C from B.
+- **L7 (real, runtime C stale vs B):** 3 shared skills
+  (`capability-router`, `gap-analysis`, `research-methodology`) held old
+  copies in C; `catalog-consistency-auditor` in C had 3 leftover old-layout
+  files absent from B. Re-derived C from B (additive; C's 22 private skills
+  left untouched), backing up B and C first.
+
+Residual WARNs (5 on the full 238) are all benign pattern hits in
+instructional text (e.g. `token=` in VAULT_TOKEN examples, `base64` in
+crypto how-tos, `rm -rf` in documented "nuclear reset" steps) — not
+violations. They are reported, not failed.
+
+Canonical gates at pass: `validate_catalog.py` consistent,
+`check_skill_mirror_parity.py` FULL_MIRROR_PARITY_CONFIRMED, `pytest` 31
+passed.
