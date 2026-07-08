@@ -30,7 +30,7 @@
 
 | Skill | Source | What it does |
 |-------|--------|-------------|
-| `architecture-decision-records` | community | Write and maintain ADRs |
+| `architecture-decision-records` | **custom** | Write and maintain ADRs |
 | `architecture-patterns` | community | Clean Arch, Hexagonal, DDD patterns |
 | `architecture-review` | **custom** | Review an architecture against requirements, boundaries, risks, operability, and tradeoffs |
 | `backward-compatibility-and-change-management` | **custom** | Review changes for compatibility impact and safe evolution strategy |
@@ -158,9 +158,9 @@
 
 | Skill | Source | What it does |
 |-------|--------|-------------|
-| `code-review` | community | Two-axis review (Standards + Spec) |
-| `code-review-and-quality` | community | Multi-axis code review |
-| `code-review-excellence` | community | Effective code review practices |
+| `code-review` | **custom** | Two-axis review (Standards + Spec) |
+| `code-review-and-quality` | **custom** | Multi-axis code review |
+| `code-review-excellence` | **custom** | Effective code review practices |
 | `codeowners-and-review-routing` | **custom** | Define ownership boundaries, CODEOWNERS rules, and review routing |
 | `typed-holes-refactor` | community | Design by Typed Holes refactoring |
 | `pr-writer` | **custom** | Write structured PR descriptions from git diff |
@@ -206,7 +206,7 @@
 
 | Skill | Source | What it does |
 |-------|--------|-------------|
-| `documentation-and-adrs` | community | Record decisions and documentation |
+| `documentation-and-adrs` | **custom** | Record decisions and documentation |
 | `readme-writer` | **custom** | Generate README from project context |
 | `api-documenter` | **custom** | Generate API docs from code/specs |
 | `code-documenter` | **custom** | Add docstrings and code documentation |

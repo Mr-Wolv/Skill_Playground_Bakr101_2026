@@ -159,6 +159,9 @@
 | `pr-writer` | Write structured PR descriptions from git diff |
 | `document-reviewer` | Review docs for clarity, structure, completeness |
 | `codeowners-and-review-routing` | Define ownership boundaries and review routing rules |
+| `code-review` | Two-axis review (Standards + Spec) |
+| `code-review-and-quality` | Multi-axis code review |
+| `code-review-excellence` | Effective code review practices |
 
 ## Domain 20: Documentation
 *README, architecture docs, API docs, ADRs, runbooks, specs*
@@ -178,7 +181,6 @@
 
 | Skill | What it does |
 |-------|-------------|
-| `research-note` | Investigate a question against high-trust primary sources and capture findings in the repo |
 | `research-methodology` | Source hierarchy, CRAAP test, RFC analysis, synthesis |
 
 ## Domain 25: Analytical Thinking
