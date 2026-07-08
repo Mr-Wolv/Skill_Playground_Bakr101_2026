@@ -28,7 +28,7 @@ def _patch(path: Path, old: str, new: str, count: int = 1):
     """Rewrite `old` -> `new` in a real file; raises if anchor missing.
 
     count=0 replaces ALL occurrences (Python's str.replace treats count as a
-    limit, so 0 means "replace none" — we special-case it to mean "replace all"
+    limit, so 0 means "replace none" -- we special-case it to mean "replace all"
     for callers that need every copy gone for a substring check to fail).
     """
     text = path.read_text(encoding="utf-8")
@@ -77,6 +77,17 @@ class TestMissingSkillRefs:
                        for e in errs)
         finally:
             dom.write_bytes(orig)
+
+    def test_skill_md_repr_missing_ref_fails(self, repo):
+        sm = repo / "SKILL.md"
+        orig = sm.read_bytes()
+        try:
+            _patch(sm, "unit-test-writer", "nonexistent-skill-xyz")
+            errs = vc.validate(repo)
+            assert any("SKILL.md references missing skill: nonexistent-skill-xyz" in e
+                       for e in errs)
+        finally:
+            sm.write_bytes(orig)
 
 
 class TestJsonCountDrift:
@@ -204,6 +215,29 @@ class TestCommunitySkillNames:
                        for e in errs)
         finally:
             sj.write_bytes(orig)
+
+
+class TestOrphanSkills:
+    """Every on-disk skill must be documented (in skills.json or a doc)."""
+
+    def test_orphan_skill_fails(self, repo):
+        probe = repo / "skills" / "zzz-orphan-probe"
+        created = False
+        try:
+            probe.mkdir(exist_ok=True)
+            created = True
+            (probe / "SKILL.md").write_text(
+                "---\nname: zzz-orphan-probe\ndescription: probe\n---\n\n# probe\n",
+                encoding="utf-8",
+            )
+            errs = vc.validate(repo)
+            assert any(
+                "orphan skill (on disk, documented nowhere): zzz-orphan-probe" in e
+                for e in errs
+            )
+        finally:
+            if created and probe.exists():
+                shutil.rmtree(probe)
 
 
 class TestExpectedSnippets:

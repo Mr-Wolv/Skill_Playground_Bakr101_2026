@@ -82,6 +82,40 @@ def validate(root: Path = ROOT) -> list[str]:
         if skill not in fs_skills:
             fail(f"README.md references missing skill: {skill}")
 
+    # SKILL.md "Skill Categories" table lists representative skills in plain-text
+    # cells (comma-separated). They must all be real on-disk skills.
+    skill_md_text = read_text(root / "SKILL.md")
+    skill_md_repr = set()
+    for ln in skill_md_text.splitlines():
+        if not ln.strip().startswith("|"):
+            continue
+        cells = [c.strip() for c in ln.strip().strip("|").split("|")]
+        # representative column is the 2nd cell; skip header/separator rows
+        if len(cells) < 2 or cells[0].startswith("Category"):
+            continue
+        for tok in re.split(r",\s*", cells[1]):
+            tok = tok.strip().strip("`")
+            if re.fullmatch(r"[a-z][a-z0-9_-]+", tok):
+                skill_md_repr.add(tok)
+    for skill in skill_md_repr:
+        if skill not in fs_skills:
+            fail(f"SKILL.md references missing skill: {skill}")
+
+    # Orphan check: every skill directory must be documented somewhere — either
+    # named in skills.json (custom categories or community list) or referenced
+    # by backtick in one of the catalog/overview docs. A skill present on disk
+    # but absent from both is silently undocumented.
+    _jdata = json.loads(read_text(skills_json))
+    _json_names = {
+        s for arr in _jdata.get("categories", {}).values() for s in arr
+    } | set(_jdata.get("community_skill_names", []))
+    mentioned = set(_json_names)
+    for doc in (catalog_text, domain_text, cheatsheet_text, readme_text, skill_md_text):
+        mentioned |= set(re.findall(r"`([a-z][a-z0-9_-]+)`", doc))
+    for skill in fs_skills:
+        if skill not in mentioned:
+            fail(f"orphan skill (on disk, documented nowhere): {skill}")
+
     data = json.loads(read_text(skills_json))
     # custom count is DERIVED from the manifest (not hardcoded) so union sync that
     # adds skills under the "imported" bucket keeps the gate green automatically.
