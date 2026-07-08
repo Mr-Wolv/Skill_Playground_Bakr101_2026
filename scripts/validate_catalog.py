@@ -87,6 +87,38 @@ for skill in json_skills:
     if skill not in fs_skills:
         fail(f"skills.json references missing skill: {skill}")
 
+# Per-row source labels in SKILL-CATALOG.md must match the canonical custom set.
+# The aggregate count check above does NOT catch a row that is labeled wrong
+# (e.g. a custom skill tagged `community` or vice versa) as long as the totals
+# happen to balance, so we verify the exact labeled set here.
+custom_catalog_rows = set(
+    re.findall(
+        r"^\|\s*`([a-z][a-z0-9_-]+)`\s*\|\s*(?:\*\*custom\*\*|custom)\s*\|",
+        catalog_text,
+        re.MULTILINE,
+    )
+)
+custom_set = set(json_skills)  # every skill in the manifest categories is "custom"
+for skill in custom_catalog_rows - custom_set:
+    fail(f"SKILL-CATALOG.md labels `{skill}` custom but it is not in the custom set")
+for skill in custom_set - custom_catalog_rows:
+    fail(f"SKILL-CATALOG.md missing custom label for `{skill}` (or labeled community)")
+
+# SKILL-CATALOG-DOMAIN.md claims to list the custom skills by domain. The
+# domain tables (excluding the meta-skills block) must enumerate exactly the
+# canonical custom set and nothing else.
+domain_meta = re.search(r"## .*Meta-Skills(.*?)## Summary", domain_text, re.S)
+domain_meta_skills = (
+    set(re.findall(r"`([a-z][a-z0-9_-]+)`", domain_meta.group(1)))
+    if domain_meta
+    else set()
+)
+domain_listed = set(re.findall(r"`([a-z][a-z0-9_-]+)`", domain_text)) - domain_meta_skills
+for skill in domain_listed - custom_set:
+    fail(f"SKILL-CATALOG-DOMAIN.md lists `{skill}` in domain tables but it is not custom")
+for skill in custom_set - domain_listed:
+    fail(f"SKILL-CATALOG-DOMAIN.md missing custom skill `{skill}` from domain tables")
+
 expected_snippets = {
     "README.md": [
         f"{fs_count} skills",
