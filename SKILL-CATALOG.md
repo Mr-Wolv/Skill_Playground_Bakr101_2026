@@ -18,6 +18,7 @@
 
 | Skill | Source | What it does |
 |-------|--------|-------------|
+| `product-discovery` | community | Use when validating product opportunities, mapping assumptions, planning discovery sprints, or testing problem-solution fit before committing delivery resources. |
 | `interview-me` | community | Extract specs through one-question-at-a-time interview |
 | `grill-me` | community | Relentless interview to sharpen plans |
 | `grill-with-docs` | community | Interview + create ADRs and glossary |
@@ -48,6 +49,8 @@
 
 | Skill | Source | What it does |
 |-------|--------|-------------|
+| `designing-distributed-systems` | community | When designing distributed systems for scalability, reliability, and consistency. Covers CAP/PACELC theorems, consistency models (strong, eventual, causal), replication patterns (leader-follower, multi-leader, leaderless), partitioning strategies (hash, range, geographic), transaction patterns (saga, event sourcing, CQRS), resilience patterns (circuit breaker, bulkhead), service discovery, and caching strategies for building fault-tolerant distributed architectures. |
+| `kafka-stream-processing` | community | Complete guide for Apache Kafka stream processing including producers, consumers, Kafka Streams, connectors, schema registry, and production deployment |
 | `cqrs-implementation` | community | Command Query Responsibility Segregation |
 | `microservices-patterns` | community | Service boundaries, event-driven, resilience |
 | `saga-orchestration` | community | Distributed transactions and compensation |
@@ -60,6 +63,7 @@
 
 | Skill | Source | What it does |
 |-------|--------|-------------|
+| `project-management` | community | Agile methodologies, issue tracking, and team collaboration tools |
 | `planning-and-task-breakdown` | community | Break work into ordered tasks |
 | `to-issues` | community | Break PRD into GitHub issues |
 | `wayfinder` | community | Plan multi-session investigation tickets |
@@ -90,6 +94,14 @@
 
 | Skill | Source | What it does |
 |-------|--------|-------------|
+| `apollo-graphql` | community | Guidelines for developing GraphQL APIs and React applications using Apollo Client for state management, data fetching, and caching |
+| `elasticsearch` | community | > |
+| `grpc-protobuf` | community | gRPC and Protocol Buffers - use for service-to-service communication, API definitions, streaming, and inter-service contracts |
+| `jpa-patterns` | community | JPA/Hibernate patterns and common pitfalls (N+1, lazy loading, transactions, queries). Use when user has JPA performance issues, LazyInitializationException, or asks about entity relationships and fetching strategies. |
+| `mongodb` | community | MongoDB - NoSQL document database with flexible schema design, aggregation pipelines, indexing strategies, and Spring Data integration |
+| `n-plus-one-prevention` | community | Use when fetching related data in loops. Use when seeing multiple queries for one request. Use when database is slow on list endpoints. |
+| `senior-data-engineer` | community | Data engineering skill for building scalable data pipelines, ETL/ELT systems, and data infrastructure. Expertise in Python, SQL, Spark, Airflow, dbt, Kafka, and modern data stack. Includes data modeling, pipeline orchestration, data quality, and DataOps. Use when designing data architectures, building data pipelines, optimizing data workflows, implementing data governance, or troubleshooting data issues. |
+| `sql-query-optimization` | community | SQL query optimization for PostgreSQL/MySQL with indexing, EXPLAIN analysis. Use for slow queries, N+1 problems, missing indexes, or encountering sequential scans, OFFSET pagination, temp table spills, inefficient JOINs. |
 | `nodejs-backend-patterns` | community | Express/Fastify, middleware, auth, DB integration |
 | `fastapi-templates` | community | Production-ready FastAPI with async, DI |
 | `dotnet-backend-patterns` | community | C#/.NET APIs, EF Core, Dapper |
@@ -105,6 +117,10 @@
 
 | Skill | Source | What it does |
 |-------|--------|-------------|
+| `electron-desktop` | community | Desktop application development with Electron for Windows, macOS, and Linux. Use when building cross-platform desktop apps, implementing native OS features, or packaging web apps for desktop. |
+| `lazy-loading` | community | Use when loading all data upfront. Use when initial page load is slow. Use when fetching data that might not be needed. |
+| `storybook` | community | Storybook 스토리 작성 및 CSF 3.0 베스트 프랙티스 스킬. 다음 상황에서 사용: (1) 새 스토리 파일(.stories.tsx, .stories.ts) 작성 시, (2) 기존 스토리 수정 시, (3) Args, Decorators, Parameters 설정 시, (4) Storybook 설정 파일(.storybook/) 작업 시, (5) 'story', 'stories', 'storybook', 'CSF' 키워드가 포함된 작업 시 |
+| `tauri-desktop` | community | >- |
 | `frontend-ui-engineering` | community | Production-quality UIs |
 | `nextjs-app-router-patterns` | community | Server Components, streaming, parallel routes |
 | `react-state-management` | community | Redux Toolkit, Zustand, Jotai, React Query |
@@ -125,6 +141,10 @@
 
 | Skill | Source | What it does |
 |-------|--------|-------------|
+| `aws-cloud-architecture` | community | Comprehensive guide to AWS cloud architecture covering compute, storage, databases, networking, security, serverless, and cost optimization with production-ready patterns |
+| `digitalocean-managed-databases` | community | DigitalOcean Managed Databases for PostgreSQL, MySQL, Redis, MongoDB, Kafka, OpenSearch, and Valkey. Use when provisioning, scaling, or operating managed database clusters on DigitalOcean. |
+| `multi-cloud-architecture` | community | Design multi-cloud architectures using a decision framework to select and integrate services across AWS, Azure, GCP, and OCI. Use when building multi-cloud systems, avoiding vendor lock-in, or leveraging best-of-breed services from multiple providers. |
+| `network-tools` | community | Linux network tools and diagnostics |
 | `docker-configurator` | **custom** | Dockerfile, compose, .dockerignore |
 | `k8s-manifest-generator` | community | Production K8s manifests |
 | `k8s-security-policies` | community | NetworkPolicy, PodSecurity, RBAC |
@@ -158,6 +178,7 @@
 
 | Skill | Source | What it does |
 |-------|--------|-------------|
+| `qe-defect-intelligence` | community | Predicts defect-prone code using change frequency, complexity metrics, and historical bug patterns. Use when predicting defects before they escape, analyzing root causes of test failures, learning from past defect patterns, or implementing proactive quality management. |
 | `code-review` | **custom** | Two-axis review (Standards + Spec) |
 | `code-review-and-quality` | **custom** | Multi-axis code review |
 | `code-review-excellence` | **custom** | Effective code review practices |
@@ -187,6 +208,8 @@
 
 | Skill | Source | What it does |
 |-------|--------|-------------|
+| `chaos-engineering-resilience` | community | Chaos engineering principles, controlled failure injection, resilience testing, and system recovery validation. Use when testing distributed systems, building confidence in fault tolerance, or validating disaster recovery. |
+| `security-pen-testing` | community | Use when the user asks to perform security audits, penetration testing, vulnerability scanning, OWASP Top 10 checks, or offensive security assessments. Covers static analysis, dependency scanning, secret detection, API security testing, and pen test report generation. |
 | `security-and-hardening` | community | Harden code against vulnerabilities |
 | `secrets-management` | community | Secure CI/CD secrets management |
 | `dependency-auditor` | **custom** | Audit packages for CVEs, outdated, licenses |
@@ -206,6 +229,7 @@
 
 | Skill | Source | What it does |
 |-------|--------|-------------|
+| `qe-technical-writing` | community | Write clear, engaging technical content from real experience. Use when writing blog posts, documentation, tutorials, or technical articles. |
 | `documentation-and-adrs` | **custom** | Record decisions and documentation |
 | `readme-writer` | **custom** | Generate README from project context |
 | `api-documenter` | **custom** | Generate API docs from code/specs |
@@ -232,6 +256,8 @@
 
 | Skill | Source | What it does |
 |-------|--------|-------------|
+| `observability-sre` | community | Observability and SRE expert. Use when setting up monitoring, logging, tracing, defining SLOs, or managing incidents. Covers Prometheus, Grafana, OpenTelemetry, and incident response best practices. |
+| `performance-optimization` | community | Optimizes application performance. Use when performance requirements exist, when you suspect performance regressions, or when Core Web Vitals or load times need improvement. Use when profiling reveals bottlenecks that need fixing. |
 | `observability-and-instrumentation` | community | Add logging, metrics, tracing |
 | `grafana-dashboards` | community | Create production monitoring dashboards |
 | `prometheus-configuration` | community | Set up metrics collection and alerting |
@@ -313,6 +339,7 @@
 
 | Skill | Source | What it does |
 |-------|--------|-------------|
+| `kotlin` | community | Design, implement, and review Kotlin and Android APIs. Use when working on .kt files, Kotlin nullability, sealed classes/interfaces, coroutines, Android threading, Java interop, or Kotlin-backed React Native Nitro Module implementations. |
 | `typescript-advanced-types` | community | Generics, conditional types, mapped types |
 | `python-code-style` | community | Linting, formatting, naming, docstrings |
 | `python-type-safety` | community | Type hints, generics, protocols, mypy |
@@ -327,6 +354,8 @@
 
 | Skill | Source | What it does |
 |-------|--------|-------------|
+| `grilling` | community | Grill the user relentlessly about a plan or design. Use when the user wants to stress-test a plan before building, or uses any 'grill' trigger phrases. |
+| `thought-patterns` | community | Orchestrates comprehensive cognitive thinking patterns for complex problem-solving. Analyzes tasks to select optimal pattern(s) from foundational, reasoning, creative, metacognitive, specialized, and neurodivergent categories. Chains multiple patterns when needed and validates outputs before responding. |
 | `data-transform` | **custom** | Convert JSON, CSV, YAML, base64, dates |
 | `regex-builder` | **custom** | Build, explain, test regular expressions |
 | `api-tester` | **custom** | Quick API endpoint testing with curl |
