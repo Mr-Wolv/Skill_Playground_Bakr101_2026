@@ -24,7 +24,7 @@ It reflects both:
 |---|---|---|
 | `code-review`, `code-review-and-quality`, `code-review-excellence` | Keep all three with current clarified boundary | Healthy enough now |
 | `documentation-and-adrs`, `architecture-decision-records` | Keep both with current generalist/specialist split | Healthy enough now |
-| `research`, `research-methodology` | Keep both | Healthy |
+| `research-note`, `research-methodology` | Keep both | Healthy |
 | `incident-response`, `postmortem` | Keep both, but tighten handoff boundary later | Candidate for future cleanup |
 | `incident-runbook-templates`, incident workflow skills | Keep, but tighten wording later | Candidate for future cleanup |
 | `planning-and-task-breakdown`, `request-refactor-plan` | Keep both | Acceptable split |

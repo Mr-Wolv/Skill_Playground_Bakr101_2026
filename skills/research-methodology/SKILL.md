@@ -18,7 +18,7 @@ Structured approach to technical research and knowledge synthesis.
 
 Use this skill for the method of research: source hierarchy, credibility evaluation, RFC reading, literature review, and synthesis discipline.
 
-Do not use this skill when the user primarily wants the actual research carried out and written into the repository as a note or findings document. For that, use `research`.
+Do not use this skill when the user primarily wants the actual research carried out and written into the repository as a note or findings document. For that, use `research-note`.
 
 Do not use this skill as a post-incident causal analysis workflow. For that, use `failure-analysis`, `root-cause-analysis`, `five-whys-analysis`, or `postmortem`.
 

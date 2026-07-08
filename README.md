@@ -103,7 +103,7 @@ After sync, skills are available at `~/.agents/skills/<skill-name>/SKILL.md`.
 | ☸️ **Delivery & Operations** | `shipping-and-launch`, `change-risk-assessment`, `operational-readiness-review`, `service-ownership-and-lifecycle-management`, `toil-analysis-and-automation` |
 | 📖 **Documentation & Decisions** | `documentation-and-adrs`, `architecture-decision-records`, `readme-writer`, `api-documenter`, `document-reviewer`, `pr-writer` |
 | 🧹 **Code Quality & Review** | `code-review`, `code-review-and-quality`, `code-review-excellence`, `tech-debt-tracker`, `dead-code-remover`, `codeowners-and-review-routing` |
-| 🔍 **Repository Intelligence & Analysis** | `catalog-consistency-auditor`, `repository-archaeology`, `failure-analysis`, `research`, `research-methodology` |
+| 🔍 **Repository Intelligence & Analysis** | `catalog-consistency-auditor`, `repository-archaeology`, `failure-analysis`, `research-note`, `research-methodology` |
 | 🧠 **Reasoning & Mindset** | `analytical-thinking-patterns`, `adjacent-disciplines`, `autonomous-learner`, `long-term-engineering-mindset`, `computer-science-foundations` |
 | 🔐 **Security** | `spring-security-patterns`, `dependency-auditor`, `security-and-hardening`, `owasp-security-check` |
 | 🗄️ **Data & Persistence** | `spring-data-jpa-patterns`, `spring-boot-patterns`, `data-modeler`, `db-migration-writer`, `data-transform` |

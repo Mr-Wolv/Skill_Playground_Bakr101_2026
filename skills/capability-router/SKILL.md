@@ -29,7 +29,7 @@ phase it inferred. It does not sequence or compose — for that use
 These are representative entries from the Skill Playground library; extend per
 your own catalog.
 
-- **Ideation & Concept**: `idea-refine`, `research`, `product-discovery`
+- **Ideation & Concept**: `idea-refine`, `research-note`, `product-discovery`
 - **Requirements & Specification**: `interview-me`, `grill-me`,
   `spec-driven-development`, `to-prd`, `domain-modeling`, `ubiquitous-language`
 - **Architecture & Design**: `architecture-patterns`, `architecture-review`,

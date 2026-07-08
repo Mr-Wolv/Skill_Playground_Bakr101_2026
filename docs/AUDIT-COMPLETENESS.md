@@ -94,7 +94,7 @@ correctly. No skill was deleted.
 
 Healthy clusters intentionally kept distinct (per `docs/merge-proposal.md`):
 `code-review` / `code-review-and-quality` / `code-review-excellence`,
-`research` / `research-methodology`, and language-specific testing pairs.
+`research-note` / `research-methodology`, and language-specific testing pairs.
 
 ## 7. Frontmatter consistency
 
