@@ -184,6 +184,12 @@ def main() -> int:
             print(f"PRIVATE (skipped) {name} -> not in repo. Opt in via scripts/import.allow or --import {name}")
 
     if cataloged and not args.dry_run and manifest is not None:
+        # Rebuild community_skill_names from the repo filesystem minus the
+        # (now-updated) custom set, so the name list stays consistent with the
+        # community_skills count after an import.
+        custom_names = {n for arr in manifest.get("categories", {}).values() for n in arr}
+        repo_names = skill_dirs(REPO)
+        manifest["community_skill_names"] = sorted(repo_names - custom_names)
         save_manifest(manifest)
         print(f"MANIFEST updated: total_skills={manifest['total_skills']}, "
               f"custom_skills={manifest['custom_skills']}, imported={len(cataloged)}")

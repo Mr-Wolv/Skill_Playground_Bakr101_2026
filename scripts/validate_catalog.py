@@ -43,7 +43,8 @@ def validate(root: Path = ROOT) -> list[str]:
             continue
         if not desc_match:
             fail(f"{file.relative_to(root)}: missing description in frontmatter")
-        skill_names.append(name_match.group(1).strip())
+        name = name_match.group(1).strip().strip('"').strip("'")
+        skill_names.append(name)
 
     fs_skills = sorted(set(skill_names))
     fs_count = len(fs_skills)
@@ -51,6 +52,15 @@ def validate(root: Path = ROOT) -> list[str]:
     catalog_text = read_text(root / "SKILL-CATALOG.md")
     domain_text = read_text(root / "SKILL-CATALOG-DOMAIN.md")
     cheatsheet_text = read_text(root / "SDLC-PHRASE-CHEATSHEET.md")
+    readme_text = read_text(root / "README.md")
+
+    # README only lists skills inside its category table rows (`| ... | ... |`);
+    # scanning the whole file would false-positive on command/fence code-spans
+    # (uv, pytest, make, ...). Restrict to table-row lines.
+    readme_rows = "\n".join(
+        ln for ln in readme_text.splitlines() if ln.strip().startswith("|")
+    )
+    readme_skills = sorted(set(re.findall(r"`([a-z][a-z0-9_-]+)`", readme_rows)))
 
     catalog_skills = sorted(set(re.findall(r"`([a-z][a-z0-9_-]+)`", catalog_text)))
     domain_skills = sorted(set(re.findall(r"`([a-z][a-z0-9_-]+)`", domain_text)))
@@ -68,6 +78,10 @@ def validate(root: Path = ROOT) -> list[str]:
         if skill not in fs_skills:
             fail(f"SDLC-PHRASE-CHEATSHEET.md references missing skill: {skill}")
 
+    for skill in readme_skills:
+        if skill not in fs_skills:
+            fail(f"README.md references missing skill: {skill}")
+
     data = json.loads(read_text(skills_json))
     # custom count is DERIVED from the manifest (not hardcoded) so union sync that
     # adds skills under the "imported" bucket keeps the gate green automatically.
@@ -82,6 +96,36 @@ def validate(root: Path = ROOT) -> list[str]:
         fail(
             f"skills.json custom_skills={data.get('custom_skills')} but expected {custom_count}"
         )
+
+    # community_skill_names must enumerate exactly the non-custom skills on disk
+    # (filesystem minus the custom set), with no overlap and length == community_skills.
+    # This closes the gap where community skills were only a count, so docs that
+    # reference individual community skills (e.g. SKILL-CATALOG-DOMAIN.md) could not
+    # be reconciled by name.
+    community_list = data.get("community_skill_names")
+    if not isinstance(community_list, list):
+        fail("skills.json missing 'community_skill_names' list")
+    else:
+        community_set = set(community_list)
+        custom_set = {s for arr in data.get("categories", {}).values() for s in arr}
+        expected_community = set(fs_skills) - custom_set
+        if len(community_list) != data.get("community_skills"):
+            fail(
+                f"skills.json community_skill_names={len(community_list)} "
+                f"but community_skills={data.get('community_skills')}"
+            )
+        if community_set & custom_set:
+            fail(
+                "skills.json community_skill_names overlaps custom set: "
+                f"{sorted(community_set & custom_set)}"
+            )
+        if community_set != expected_community:
+            extra = sorted(community_set - expected_community)
+            missing = sorted(expected_community - community_set)
+            if extra:
+                fail(f"skills.json community_skill_names lists non-community: {extra}")
+            if missing:
+                fail(f"skills.json community_skill_names missing: {missing}")
 
     json_skills = sorted(
         {skill for arr in data.get("categories", {}).values() for skill in arr}

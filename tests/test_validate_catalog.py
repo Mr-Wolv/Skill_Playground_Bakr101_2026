@@ -6,6 +6,7 @@ A failure mid-test would leave a file dirty, so we guard the restore with
 try/finally. The green-path test asserts the committed tree currently PASSES.
 """
 
+import json
 import shutil
 import sys
 from pathlib import Path
@@ -38,81 +39,83 @@ def _patch(path: Path, old: str, new: str, count: int = 1):
 
 
 class TestGreenPath:
-    def test_committed_tree_passes(self, repo):
-        assert vc.validate(repo) == [], "committed catalog should validate clean"
+    def test_green_path_passes(self, repo):
+        errs = vc.validate(repo)
+        assert errs == [], f"expected no errors on clean tree, got:\n{errs}"
 
 
-class TestReferenceIntegrity:
-    def test_missing_skill_in_catalog_fails(self, repo):
+class TestMissingSkillRefs:
+    def test_readme_missing_ref_fails(self, repo):
+        rm = repo / "README.md"
+        orig = rm.read_bytes()
+        try:
+            _patch(rm, "repository-archaeology", "nonexistent-skill-xyz")
+            errs = vc.validate(repo)
+            assert any("README.md references missing skill: nonexistent-skill-xyz" in e
+                       for e in errs)
+        finally:
+            rm.write_bytes(orig)
+
+    def test_catalog_missing_ref_fails(self, repo):
         cat = repo / "SKILL-CATALOG.md"
         orig = cat.read_bytes()
         try:
-            _patch(cat, "| `architecture-review` |", "| `definitely-not-a-skill` |")
+            _patch(cat, "repository-archaeology", "nonexistent-skill-xyz")
             errs = vc.validate(repo)
-            assert any("SKILL-CATALOG.md references missing skill: definitely-not-a-skill" in e
+            assert any("SKILL-CATALOG.md references missing skill: nonexistent-skill-xyz" in e
                        for e in errs)
         finally:
             cat.write_bytes(orig)
 
-    def test_missing_skill_in_domain_fails(self, repo):
+    def test_domain_missing_ref_fails(self, repo):
         dom = repo / "SKILL-CATALOG-DOMAIN.md"
         orig = dom.read_bytes()
         try:
-            _patch(dom, "| `research-methodology` |",
-                   "| `definitely-not-a-skill` |")
+            _patch(dom, "repository-archaeology", "nonexistent-skill-xyz")
             errs = vc.validate(repo)
-            assert any("SKILL-CATALOG-DOMAIN.md references missing skill: definitely-not-a-skill" in e
+            assert any("SKILL-CATALOG-DOMAIN.md references missing skill: nonexistent-skill-xyz" in e
                        for e in errs)
         finally:
             dom.write_bytes(orig)
 
 
-class TestManifestConsistency:
-    def test_total_skills_mismatch_fails(self, repo):
+class TestJsonCountDrift:
+    def test_total_mismatch_fails(self, repo):
         sj = repo / "skills.json"
-        data = sj.read_text(encoding="utf-8")
+        orig = sj.read_bytes()
         try:
-            sj.write_text(data.replace('"total_skills": 238', '"total_skills": 999'),
-                          encoding="utf-8")
+            data = json.loads(orig.decode("utf-8"))
+            data["total_skills"] = 999
+            sj.write_text(json.dumps(data), encoding="utf-8")
             errs = vc.validate(repo)
-            assert any("total_skills=999 but filesystem" in e for e in errs)
+            assert any("total_skills=999 but filesystem has" in e for e in errs)
         finally:
-            sj.write_text(data, encoding="utf-8")
+            sj.write_bytes(orig)
 
-    def test_custom_skills_mismatch_fails(self, repo):
+    def test_custom_mismatch_fails(self, repo):
         sj = repo / "skills.json"
-        data = sj.read_text(encoding="utf-8")
+        orig = sj.read_bytes()
         try:
-            sj.write_text(data.replace('"custom_skills": 62', '"custom_skills": 99'),
-                          encoding="utf-8")
+            data = json.loads(orig.decode("utf-8"))
+            data["custom_skills"] = 1
+            sj.write_text(json.dumps(data), encoding="utf-8")
             errs = vc.validate(repo)
-            assert any("custom_skills=99 but expected" in e for e in errs)
+            assert any("custom_skills=1 but expected" in e for e in errs)
         finally:
-            sj.write_text(data, encoding="utf-8")
+            sj.write_bytes(orig)
 
 
-class TestPerRowLabelReconciliation:
-    def test_custom_mislabeled_community_fails(self, repo):
+class TestLabelReconciliation:
+    def test_relabel_custom_as_community_fails(self, repo):
         cat = repo / "SKILL-CATALOG.md"
         orig = cat.read_bytes()
         try:
+            # code-review is in categories (custom); relabel its row as community.
             _patch(cat,
-                   "| `architecture-review` | **custom** |",
-                   "| `architecture-review` | community |")
+                   "| `code-review` | **custom** |",
+                   "| `code-review` | community |")
             errs = vc.validate(repo)
-            assert any("missing custom label for `architecture-review`" in e for e in errs)
-        finally:
-            cat.write_bytes(orig)
-
-    def test_community_mislabeled_custom_fails(self, repo):
-        cat = repo / "SKILL-CATALOG.md"
-        orig = cat.read_bytes()
-        try:
-            _patch(cat,
-                   "| `architecture-patterns` | community |",
-                   "| `architecture-patterns` | **custom** |")
-            errs = vc.validate(repo)
-            assert any("labels `architecture-patterns` custom but it is not" in e for e in errs)
+            assert any("missing custom label for `code-review`" in e for e in errs)
         finally:
             cat.write_bytes(orig)
 
@@ -146,6 +149,61 @@ class TestDomainEnumeration:
                        for e in errs)
         finally:
             dom.write_bytes(orig)
+
+
+class TestCommunitySkillNames:
+    """skills.json must enumerate community skills by name, not just count."""
+
+    def _corrupt(self, repo, mutate):
+        sj = repo / "skills.json"
+        orig = sj.read_bytes()
+        data = json.loads(orig.decode("utf-8"))
+        mutate(data)
+        sj.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
+        return sj, orig
+
+    def test_green_path_passes(self, repo):
+        assert vc.validate(repo) == []
+
+    def test_missing_name_fails(self, repo):
+        sj, orig = self._corrupt(repo, lambda d: d["community_skill_names"].pop())
+        try:
+            errs = vc.validate(repo)
+            assert any("community_skill_names missing" in e for e in errs)
+        finally:
+            sj.write_bytes(orig)
+
+    def test_extra_name_fails(self, repo):
+        sj, orig = self._corrupt(
+            repo, lambda d: d["community_skill_names"].append("does-not-exist-skill")
+        )
+        try:
+            errs = vc.validate(repo)
+            assert any("community_skill_names lists non-community" in e for e in errs)
+        finally:
+            sj.write_bytes(orig)
+
+    def test_overlap_with_custom_fails(self, repo):
+        sj, orig = self._corrupt(
+            repo, lambda d: d["community_skill_names"].append(d["categories"]["testing"][0])
+        )
+        try:
+            errs = vc.validate(repo)
+            assert any("community_skill_names overlaps custom set" in e for e in errs)
+        finally:
+            sj.write_bytes(orig)
+
+    def test_count_mismatch_fails(self, repo):
+        sj, orig = self._corrupt(
+            repo, lambda d: (d["community_skill_names"].append("extra-1"),
+                             d["community_skill_names"].append("extra-2"))
+        )
+        try:
+            errs = vc.validate(repo)
+            assert any("community_skill_names=" in e and "but community_skills=" in e
+                       for e in errs)
+        finally:
+            sj.write_bytes(orig)
 
 
 class TestExpectedSnippets:
