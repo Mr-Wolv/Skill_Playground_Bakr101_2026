@@ -353,11 +353,11 @@ This repository includes workflow-oriented and orchestration-focused skills, but
 
 | Skill | Source | What it does |
 |-------|--------|-------------|
-| `capability-orchestrator` | custom | Select, sequence, and compose capabilities into an executable plan for a multi-phase request |
-| `capability-router` | custom | Map a request to the right capability(s) by SDLC phase |
-| `engineering-phase-detector` | custom | Detect which SDLC phase(s) a request or artifact is operating in |
-| `assumption-and-bias-check` | custom | Surface hidden assumptions, cognitive bias, and overconfidence before a decision stands |
-| `systems-thinking` | custom | Model feedback loops, delays, and second-order effects for systemic engineering problems |
+| `capability-orchestrator` | **custom** | Select, sequence, and compose capabilities into an executable plan for a multi-phase request |
+| `capability-router` | **custom** | Map a request to the right capability(s) by SDLC phase |
+| `engineering-phase-detector` | **custom** | Detect which SDLC phase(s) a request or artifact is operating in |
+| `assumption-and-bias-check` | **custom** | Surface hidden assumptions, cognitive bias, and overconfidence before a decision stands |
+| `systems-thinking` | **custom** | Model feedback loops, delays, and second-order effects for systemic engineering problems |
 
 ---
 
