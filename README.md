@@ -209,6 +209,7 @@ Mirror → python scripts/sync_global_to_repo.py
 Verify → python scripts/validate_catalog.py + python scripts/check_skill_mirror_parity.py
 Shortcut → python scripts/sync_and_validate.py
 Use → skills load from the global source of truth (`~/.agents/skills/`)
+```
 
 
 ---
