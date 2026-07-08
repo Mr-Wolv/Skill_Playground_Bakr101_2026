@@ -76,10 +76,11 @@ def allowed_imports() -> set[str]:
     return out
 
 
-def plan(global_base, repo_base, global_names, repo_names, force, explicit_imports, import_all):
+def plan(global_base, repo_base, global_names, repo_names, force, explicit_imports, import_all, allowed):
     to_add, to_update_identical, to_skip_differ, to_leave_in_repo = [], [], [], []
     private_blocked = []  # global-only, not opted-in -> never exported
-    explicit = set(explicit_imports) | (global_names if import_all else set())
+    # explicit = --import flags + --import-all + opt-ins from scripts/import.allow
+    explicit = set(explicit_imports) | (global_names if import_all else set()) | set(allowed)
 
     for name in sorted(global_names):
         g = global_base / name
@@ -129,7 +130,8 @@ def main() -> int:
     print("flow: GLOBAL -> REPO (export). Private global-only skills stay private unless opted in.\n")
 
     g_names, r_names = skill_names(global_base), skill_names(repo_base)
-    p = plan(global_base, repo_base, g_names, r_names, args.force, args.imports, args.import_all)
+    p = plan(global_base, repo_base, g_names, r_names, args.force, args.imports,
+             args.import_all, allowed_imports())
 
     print(f"global skills : {p['counts']['global']}")
     print(f"repo skills   : {p['counts']['repo']}")
