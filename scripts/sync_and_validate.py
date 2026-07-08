@@ -2,7 +2,9 @@
 
 Operating model (source of truth = GLOBAL store):
     GLOBAL (~/.agents/skills)  = source of truth (curated across agents)
-      |-- sync_runtime_to_mirror.py --> MY RUNTIME (~/.hermes/skills)
+      |-- sync_runtime_to_mirror.py --> MY RUNTIME (resolved via runtime_skills_dir():
+      |                                   $HERMES_RUNTIME_SKILLS | $HERMES_HOME/skills
+      |                                   | ~/.hermes/skills; on this machine = <LOCALAPPDATA>/hermes/skills)
       |-- sync_global_to_repo.py    --> REPO (community export, downstream)
 
 This shortcut runs the two downstream syncs (dry-run safe by default for the

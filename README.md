@@ -45,8 +45,10 @@ All skills are treated as a mirrored pair between this project's `skills/` direc
 The **global skill store** (`~/.agents/skills`) is the **source of truth**. It
 is curated across all your agents. Everything else is a *derived export*:
 
-- **My runtime** (`~/.hermes/skills`) — Hermes's private load of the global
-  store, for this agent only. Derived from global.
+- **My runtime** (`$HERMES_HOME/skills`, default `~/.hermes/skills`) — Hermes's live load of the global
+  store, for this agent only. Derived from global. The actual path is resolved by `runtime_skills_dir()`
+  in `scripts/skill_paths.py` via `$HERMES_RUNTIME_SKILLS` → `$HERMES_HOME/skills` → `~/.hermes/skills`,
+  so a non-default `HERMES_HOME` (e.g. `<LOCALAPPDATA>/hermes`) is followed automatically.
 - **This repo** (`D:\Skill-Playground`) — a **community/localized export** of
   the global store. Downstream; never authoritative.
 - **Private store** (`<LOCALAPPDATA>/hermes/skills`) — skills this agent
@@ -188,7 +190,7 @@ Include:
 │   ├── validate_catalog.py       # Structural catalog validator
 │   ├── check_skill_mirror_parity.py # Recursive repo/global parity checker
 │   ├── sync_global_to_repo.py   # Export global (source) -> repo (community copy)
-│   ├── sync_runtime_to_mirror.py # global -> my runtime (~/.hermes/skills)
+│   ├── sync_runtime_to_mirror.py # global -> my runtime (resolved via runtime_skills_dir: $HERMES_RUNTIME_SKILLS | $HERMES_HOME/skills | ~/.hermes/skills)
 │   └── sync_skills_union.py      # Opt-in publisher: global-only -> repo (privacy-gated)
 
 └── .github/workflows/validate.yml  # CI: frontmatter + catalog validation

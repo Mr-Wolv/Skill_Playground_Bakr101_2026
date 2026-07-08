@@ -45,7 +45,7 @@ These artifacts define the catalog's source-of-truth, sync, and validation rules
 
 ```bash
 # Source of truth is the GLOBAL store (~/.agents/skills). Two downstream syncs:
-python scripts/sync_runtime_to_mirror.py   # global -> my runtime (~/.hermes/skills)
+python scripts/sync_runtime_to_mirror.py   # global -> my runtime (resolved via runtime_skills_dir: $HERMES_RUNTIME_SKILLS | $HERMES_HOME/skills | ~/.hermes/skills)
 python scripts/sync_global_to_repo.py      # global -> this repo (community export)
 python scripts/sync_and_validate.py        # both (--apply) + validate + parity
 python scripts/validate_catalog.py         # structural catalog validation

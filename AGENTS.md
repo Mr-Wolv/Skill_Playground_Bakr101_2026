@@ -88,7 +88,7 @@ There are four skill stores. Ownership and the load/sync rules for each are fixe
 
 - **Shared catalog** `~/.agents/skills` — the single SOURCE OF TRUTH. A neutral directory owned by the human. Every agent reads from it; nobody auto-writes into it. Publishing is opt-in and human-approved.
 - **Public repo** `skills/` in this repo — a downstream export of the shared catalog. Never authoritative; never pushed back into the catalog.
-- **Runtime** `~/.hermes/skills` — Hermes's load path, DERIVED from the shared catalog (via `sync_runtime_to_mirror.py`). Auto-rebuilt; never a write target, never a source of truth. Other agents have their own equivalent runtime, derived from the shared catalog + their own private store.
+- **Runtime** `$HERMES_HOME/skills` (default `~/.hermes/skills`) — Hermes's load path, DERIVED from the shared catalog (via `sync_runtime_to_mirror.py`). Auto-rebuilt; never a write target, never a source of truth. The exact path is resolved by `runtime_skills_dir()` in `scripts/skill_paths.py` through `$HERMES_RUNTIME_SKILLS` → `$HERMES_HOME/skills` → `~/.hermes/skills`, so when `HERMES_HOME` points at `<LOCALAPPDATA>/hermes` the runtime follows it. Other agents have their own equivalent runtime, derived from the shared catalog + their own private store.
 - **Hermes private** `<LOCALAPPDATA>/hermes/skills` — Hermes's own experimental/agent-authored skills. Excluded from all sync. Never read by other agents.
 - **User private** `~/skills` — the human's own experiments, deliberately ASIDE from every agent. NOT in any agent load path, NOT synced, NOT read or written by Hermes or any other agent.
 

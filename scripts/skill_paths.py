@@ -27,15 +27,21 @@ def global_skills_dir() -> Path:
 
 
 def runtime_skills_dir() -> Path:
-    """Hermes's primary runtime load path (~/.hermes/skills).
+    """Hermes's primary runtime load path.
 
-    This is what Hermes actually loads skills from at boot. Override with
-    $HERMES_RUNTIME_SKILLS for non-default layouts. Never hardcoded to a
-    username so the script stays portable / public-repo-safe.
+    Hermes loads skills from $HERMES_HOME/skills at boot. On a default install
+    $HERMES_HOME is ~/.hermes, so this resolves to ~/.hermes/skills; when
+    HERMES_HOME points elsewhere (e.g. <LOCALAPPDATA>/hermes) the runtime
+    follows it. Override the resolved path directly with $HERMES_RUNTIME_SKILLS
+    for non-default layouts. Never hardcoded to a username so the script stays
+    portable / public-repo-safe.
     """
     override = __import__("os").environ.get("HERMES_RUNTIME_SKILLS")
     if override:
         return Path(override).expanduser()
+    home = __import__("os").environ.get("HERMES_HOME")
+    if home:
+        return Path(home).expanduser() / "skills"
     return Path.home() / ".hermes" / "skills"
 
 

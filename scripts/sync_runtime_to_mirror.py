@@ -7,21 +7,31 @@ so nothing is hardcoded to a username):
                                  |
                                  |  sync_runtime_to_mirror.py
                                  v
-                                 A = ~/.hermes/skills   (runtime load path)
+                                 C = <runtime skills dir>  (Hermes's live load path)
 
-    C = <LOCALAPPDATA>/hermes/skills   (separate PRIVATE load path -- NEVER touched)
+    The runtime load path is resolved by runtime_skills_dir() as:
+        $HERMES_RUNTIME_SKILLS  (explicit override)
+        else $HERMES_HOME/skills  (e.g. <LOCALAPPDATA>/hermes/skills)
+        else ~/.hermes/skills    (default install)
+
+    NOTE: On this machine HERMES_HOME points at <LOCALAPPDATA>/hermes, so the
+    live runtime is that path -- NOT ~/.hermes/skills. The scripts follow
+    HERMES_HOME, so a sync here lands where Hermes actually reads.
+
+    User private (~/skills) and any other agent's private store are NEVER
+    touched by this sync.
 
 Guarantees (intact / secure / non-breaking):
-  * ADDITIVE: skills present in A but absent from B are NEVER removed.
+  * ADDITIVE: skills present in the runtime dir but absent from B are NEVER removed.
   * NON-OVERWRITING BY DEFAULT: if a skill with the same name exists in both
     but with DIFFERENT content, it is SKIPPED (not clobbered). Use --force to
     override, which still backs up first.
   * CONTENT-IDENTICAL is a no-op (no copy, no churn).
-  * C is never read, written, or "corrected".
+  * User private store is never read, written, or "corrected".
   * A safety audit (destructive / secret-exfil patterns) gates every skill that
     would be ADDED or OVERWRITTEN. Unsafe skills are refused unless --allow-unsafe.
   * DRY-RUN BY DEFAULT. Use --apply to actually write.
-  * A timestamped backup of A is taken before any real write.
+  * A timestamped backup of the runtime dir is taken before any real write.
 
 Usage:
     python scripts/sync_runtime_to_mirror.py            # dry-run, prints plan
@@ -196,7 +206,8 @@ def main() -> int:
 
     print(f"source (mirror) : {src}")
     print(f"dest   (runtime): {dst}")
-    print(f"private store C : {local}  (excluded from sync, never touched)")
+    print(f"local skills    : {local}  (agent's own local dir; on this layout it IS the runtime;"
+          f" excluded from this B->runtime sync and never overwritten by it)")
     print(f"user private   : {user_skills_dir()}  (YOUR skills; OUT of scope: "
           f"not loaded by any agent, not synced)\n")
 
