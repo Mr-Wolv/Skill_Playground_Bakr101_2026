@@ -65,7 +65,7 @@ If exact counts are mentioned anywhere, verify them from the actual directory co
 
 This repo treats the following directories as a mirrored pair:
 
-- workspace: `D:\Skill-Playground\skills`
+- workspace: `skills/` (this repo)
 - global: `~/.agents/skills`
 
 Parity means full folder contents, not only matching folder names.
@@ -90,7 +90,8 @@ There are four skill stores. Ownership and the load/sync rules for each are fixe
 - **Public repo** `skills/` in this repo — a downstream export of the shared catalog. Never authoritative; never pushed back into the catalog.
 - **Runtime** `$HERMES_HOME/skills` (default `~/.hermes/skills`) — Hermes's load path, DERIVED from the shared catalog (via `sync_runtime_to_mirror.py`). Auto-rebuilt; never a write target, never a source of truth. The exact path is resolved by `runtime_skills_dir()` in `scripts/skill_paths.py` through `$HERMES_RUNTIME_SKILLS` → `$HERMES_HOME/skills` → `~/.hermes/skills`, so when `HERMES_HOME` points at `<LOCALAPPDATA>/hermes` the runtime follows it. Other agents have their own equivalent runtime, derived from the shared catalog + their own private store.
 - **Hermes private** `<LOCALAPPDATA>/hermes/skills` — Hermes's own experimental/agent-authored skills. Excluded from all sync. Never read by other agents.
-- **User private** `~/skills` — the human's own experiments, deliberately ASIDE from every agent. NOT in any agent load path, NOT synced, NOT read or written by Hermes or any other agent.
+
+Separately, the human's own private directory `~/skills` is deliberately ASIDE from every agent: NOT in any agent load path, NOT synced, NOT read or written by Hermes or any other agent. It holds the human's personal experiments and is **not** one of the four stores above.
 
 Hermes is NOT the source of truth. The human owns the catalog; agents are derived from it.
 
