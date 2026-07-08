@@ -12,7 +12,7 @@
 | Skill | Source | What it does |
 |-------|--------|-------------|
 | `idea-refine` | community | Refine raw ideas into sharp, actionable concepts |
-| `research` | community | Investigate questions against primary sources |
+| `research-note` | community | Investigate questions against primary sources |
 
 ## 📝 Phase 2: Requirements & Specification
 
@@ -339,7 +339,7 @@
 | `research-methodology` | **custom** | Source hierarchy, CRAAP test, RFC analysis |
 | `sql-optimization-patterns` | community | SQL query optimization and indexing |
 | `context-engineering` | community | Agent context setup and optimization |
-| `research` | community | Investigate against primary sources |
+| `research-note` | community | Investigate against primary sources |
 | `teach` | community | Teach the user a skill or concept |
 | `writing-great-skills` | community | Reference for writing good skills |
 

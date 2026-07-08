@@ -178,7 +178,7 @@
 
 | Skill | What it does |
 |-------|-------------|
-| `research` | Investigate a question against high-trust primary sources and capture findings in the repo |
+| `research-note` | Investigate a question against high-trust primary sources and capture findings in the repo |
 | `research-methodology` | Source hierarchy, CRAAP test, RFC analysis, synthesis |
 
 ## Domain 25: Analytical Thinking
