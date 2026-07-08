@@ -1,0 +1,165 @@
+# Deploy Workflow
+# Builds, tags, and deploys the application to a target environment via a
+# GitHub Actions environment (with optional approval gate). Includes a
+# rollback note describing how to revert a bad deployment.
+# Place this file at: .github/workflows/deploy-workflow.yml
+name: Deploy
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Target environment to deploy"
+        required: true
+        default: "staging"
+        type: choice
+        options:
+          - staging
+          - production
+
+permissions:
+  contents: read
+  packages: write
+  id-token: write
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build:
+    name: Build and tag image
+    runs-on: ubuntu-latest
+    outputs:
+      image-tag: ${{ steps.meta.outputs.version }}
+      image-digest: ${{ steps.build.outputs.digest }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels)
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=sha
+
+      - name: Build and push image
+        id: build
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  deploy-staging:
+    name: Deploy to Staging
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: staging
+      url: https://staging.example.com
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure cloud credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+
+      - name: Update kubeconfig
+        run: aws eks update-kubeconfig --name staging-cluster --region us-west-2
+
+      - name: Deploy to Kubernetes
+        run: |
+          kubectl set image deployment/api api=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs.build.outputs.image-tag }} -n staging
+          kubectl rollout status deployment/api -n staging --timeout=300s
+
+      - name: Verify deployment
+        run: kubectl get pods -n staging -l app=api
+
+  deploy-production:
+    name: Deploy to Production
+    needs: deploy-staging
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://app.example.com
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure cloud credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+          aws-region: us-east-1
+
+      - name: Update kubeconfig
+        run: aws eks update-kubeconfig --name production-cluster --region us-east-1
+
+      - name: Deploy to Kubernetes
+        run: |
+          kubectl set image deployment/api api=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs.build.outputs.image-tag }} -n production
+          kubectl rollout status deployment/api -n production --timeout=600s
+
+      - name: Verify deployment
+        run: kubectl get pods -n production -l app=api
+
+      - name: Notify Slack of success
+        if: success()
+        uses: slackapi/slack-github-action@v1
+        with:
+          webhook-url: ${{ secrets.SLACK_WEBHOOK }}
+          payload: |
+            {
+              "text": "✅ Deployed ${{ needs.build.outputs.image-tag }} to production."
+            }
+
+  # ---------------------------------------------------------------------------
+  # ROLLBACK NOTE
+  # ---------------------------------------------------------------------------
+  # If a deployment is unhealthy, revert to the previous stable image:
+  #
+  #   1. List rollout history and find the prior revision:
+  #        kubectl rollout history deployment/api -n production
+  #   2a. Roll back to the immediately previous revision:
+  #        kubectl rollout undo deployment/api -n production
+  #   2b. Or roll back to a specific revision:
+  #        kubectl rollout undo deployment/api -n production --to-revision=<N>
+  #   3. Wait for the rollback to settle:
+  #        kubectl rollout status deployment/api -n production --timeout=600s
+  #   4. Verify pods are healthy:
+  #        kubectl get pods -n production -l app=api
+  #
+  # For image-tag-based rollback, re-run this workflow with the previous tag,
+  # or redeploy the prior digest directly:
+  #   kubectl set image deployment/api api=<REGISTRY>/<IMAGE>@<PREVIOUS_DIGEST> -n production
+  #
+  # GitHub environments also keep a deployment history; you can click
+  # "Redeploy" on a previous successful deployment from the repo's
+  # Environments page to trigger a rollback via this same workflow.
+  # ---------------------------------------------------------------------------

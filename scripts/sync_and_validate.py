@@ -33,6 +33,15 @@ def main() -> int:
 
     flags = ["--apply"] if args.apply else []
 
+    # Functional gate first: every skill must reference files that exist.
+    # Run against the source of truth so a broken reference never propagates
+    # to the runtime or the repo. Fail-fast before any downstream sync.
+    global_store = Path.home() / ".agents" / "skills"
+    gcode = run("verify_skill_references.py", str(global_store))
+    if gcode != 0:
+        print("FAILED verify_skill_references.py (broken references in source of truth)")
+        return gcode
+
     for script_name in (
         "sync_runtime_to_mirror.py",
         "sync_global_to_repo.py",

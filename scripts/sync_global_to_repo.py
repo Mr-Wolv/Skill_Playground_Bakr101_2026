@@ -92,13 +92,17 @@ def plan(global_base, repo_base, global_names, repo_names, force, explicit_impor
         elif dir_hash(g) == dir_hash(r):
             to_update_identical.append(name)
         else:
-            (to_skip_differ.append(name)) if not force else to_update_identical.append(name)
+            # Differing: keep listed as skipped (or overwritten under --force).
+            # NOTE: do NOT reclassify into to_update_identical under --force,
+            # or the apply loop (which only copies to_add and to_skip_differ)
+            # would never actually export the new files.
+            to_skip_differ.append(name)
 
     only_repo = sorted(repo_names - global_names)
     return {
         "to_add": to_add,
         "to_update_identical": to_update_identical,
-        "to_skip_differ": to_skip_differ if not force else [],
+        "to_skip_differ": to_skip_differ,
         "private_blocked": private_blocked,
         "only_in_repo_left_untouched": only_repo,
         "counts": {"global": len(global_names), "repo": len(repo_names)},
