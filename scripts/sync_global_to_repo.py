@@ -59,7 +59,7 @@ def skill_names(base: Path) -> set[str]:
 def dir_hash(d: Path) -> str:
     h = hashlib.sha256()
     for f in sorted(d.rglob("*")):
-        if f.is_file():
+        if f.is_file() and "__pycache__" not in f.parts and f.suffix != ".pyc":
             h.update(f.relative_to(d).as_posix().encode())
             h.update(f.read_bytes())
     return h.hexdigest()

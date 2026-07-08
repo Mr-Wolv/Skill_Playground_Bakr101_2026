@@ -1,45 +1,6 @@
-# ──────────────────────────────────────────────────────
-# Skill Playground — .gitignore
-# ──────────────────────────────────────────────────────
-
-# Dependencies
-node_modules/
-
-# Build outputs
-dist/
-build/
-out/
-
-# Environment files
-.env
-.env.local
-.env.*.local
-
-# IDE / editor
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# OS
-.DS_Store
-Thumbs.db
-*.log
-
-# Test coverage
-coverage/
-.vitest/
-
-# Temporary data
-/data/
-*.db
-*.db-wal
-*.db-shm
-
-# Debug logs
-npm-debug.log*
-
-# Python bytecode cache
+# Python byte-code caches must never enter the skill store (they pollute
+# mirror parity and are machine-specific). Audit/sync tooling compiles in
+# memory; any __pycache__ created accidentally is ignored here.
 __pycache__/
 *.pyc
+.deep_audit_report.json
