@@ -208,6 +208,7 @@ Manifest → skills.json
 Mirror → python scripts/sync_global_to_repo.py
 Verify → python scripts/validate_catalog.py + python scripts/check_skill_mirror_parity.py
 Tests → `uv run --with pytest pytest` (regression suite in tests/)
+  or: `make verify` (same, with the other gates)
 Shortcut → python scripts/sync_and_validate.py
 Use → skills load from the global source of truth (`~/.agents/skills/`)
 ```
