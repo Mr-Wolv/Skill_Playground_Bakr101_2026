@@ -365,8 +365,8 @@ This repository includes workflow-oriented and orchestration-focused skills, but
 
 | Category | Count |
 |----------|-------|
-| Community skills | 181 |
-| Custom skills | 57 |
+| Community skills | 176 |
+| Custom skills | 62 |
 | Meta/workflow skills | present in repository but not exhaustively separated here |
 | **Total** | **238** |
 

@@ -20,7 +20,7 @@ python scripts/sync_global_to_repo.py --apply
 
 # Or run the full maintenance shortcut
 python scripts/sync_and_validate.py
-
+```
 
 ## Skill Categories
 
@@ -31,7 +31,7 @@ python scripts/sync_and_validate.py
 | ☸️ **Delivery & Operations** | shipping-and-launch, change-risk-assessment, operational-readiness-review, service-ownership-and-lifecycle-management, toil-analysis-and-automation |
 | 📖 **Documentation & Decisions** | documentation-and-adrs, architecture-decision-records, readme-writer, api-documenter, document-reviewer, pr-writer |
 | 🧹 **Code Quality & Review** | code-review, code-review-and-quality, code-review-excellence, tech-debt-tracker, dead-code-remover, codeowners-and-review-routing |
-| 🔍 **Repository Intelligence & Analysis** | catalog-consistency-auditor, repository-archaeology, failure-analysis, research, research-methodology |
+| 🔍 **Repository Intelligence & Analysis** | catalog-consistency-auditor, repository-archaeology, failure-analysis, research-note, research-methodology |
 | 🧠 **Engineering Mindset** | long-term-engineering-mindset, adjacent-disciplines, autonomous-learner, computer-science-foundations |
 | 🔐 **Security** | spring-security-patterns, dependency-auditor, security-and-hardening, owasp-security-check |
 | 🗄️ **Data & Persistence** | spring-data-jpa-patterns, spring-boot-patterns, data-modeler, db-migration-writer, data-transform |
