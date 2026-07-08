@@ -23,9 +23,11 @@ so nothing is hardcoded to a username):
 
 Guarantees (intact / secure / non-breaking):
   * ADDITIVE: skills present in the runtime dir but absent from B are NEVER removed.
-  * NON-OVERWRITING BY DEFAULT: if a skill with the same name exists in both
-    but with DIFFERENT content, it is SKIPPED (not clobbered). Use --force to
-    override, which still backs up first.
+  * NON-OVERWRITING: if a skill with the same name exists in both
+    but with DIFFERENT content, it is always SKIPPED (never clobbered). The
+    runtime is a derived copy of B; re-run this sync after changing B to pick
+    up updates. (The --force flag is accepted for CLI symmetry but this
+    additive sync does not overwrite differing content.)
   * CONTENT-IDENTICAL is a no-op (no copy, no churn).
   * User private store is never read, written, or "corrected".
   * A safety audit (destructive / secret-exfil patterns) gates every skill that
@@ -192,7 +194,7 @@ def apply_sync(src: Path, dst: Path, force: bool, do_audit: bool, allow_unsafe: 
 def main() -> int:
     ap = argparse.ArgumentParser(description="Sync runtime skill store from the mirror (additive, non-destructive).")
     ap.add_argument("--apply", action="store_true", help="Actually write. Default is dry-run.")
-    ap.add_argument("--force", action="store_true", help="Overwrite skills whose content differs (backs up first).")
+    ap.add_argument("--force", action="store_true", help="Accepted for CLI symmetry; this additive sync never overwrites differing content (re-derive runtime from B).")
     ap.add_argument("--no-audit", action="store_true", help="Skip the safety audit (NOT recommended).")
     ap.add_argument("--allow-unsafe", action="store_true",
                     help="Add skills that FAIL the safety audit. Overrides --no-audit. NOT advised.")

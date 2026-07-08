@@ -116,6 +116,7 @@ Healthy clusters intentionally kept distinct (per `docs/merge-proposal.md`):
   `prompt-engineering-patterns`, `security-pen-testing`, `senior-data-engineer`,
   `typed-holes-refactor`. All compile.
 - `sync_and_validate.py` is the single gate: runs
+  `verify_skill_references.py` → `sync_runtime_to_mirror.py` →
   `sync_global_to_repo.py` → `validate_catalog.py` →
   `check_skill_mirror_parity.py`. It passed after the fixes in §3–§4.
 
