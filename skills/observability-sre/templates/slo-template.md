@@ -339,9 +339,10 @@ routes:
 ## Runbooks
 
 **Related Runbooks:**
-- [High Error Rate Investigation](../runbooks/high-error-rate.md)
-- [Latency Debugging](../runbooks/latency-debugging.md)
-- [Database Connection Issues](../runbooks/database-connections.md)
+
+- High Error Rate Investigation
+- Latency Debugging
+- Database Connection Issues
 
 ---
 
@@ -381,7 +382,7 @@ routes:
 
 | Date | SLO Violated | Impact | Root Cause | Postmortem |
 |------|--------------|--------|------------|------------|
-| 2025-01-15 | Availability (99.87% for 2 hours) | 15,000 users | Database pool exhaustion | [Link](../postmortems/2025-01-15.md) |
+| 2025-01-15 | Availability (99.87% for 2 hours) | 15,000 users | Database pool exhaustion | Postmortem: 2025-01-15 |
 
 ---
 

@@ -553,8 +553,8 @@ SLO Dashboard:
 
 ## See Also
 
-- [reference/monitoring.md](reference/monitoring.md) — Prometheus and Grafana deep dive
-- [reference/logging.md](reference/logging.md) — Structured logging best practices
-- [reference/tracing.md](reference/tracing.md) — OpenTelemetry and distributed tracing
-- [reference/incident-response.md](reference/incident-response.md) — Incident management and postmortems
-- [templates/slo-template.md](templates/slo-template.md) — SLO definition template
+- [reference/monitoring.md](monitoring.md) — Prometheus and Grafana deep dive
+- [reference/logging.md](logging.md) — Structured logging best practices
+- [reference/tracing.md](tracing.md) — OpenTelemetry and distributed tracing
+- [reference/incident-response.md](incident-response.md) — Incident management and postmortems
+- [templates/slo-template.md](../templates/slo-template.md) — SLO definition template

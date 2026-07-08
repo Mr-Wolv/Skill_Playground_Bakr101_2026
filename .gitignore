@@ -39,3 +39,7 @@ coverage/
 
 # Debug logs
 npm-debug.log*
+
+# Python bytecode cache
+__pycache__/
+*.pyc

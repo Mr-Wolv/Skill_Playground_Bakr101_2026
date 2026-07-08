@@ -1,0 +1,10 @@
+# import.allow — explicit opt-in list for union sync
+#
+# Global-only skills (present in your local ~/.agents/skills but not in this
+# repo) are PRIVATE BY DEFAULT and are NEVER copied into this public repo by
+# `sync_skills_union.py` unless their name appears below.
+#
+# Add one skill name per line. Lines starting with `#` are comments.
+# Equivalent to:  python scripts/sync_skills_union.py --import <name>
+#
+# Only list skills here when you intend to PUBLISH them to this repo.

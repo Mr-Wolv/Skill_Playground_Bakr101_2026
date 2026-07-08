@@ -1,4 +1,4 @@
-# SDLC Skills Catalog — 233 Skills
+# SDLC Skills Catalog — 238 Skills
 
 > **Mirrored with the global skill store**
 > 🔄 Verified: 2026-07-08
@@ -349,19 +349,31 @@ This repository includes workflow-oriented and orchestration-focused skills, but
 
 ---
 
+## 🧠 Engineering Intelligence & Orchestration
+
+| Skill | Source | What it does |
+|-------|--------|-------------|
+| `capability-orchestrator` | custom | Select, sequence, and compose capabilities into an executable plan for a multi-phase request |
+| `capability-router` | custom | Map a request to the right capability(s) by SDLC phase |
+| `engineering-phase-detector` | custom | Detect which SDLC phase(s) a request or artifact is operating in |
+| `assumption-and-bias-check` | custom | Surface hidden assumptions, cognitive bias, and overconfidence before a decision stands |
+| `systems-thinking` | custom | Model feedback loops, delays, and second-order effects for systemic engineering problems |
+
+---
+
 ## Summary
 
 | Category | Count |
 |----------|-------|
 | Community skills | 181 |
-| Custom skills | 52 |
+| Custom skills | 57 |
 | Meta/workflow skills | present in repository but not exhaustively separated here |
-| **Total** | **233** |
+| **Total** | **238** |
 
 This catalog is the canonical SDLC-phase view of the full repository skill set.
 
 ---
 
-*Skills are treated as a mirrored pair between `skills/` (local) and `~/.agents/skills/` (global).*
-*Current supported operating model: sync this repository into the global skill store with `python scripts/sync_skills_to_global.py`.*
+*Skills are exported from the global source of truth (`~/.agents/skills/`) into this repository.*
+*Current supported operating model: export the global store into this repo with `python scripts/sync_global_to_repo.py` (private skills stay out unless opted in).*
 *See [SKILL-CATALOG-DOMAIN.md](SKILL-CATALOG-DOMAIN.md) for the domain-organized custom-skill view and [SDLC-PHRASE-CHEATSHEET.md](SDLC-PHRASE-CHEATSHEET.md) for natural-language invocation guidance.*

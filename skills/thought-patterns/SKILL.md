@@ -63,6 +63,21 @@ Based on task analysis, load the appropriate resource file(s) and select pattern
 - Check coherence: Does the output logically follow from the thinking process?
 - Assess quality: Does this meet the standard the user expects?
 
+## Companion cognitive capabilities
+
+`thought-patterns` selects and chains patterns. For deeper, single-discipline
+reasoning, route to the dedicated capabilities rather than re-deriving them here:
+
+- `analytical-thinking-patterns` — first-principles, systems, tradeoff, decision frameworks (lightweight entry point).
+- `systems-thinking` — deep causal/feedback-loop reasoning for systemic problems.
+- `assumption-and-bias-check` — surface hidden assumptions, bias, and overconfidence before a decision stands.
+- `doubt-driven-development` — in-flight adversarial review of non-trivial decisions.
+- `capability-orchestrator` / `capability-router` / `engineering-phase-detector` — when the task needs capability selection and sequencing, not just cognitive patterns.
+
+Load a companion skill when the chosen pattern is itself a full discipline
+(systems thinking, assumption auditing) and the task warrants depth over a
+single pattern pass.
+
 ## Pattern Selection Heuristics
 
 ### By Problem Type

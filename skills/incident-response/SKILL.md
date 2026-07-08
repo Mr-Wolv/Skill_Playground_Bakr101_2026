@@ -6,7 +6,7 @@ argument-hint: "<incident description or alert>"
 
 # /incident-response
 
-> If you see unfamiliar placeholders or need to check which tools are connected, see [CONNECTORS.md](../../CONNECTORS.md).
+> If you see unfamiliar placeholders or need to check which tools are connected, see [connectors.md](references/connectors.md).
 
 Manage an active incident from detection through resolution, then hand off the factual incident record into the dedicated postmortem workflow.
 

@@ -21,7 +21,7 @@ jobs:
 
       - name: Explain mirror parity requirement
         run: |
-          echo "Mirror parity with C:\Users\GIGABYTE\.agents\skills is enforced locally, not in GitHub Actions."
+          echo "Mirror parity with your local agent skill store (~/.agents/skills) is enforced locally, not in GitHub Actions."
           echo "After any catalog change, run:"
-          echo "  python scripts/sync_skills_to_global.py"
+          echo "  python scripts/sync_global_to_repo.py --apply"
           echo "  python scripts/check_skill_mirror_parity.py"

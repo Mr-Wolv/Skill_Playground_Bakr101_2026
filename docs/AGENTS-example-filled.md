@@ -18,7 +18,7 @@ When working in this repo:
 - optimize for high cohesion and low coupling
 - avoid duplication, fragmentation, and capability inflation
 - prefer reusable engineering concepts over narrow technology-specific skills
-- treat `skills/` and `C:\Users\GIGABYTE\.agents\skills` as mirrored skill stores
+- treat `skills/` and `~/.agents/skills` as mirrored skill stores
 - keep all repository documents consistent with the current catalog state
 
 ## Default Working Rules
@@ -73,7 +73,7 @@ If exact counts are mentioned anywhere, verify them from the actual directory co
 This repo treats the following directories as a mirrored pair:
 
 - workspace: `D:\Skill-Playground\skills`
-- global: `C:\Users\GIGABYTE\.agents\skills`
+- global: `~/.agents/skills`
 
 Parity means full folder contents, not only matching folder names.
 
@@ -81,7 +81,7 @@ Changes should preserve parity unless a task explicitly says otherwise.
 
 After catalog-affecting work, run:
 
-1. `python scripts/sync_skills_to_global.py`
+1. `python scripts/sync_global_to_repo.py`   # export global -> this repo (community copy)
 2. `python scripts/validate_catalog.py`
 3. `python scripts/check_skill_mirror_parity.py`
 

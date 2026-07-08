@@ -32,6 +32,18 @@ If multiple skills appear relevant:
 3. prefer an implementation skill for build/change asks
 4. prefer a governance or workflow skill for ownership, routing, readiness, risk, or process asks
 
+## Engineering Intelligence & Cognition
+
+Invoke the orchestration and reasoning layer for multi-phase or high-stakes work instead of improvising a workflow:
+
+- `engineering-phase-detector` — run first when a request spans phases or you are unsure where the work sits; it classifies the active SDLC phase(s).
+- `capability-router` — when you know the phase (or after detection) and need the correct skill name(s); it maps request → capability.
+- `capability-orchestrator` — when a request touches multiple phases; it selects, sequences, and composes capabilities into an executable plan with review/validation gates.
+- `assumption-and-bias-check` — before any high-stakes or irreversible decision; it surfaces hidden assumptions, cognitive bias, and overconfidence.
+- `systems-thinking` — when a change ripples across a system or local fixes cause distant failures; it models feedback loops, delays, and second-order effects.
+
+Pair these with `doubt-driven-development` (adversarial in-flight review), `analytical-thinking-patterns` (first-principles/tradeoff), and `thought-patterns` (pattern selection) for defensible reasoning.
+
 ## Expansion Discipline
 
 Do not recommend creating something new by default.

@@ -39,3 +39,20 @@ Structured approaches to analytical problem-solving for engineering decisions.
 - Confirmation bias (looking for evidence that supports your preferred solution)
 - False dichotomy (there may be more than two options)
 - Ignoring sunk cost (past decisions don't justify bad current choices)
+
+## Cognitive layer (new skills that deepen this one)
+
+This skill is the lightweight entry point. For deeper reasoning on the same
+disciplines, route to the dedicated capabilities:
+
+- `systems-thinking` — the deep version of move 2: feedback loops, delays,
+  stocks/flows, leverage points, second-order effects.
+- `assumption-and-bias-check` — the explicit inventory behind the anti-patterns
+  above: hidden assumptions, bias flags, honest confidence estimates.
+- `thought-patterns` — selects and chains cognitive patterns for the task at
+  hand; load it when you need the right reasoning pattern, not just a framework.
+- `doubt-driven-development` — the in-flight adversarial posture that applies
+  this analysis before a decision stands.
+
+Use these when the decision is high-stakes or the reasoning needs to be
+defensible, not just correct.

@@ -3,7 +3,7 @@
 > **How to talk to me so I load the right skill.**
 > Just say what you want in plain English — I match your intent automatically.
 > 📚 [Documentation Index](docs/index.md) | [SDLC Catalog](SKILL-CATALOG.md) | [Domain Catalog](SKILL-CATALOG-DOMAIN.md) | [Repo Root](SKILL.md)
-> 📦 Use by syncing this repo into `~/.agents/skills/` with `python scripts/sync_skills_to_global.py`
+> 📦 This repo is a community export of your global skill store (`~/.agents/skills/`, the source of truth). Export with `python scripts/sync_global_to_repo.py`.
 
 ---
 

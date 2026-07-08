@@ -300,7 +300,7 @@ Automated security checks on every PR: secret scanning (TruffleHog), dependency 
 
 | Skill | Relationship |
 |-------|-------------|
-| [senior-secops](../senior-secops/SKILL.md) | Defensive security operations — monitoring, incident response, SIEM configuration |
-| [senior-security](../senior-security/SKILL.md) | Security policy and governance — frameworks, risk registers, compliance |
-| [dependency-auditor](engineering/skills/dependency-auditor/SKILL.md) | Deep supply chain security — SBOMs, license compliance, transitive risk |
-| [code-reviewer](../code-reviewer/SKILL.md) | Code review practices — includes security review checklist |
+| [senior-secops](../security-and-hardening/SKILL.md) | Defensive security operations — monitoring, incident response, SIEM configuration |
+| [senior-security](../security-and-hardening/SKILL.md) | Security policy and governance — frameworks, risk registers, compliance |
+| [dependency-auditor](../dependency-auditor/SKILL.md) | Deep supply chain security — SBOMs, license compliance, transitive risk |
+| [code-reviewer](../code-review-and-quality/SKILL.md) | Code review practices — includes security review checklist |

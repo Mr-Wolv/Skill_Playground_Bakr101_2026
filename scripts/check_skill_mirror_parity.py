@@ -2,9 +2,11 @@ import hashlib
 import sys
 from pathlib import Path
 
+from skill_paths import global_skills_dir
+
 ROOT = Path(__file__).resolve().parents[1]
 REPO = ROOT / "skills"
-GLOBAL = Path(r"C:\Users\GIGABYTE\.agents\skills")
+GLOBAL = global_skills_dir()
 
 
 def sha256(path: Path) -> str:

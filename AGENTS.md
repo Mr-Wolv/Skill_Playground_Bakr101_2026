@@ -11,7 +11,7 @@ When working in this repo:
 - optimize for **high cohesion** and **low coupling**
 - avoid duplication, fragmentation, and capability inflation
 - prefer reusable engineering concepts over narrow technology-specific skills
-- treat `skills/` and `C:\Users\GIGABYTE\.agents\skills` as mirrored skill stores
+- treat `skills/` and `~/.agents/skills` as mirrored skill stores
 - keep all repository documents consistent with the current catalog state
 
 ## Default Working Rules
@@ -66,7 +66,7 @@ If exact counts are mentioned anywhere, verify them from the actual directory co
 This repo treats the following directories as a mirrored pair:
 
 - workspace: `D:\Skill-Playground\skills`
-- global: `C:\Users\GIGABYTE\.agents\skills`
+- global: `~/.agents/skills`
 
 Parity means full folder contents, not only matching folder names.
 
@@ -74,13 +74,35 @@ Changes should preserve parity unless a task explicitly says otherwise.
 
 After catalog-affecting work, run:
 
-1. `python scripts/sync_skills_to_global.py`
+1. `python scripts/sync_global_to_repo.py`   # export global -> this repo (community copy)
 2. `python scripts/validate_catalog.py`
 3. `python scripts/check_skill_mirror_parity.py`
 
 Or use the shortcut:
 
 - `python scripts/sync_and_validate.py`
+
+## Skill Store Ownership & Boundaries
+
+There are four skill stores. Ownership and the load/sync rules for each are fixed to remove ambiguity:
+
+- **Shared catalog** `~/.agents/skills` — the single SOURCE OF TRUTH. A neutral directory owned by the human. Every agent reads from it; nobody auto-writes into it. Publishing is opt-in and human-approved.
+- **Public repo** `skills/` in this repo — a downstream export of the shared catalog. Never authoritative; never pushed back into the catalog.
+- **Runtime** `~/.hermes/skills` — Hermes's load path, DERIVED from the shared catalog (via `sync_runtime_to_mirror.py`). Auto-rebuilt; never a write target, never a source of truth. Other agents have their own equivalent runtime, derived from the shared catalog + their own private store.
+- **Hermes private** `<LOCALAPPDATA>/hermes/skills` — Hermes's own experimental/agent-authored skills. Excluded from all sync. Never read by other agents.
+- **User private** `~/skills` — the human's own experiments, deliberately ASIDE from every agent. NOT in any agent load path, NOT synced, NOT read or written by Hermes or any other agent.
+
+Hermes is NOT the source of truth. The human owns the catalog; agents are derived from it.
+
+Routing rule (no ambiguity):
+
+- shared/curated skill -> shared catalog (the one truth); derives to runtime + exports to repo
+- private/experimental skill -> its owner's private store (yours: `~/skills`; Hermes's: `<LOCALAPPDATA>/hermes/skills`)
+- NEVER write into a runtime store as an origin
+- NEVER cross into another owner's private store
+- sync is additive, hash-detect-don't-overwrite, backup-before-write, private stores excluded
+
+The human manages exactly two things: the shared catalog (what they publish) and their own `~/skills`. Runtimes are auto-derived and never monitored.
 
 ## Documentation Style
 

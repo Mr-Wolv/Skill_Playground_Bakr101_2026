@@ -4,7 +4,7 @@
 [![Mirror Parity Guidance](https://github.com/Mr-Wolv/Skill_Playground_Bakr101_2026/actions/workflows/mirror-parity.yml/badge.svg?branch=main)](https://github.com/Mr-Wolv/Skill_Playground_Bakr101_2026/actions/workflows/mirror-parity.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-> **A curated skill repository — 233 skills, mirrored with the global skill store.**
+> **A curated skill repository — 238 skills, mirrored with the global skill store.**
 > Current supported operating model: manage `skills/` in this repo and sync into `~/.agents/skills/`.
 
 ---
@@ -12,14 +12,17 @@
 ## Quick Start
 
 ```bash
-# 1. Sync repository skills into the global skill store
-python scripts/sync_skills_to_global.py
+# 1. Keep this agent's runtime store in sync with the global source of truth
+python scripts/sync_runtime_to_mirror.py --apply
 
-# 2. Validate catalogs and mirror parity
+# 2. Export the global store into this repo (community copy; private skills stay out)
+python scripts/sync_global_to_repo.py --apply
+
+# 3. Validate catalogs and mirror parity
 python scripts/sync_and_validate.py
 
-# 3. Use the skills from your global store
-#    "Write unit tests for this function" → loads unit-test-writer
+# 4. Use the skills from your global store
+
 #    "Set up Docker for this app"        → loads docker-configurator
 #    "Find tech debt in this codebase"   → loads tech-debt-tracker
 
@@ -31,7 +34,7 @@ open SDLC-PHRASE-CHEATSHEET.md
 
 ## What is this?
 
-Skill Playground is a **skills repository** for the agent skills ecosystem. It currently contains **233 skills**, organized by both [SDLC phase](SKILL-CATALOG.md) and [engineering domain](SKILL-CATALOG-DOMAIN.md).
+Skill Playground is a **skills repository** for the agent skills ecosystem. It currently contains **238 skills**, organized by both [SDLC phase](SKILL-CATALOG.md) and [engineering domain](SKILL-CATALOG-DOMAIN.md).
 
 All skills are treated as a mirrored pair between this project's `skills/` directory and the global skill store at `~/.agents/skills/`.
 
@@ -39,16 +42,48 @@ All skills are treated as a mirrored pair between this project's `skills/` direc
 
 ## Operating Model
 
-This repository is currently managed as a **source-controlled local mirror** of your global skill store.
+The **global skill store** (`~/.agents/skills`) is the **source of truth**. It
+is curated across all your agents. Everything else is a *derived export*:
+
+- **My runtime** (`~/.hermes/skills`) — Hermes's private load of the global
+  store, for this agent only. Derived from global.
+- **This repo** (`D:\Skill-Playground`) — a **community/localized export** of
+  the global store. Downstream; never authoritative.
+- **Private store** (`<LOCALAPPDATA>/hermes/skills`) — skills this agent
+  authors for itself; excluded from all sync.
+
+Two downstream sync directions flow FROM global:
+
+- **global → runtime** (`sync_runtime_to_mirror.py`) — keeps this agent's
+  loaded skills in step with the global source. Additive and non-destructive:
+  never deletes, never overwrites differing content, never touches the private
+  store, re-runs a safety audit on every skill it adds. Dry-run by default;
+  `--apply` to write (backs up first).
+- **global → repo** (`sync_global_to_repo.py`) — the export to community.
+  Additive: never removes repo-only skills. Private-by-default: global-only
+  skills are NOT copied into the (public) repo unless opted in via
+  `scripts/import.allow`, `--import <name>`, or `--import-all`. Dry-run by
+  default; `--apply` to write (backs up first).
+
+> The older `sync_skills_to_global.py` (repo → global) runs **backwards** under
+> this model and will clobber the source. It now refuses to run unless you pass
+> `--i-understand-repo-is-downstream`. Prefer the two downstream scripts above.
+
+The global store location is resolved portably (no hardcoded username): it
+reads `$HERMES_SKILLS_HOME`, else `~/.agents/skills`, else
+`$XDG_DATA_HOME/hermes/skills`.
 
 The supported workflow is:
 
 ```bash
-# Sync repo skills into the global skill store
-python scripts/sync_skills_to_global.py
+# Keep this agent's runtime store in sync with global (additive, safe)
+python scripts/sync_runtime_to_mirror.py --apply
+
+# Export global into this repo (community copy; private skills stay out)
+python scripts/sync_global_to_repo.py --apply
 
 # Validate docs/manifests and verify full recursive parity
-python scripts/sync_and_validate.py
+python scripts/sync_and_validate.py --apply
 ```
 
 After sync, skills are available at `~/.agents/skills/<skill-name>/SKILL.md`.
@@ -143,13 +178,19 @@ Include:
 ## Project Structure
 
 ```
-├── skills/                       # 233 skills (each has SKILL.md)
+├── skills/                       # 238 skills (each has SKILL.md)
 ├── SKILL.md                      # Root overview for the mirrored skill catalog
 ├── SKILL-CATALOG.md              # Skills by SDLC phase (full listing)
 ├── SKILL-CATALOG-DOMAIN.md       # Custom skills by engineering domain
 ├── SDLC-PHRASE-CHEATSHEET.md     # Natural language → skill triggers
 ├── skills.json                   # Machine-readable manifest
-├── docs/index.md                 # Navigation hub for all artifacts
+├── scripts/                      # Validation and mirror-maintenance helpers
+│   ├── validate_catalog.py       # Structural catalog validator
+│   ├── check_skill_mirror_parity.py # Recursive repo/global parity checker
+│   ├── sync_global_to_repo.py   # Export global (source) -> repo (community copy)
+│   ├── sync_runtime_to_mirror.py # global -> my runtime (~/.hermes/skills)
+│   └── sync_skills_union.py      # Opt-in publisher: global-only -> repo (privacy-gated)
+
 └── .github/workflows/validate.yml  # CI: frontmatter + catalog validation
 ```
 
@@ -162,11 +203,11 @@ Create → skills/<name>/SKILL.md
 Catalog → SKILL-CATALOG.md + SKILL-CATALOG-DOMAIN.md
 Trigger → SDLC-PHRASE-CHEATSHEET.md
 Manifest → skills.json
-Mirror → python scripts/sync_skills_to_global.py
+Mirror → python scripts/sync_global_to_repo.py
 Verify → python scripts/validate_catalog.py + python scripts/check_skill_mirror_parity.py
 Shortcut → python scripts/sync_and_validate.py
-Use → sync to `~/.agents/skills/` and invoke by natural language
-```
+Use → skills load from the global source of truth (`~/.agents/skills/`)
+
 
 ---
 

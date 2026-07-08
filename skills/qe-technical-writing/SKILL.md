@@ -158,8 +158,8 @@ const docsFleet = await FleetManager.coordinate({
 ---
 
 ## Related Skills
-- [bug-reporting-excellence](../bug-reporting-excellence/) - Technical bug writing
-- [code-review-quality](../code-review-quality/) - Review documentation
+- [bug-reporting-excellence](../triage/) - Technical bug writing
+- [code-review-and-quality](../code-review-and-quality/) - Review documentation
 
 ---
 

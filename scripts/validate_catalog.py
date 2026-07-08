@@ -12,7 +12,6 @@ DOC_FILES = {
     "SKILL-CATALOG-DOMAIN.md": ROOT / "SKILL-CATALOG-DOMAIN.md",
     "docs/index.md": ROOT / "docs" / "index.md",
     "docs/catalog-governance.md": ROOT / "docs" / "catalog-governance.md",
-    "docs/final-audit-2026-07-08.md": ROOT / "docs" / "final-audit-2026-07-08.md",
 }
 SKILLS_JSON = ROOT / "skills.json"
 
@@ -45,7 +44,6 @@ for file in skill_files:
 
 fs_skills = sorted(set(skill_names))
 fs_count = len(fs_skills)
-custom_count = 52
 
 catalog_text = read_text(ROOT / "SKILL-CATALOG.md")
 domain_text = read_text(ROOT / "SKILL-CATALOG-DOMAIN.md")
@@ -68,6 +66,11 @@ for skill in cheatsheet_skills:
         fail(f"SDLC-PHRASE-CHEATSHEET.md references missing skill: {skill}")
 
 skills_json = json.loads(read_text(SKILLS_JSON))
+# custom count is DERIVED from the manifest (not hardcoded) so union sync that
+# adds skills under the "imported" bucket keeps the gate green automatically.
+custom_count = len(
+    {skill for arr in skills_json.get("categories", {}).values() for skill in arr}
+)
 if skills_json.get("total_skills") != fs_count:
     fail(
         f"skills.json total_skills={skills_json.get('total_skills')} but filesystem has {fs_count}"
@@ -100,10 +103,6 @@ expected_snippets = {
     "docs/catalog-governance.md": [
         f"Repository skill directories: **{fs_count}**",
         f"Global skill directories: **{fs_count}**",
-    ],
-    "docs/final-audit-2026-07-08.md": [
-        f"Repository skills: **{fs_count}**",
-        f"Global mirrored skills: **{fs_count}**",
     ],
 }
 

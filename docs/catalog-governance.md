@@ -8,14 +8,14 @@ This document defines the source-of-truth and maintenance rules for the Skill Pl
 
 ## Current Verified State
 
-- Repository skill directories: **233**
-- Global skill directories: **233**
+- Repository skill directories: **238**
+- Global skill directories: **238**
 - Full recursive parity between repo and global store: **yes**
 
 Verified against:
 
 - `D:\Skill-Playground\skills`
-- `C:\Users\GIGABYTE\.agents\skills`
+- `~/.agents/skills`
 
 ## Source of Truth
 
@@ -25,7 +25,7 @@ The primary structural source of truth is the actual set of folders under:
 
 The global directory is treated as a synchronized mirror:
 
-- `C:\Users\GIGABYTE\.agents\skills`
+- `~/.agents/skills`
 
 If any document count disagrees with the folder set, the folder set wins and the document must be updated.
 
@@ -47,7 +47,7 @@ When skills are added, removed, renamed, merged, or split, review and update as 
 For any catalog-affecting change:
 
 1. update the skill folder(s)
-2. sync repo `skills/` to the global mirror with `python scripts/sync_skills_to_global.py`
+2. export the global source of truth into this repo with `python scripts/sync_global_to_repo.py` (private skills stay out unless opted in)
 3. validate repo documentation and manifests with `python scripts/validate_catalog.py`
 4. confirm full recursive repo/global parity with `python scripts/check_skill_mirror_parity.py`
 5. update counts mentioned in documentation
@@ -70,11 +70,12 @@ Before editing docs that mention totals:
 
 The repository includes:
 
-- `scripts/sync_skills_to_global.py` — one-way sync from repo `skills/` to the global mirror
+- `scripts/sync_global_to_repo.py` — export the global source of truth (`~/.agents/skills`) into this repo (community copy); private skills stay out unless opted in
+- `scripts/sync_runtime_to_mirror.py` — keep this agent's runtime store in sync with global
 - `scripts/check_skill_mirror_parity.py` — full recursive parity verification between repo and global stores
 - `scripts/sync_and_validate.py` — convenience wrapper that syncs, validates docs, and checks parity
 
-GitHub Actions validates repository coherence on pushes and pull requests. Full mirror parity is a local concern because the CI runner cannot inspect `C:\Users\GIGABYTE\.agents\skills` on your workstation.
+GitHub Actions validates repository coherence on pushes and pull requests. Full mirror parity is a local concern because the CI runner cannot inspect `~/.agents/skills` on your workstation.
 
 ## Naming Policy
 

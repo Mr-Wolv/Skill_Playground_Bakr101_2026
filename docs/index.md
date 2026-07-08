@@ -1,93 +1,58 @@
-# Skill-Playground Documentation
+# Skill Playground — Documentation
 
-> Central navigation for the repository's catalogs, governance artifacts, templates, and maintenance helpers.
+> Navigation hub for the **Skill Playground** skill catalog: 238 verified skills (62 custom), mirrored with your global agent skill store.
 > Last updated: 2026-07-08
 
 ---
 
-## 📋 Catalogs & References
+## Start here
 
-| Document | Description |
-|----------|-------------|
-| [SDLC Phrase Cheatsheet](../SDLC-PHRASE-CHEATSHEET.md) | Say-this-get-that mapping — natural language → skill invocation |
-| [Skill Catalog (SDLC Phases)](../SKILL-CATALOG.md) | 233 verified skills organized by SDLC phase |
-| [Skill Catalog (Domains)](../SKILL-CATALOG-DOMAIN.md) | 52 custom skills organized by engineering domain |
-| [Skills JSON Manifest](../skills.json) | Machine-readable index of all skills |
-| [Merge Proposal](./merge-proposal.md) | Recommended keep/merge/rename plan for overlapping skill clusters |
-| [Final Audit (2026-07-08)](./final-audit-2026-07-08.md) | Final architectural audit of the catalog, overlaps, and remaining cleanup candidates |
-| [Publication Summary (2026-07-08)](./publication-summary-2026-07-08.md) | Publication-oriented summary of the catalog cleanup, additions, and validation model |
-| [AGENTS Template](./AGENTS-template.md) | Reusable governance template for repositories that need source-of-truth, sync, and validation rules |
-| [AGENTS Example (Filled)](./AGENTS-example-filled.md) | Concrete copy-paste example based on this repository's finalized governance model |
-| [Global Agent Instructions Template](./GLOBAL-AGENT-INSTRUCTIONS.md) | Concise always-on instruction template for cross-project skill-aware agent behavior |
-| [Global Agent Instructions (Minimal)](./GLOBAL-AGENT-INSTRUCTIONS-MINIMAL.md) | Lightweight always-on variant with minimal standing instruction weight |
-| [Global Agent Instructions (Strict)](./GLOBAL-AGENT-INSTRUCTIONS-STRICT.md) | Higher-discipline variant for stronger anti-sprawl and workflow enforcement |
-| [Global Agent Instructions (Personal Copy-Paste)](./GLOBAL-AGENT-INSTRUCTIONS-PERSONAL-COPYPASTE.md) | Copy-paste-ready block for personal/global instruction fields |
-| [Skill Playground Root](../SKILL.md) | Root overview for the mirrored catalog and its global-store workflow |
+| Document | What it's for |
+|----------|---------------|
+| [README](../README.md) | What this repo is, how to sync it into your agent, and how to contribute a skill. **Read this first.** |
+| [SKILL.md](../SKILL.md) | The root catalog overview and skill categories at a glance. |
+| [Skill Catalog (SDLC Phases)](../SKILL-CATALOG.md) | All 238 skills organized by where they fit in the software development lifecycle. |
+| [Skill Catalog (Domains)](../SKILL-CATALOG-DOMAIN.md) | The 62 custom skills organized by engineering domain. |
+| [SDLC Phrase Cheatsheet](../SDLC-PHRASE-CHEATSHEET.md) | "Say this → get that" — natural-language phrases that map to specific skills. |
 
-## 🏗️ Project Structure
+## How to use the skills
 
+1. Sync the catalog into your agent's global skill store:
+   ```bash
+   python scripts/sync_global_to_repo.py       # export global -> this repo (community copy)
+   ```
+2. Invoke a skill by name or by natural language. For example:
+   - *"Write unit tests for this function"* → loads `unit-test-writer`
+   - *"Set up Docker for this app"* → loads `docker-configurator`
+   - *"Find tech debt in this codebase"* → loads `tech-debt-tracker`
+3. Browse [SKILL-CATALOG.md](../SKILL-CATALOG.md) or the [cheatsheet](../SDLC-PHRASE-CHEATSHEET.md) to discover more.
+
+## Governance & reusable templates (for maintainers)
+
+These artifacts define the catalog's source-of-truth, sync, and validation rules. They are useful if you want to apply the same governance model to another repository.
+
+| Document | What it's for |
+|----------|---------------|
+| [Catalog Governance](./catalog-governance.md) | Source-of-truth and mirror-sync rules; how the repo stays consistent. |
+| [AGENTS Template](./AGENTS-template.md) | Reusable governance template (source-of-truth, sync, validation) for any repo. |
+| [AGENTS Example (Filled)](./AGENTS-example-filled.md) | A concrete, copy-paste example based on this repo's finalized model. |
+| [Global Agent Instructions](./GLOBAL-AGENT-INSTRUCTIONS.md) | Concise always-on instruction block for skill-aware agent behavior. |
+| [Minimal variant](./GLOBAL-AGENT-INSTRUCTIONS-MINIMAL.md) | Lightweight always-on variant with minimal standing instruction weight. |
+| [Strict variant](./GLOBAL-AGENT-INSTRUCTIONS-STRICT.md) | Higher-discipline variant for stronger anti-sprawl and workflow enforcement. |
+| [Personal copy-paste](./GLOBAL-AGENT-INSTRUCTIONS-PERSONAL-COPYPASTE.md) | Ready-to-paste block for personal/global instruction fields. |
+
+## Maintenance commands
+
+```bash
+# Source of truth is the GLOBAL store (~/.agents/skills). Two downstream syncs:
+python scripts/sync_runtime_to_mirror.py   # global -> my runtime (~/.hermes/skills)
+python scripts/sync_global_to_repo.py      # global -> this repo (community export)
+python scripts/sync_and_validate.py        # both (--apply) + validate + parity
+python scripts/validate_catalog.py         # structural catalog validation
+python scripts/check_skill_mirror_parity.py# verify repo/global skill parity
+# sync_skills_to_global.py (repo->global) is DEPRECATED: runs backwards, refuses
+#   unless --i-understand-repo-is-downstream. sync_skills_union.py is the opt-in
+#   publisher for global-only skills into the repo.
 ```
-Skill-Playground/
-├── skills/                       # 233 skills (each has SKILL.md)
-├── SKILL.md                      # Root overview for the mirrored catalog
-├── SKILL-CATALOG.md              # SDLC-phase organized catalog
-├── SKILL-CATALOG-DOMAIN.md       # Domain-organized catalog
-├── SDLC-PHRASE-CHEATSHEET.md     # Natural language skill triggers
-├── skills.json                   # Machine-readable manifest
-├── README.md                     # Repo overview + operating model + contributing
-├── .github/workflows/validate.yml  # CI: SKILL.md frontmatter + catalog sync
-├── scripts/                      # Validation and mirror-maintenance helpers
-│   ├── validate_catalog.py       # Structural catalog validator
-│   ├── check_skill_mirror_parity.py # Recursive repo/global parity checker
-│   └── sync_skills_to_global.py  # One-way sync from repo skills/ to global mirror
-└── docs/                         # This directory — central navigation
-    ├── index.md                   # Navigation hub
-    ├── catalog-governance.md      # Source-of-truth and sync rules
-    ├── merge-proposal.md          # Consolidation and boundary recommendations
-    ├── final-audit-2026-07-08.md  # Current architectural audit snapshot
-    ├── publication-summary-2026-07-08.md # Publication summary
-    ├── AGENTS-template.md          # Reusable governance template
-    ├── AGENTS-example-filled.md    # Concrete filled governance example
-    ├── GLOBAL-AGENT-INSTRUCTIONS.md # Cross-project always-on instruction template
-    ├── GLOBAL-AGENT-INSTRUCTIONS-MINIMAL.md # Lightweight always-on variant
-    ├── GLOBAL-AGENT-INSTRUCTIONS-STRICT.md # Stronger discipline variant
-    ├── GLOBAL-AGENT-INSTRUCTIONS-PERSONAL-COPYPASTE.md # Personal instruction block
-```
 
-## 🔗 Quick Links
-
-- **[Browse the skill catalog](../SKILL-CATALOG.md)** — see all 233 verified skills by SDLC phase
-- **[Use skills](../SKILL.md)** — sync this repo into `~/.agents/skills/` and invoke skills from the global store
-- **[Contribute a new skill](../README.md#contributing)** — see contributing guidelines
-
-## Custom Skills at a Glance
-
-The repo includes 52 custom skills with expanded instruction bodies. These custom skills anchor the repo's most curated capability areas, while the broader repository also includes community and workflow-oriented skills.
-
-Representative custom capability areas include:
-
-| Area | Representative Custom Skills |
-|------|-------------------------------|
-| Architecture and design | `architecture-review`, `design-review`, `clean-architecture-principles`, `backward-compatibility-and-change-management` |
-| Delivery and operations | `change-risk-assessment`, `operational-readiness-review`, `service-ownership-and-lifecycle-management`, `toil-analysis-and-automation` |
-| Code quality and repository intelligence | `tech-debt-tracker`, `dead-code-remover`, `catalog-consistency-auditor`, `repository-archaeology`, `codeowners-and-review-routing` |
-| Documentation and communication | `readme-writer`, `api-documenter`, `code-documenter`, `code-commenter`, `document-reviewer`, `pr-writer` |
-| Testing and verification | `unit-test-writer`, `integration-test-writer`, `test-fixture-generator`, `react-testing-library-patterns`, `java-testing-patterns` |
-| Analytical and engineering mindset | `analytical-thinking-patterns`, `adjacent-disciplines`, `autonomous-learner`, `long-term-engineering-mindset`, `computer-science-foundations` |
-
-See [SKILL-CATALOG.md](../SKILL-CATALOG.md) for the full repository listing and [SKILL-CATALOG-DOMAIN.md](../SKILL-CATALOG-DOMAIN.md) for the custom-skill domain view.
-
----
-
-See also [Catalog Governance and Sync Model](./catalog-governance.md) for maintenance rules, [Merge Proposal](./merge-proposal.md) for overlap-reduction planning, [Final Audit (2026-07-08)](./final-audit-2026-07-08.md) for the current architectural assessment, and [Publication Summary (2026-07-08)](./publication-summary-2026-07-08.md) for a publication-oriented overview.
-
-## Maintenance Commands
-
-Useful local maintenance commands:
-
-- `python scripts/validate_catalog.py`
-- `python scripts/check_skill_mirror_parity.py`
-- `python scripts/sync_skills_to_global.py`
-- `python scripts/sync_and_validate.py`
-
-*See [README.md](../README.md) for operating-model details and contributing guidelines.*
+*See [README.md](../README.md) for the full operating model and contributing guidelines.*

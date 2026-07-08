@@ -1,10 +1,10 @@
 # Domain Engineering Catalog — Custom Skills
 
-> **52 custom skills organized by engineering domain**
-> 📚 [Documentation Index](docs/index.md) | [SDLC Catalog](SKILL-CATALOG.md) (full 233-skill listing) | [Cheatsheet](SDLC-PHRASE-CHEATSHEET.md) | [Repo Root](SKILL.md)
+> **62 custom skills organized by engineering domain**
+> 📚 [Documentation Index](docs/index.md) | [SDLC Catalog](SKILL-CATALOG.md) (full 238-skill listing) | [Cheatsheet](SDLC-PHRASE-CHEATSHEET.md) | [Repo Root](SKILL.md)
 
-> This catalog lists the **52 custom skills** organized by engineering domain.
-> For the complete 233-skill listing, see [SKILL-CATALOG.md](SKILL-CATALOG.md).
+> This catalog lists the **62 custom skills** organized by engineering domain.
+> For the complete 238-skill listing, see [SKILL-CATALOG.md](SKILL-CATALOG.md).
 
 ---
 
@@ -200,6 +200,11 @@
 | `analytical-thinking-patterns` | Evidence-based decision making |
 | `clean-code-principles` | Simplicity and maintainability |
 | `clean-architecture-principles` | Long-term thinking at the architecture level |
+| `capability-orchestrator` | Select, sequence, compose engineering capabilities into a plan |
+| `capability-router` | Route a request to the right capability by SDLC phase |
+| `engineering-phase-detector` | Detect the active SDLC phase of a request or artifact |
+| `assumption-and-bias-check` | Surface hidden assumptions, bias, and overconfidence |
+| `systems-thinking` | Feedback loops, delays, second-order effects for systemic problems |
 
 ## Domain 28: Adjacent Disciplines
 *Systems engineering, HCI, cognitive psychology, decision science, leadership*
@@ -232,9 +237,9 @@ These operate as orchestration or guidance layers rather than narrow engineering
 
 | Category | Count |
 |----------|-------|
-| Domain catalog entries | 52 custom skills |
+| Domain catalog entries | 62 custom skills |
 | Meta/workflow skills | present in repository but not exhaustively enumerated here |
-| **Repository total** | **233 verified skills** |
+| **Repository total** | **238 verified skills** |
 
 ---
 

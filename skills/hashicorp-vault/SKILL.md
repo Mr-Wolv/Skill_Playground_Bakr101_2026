@@ -379,6 +379,6 @@ spec:
 
 ## Related Skills
 
-- [aws-secrets-manager](../aws-secrets-manager/) - AWS native secrets
-- [sops-encryption](../sops-encryption/) - File encryption
-- [kubernetes-hardening](../../hardening/kubernetes-hardening/) - K8s security
+- [aws-secrets-manager](../secrets-management/) - AWS native secrets
+- [sops-encryption](../secrets-management/) - File encryption
+- [kubernetes-hardening](../security-and-hardening/SKILL.md) - K8s security

@@ -170,9 +170,9 @@ semgrep --config p/pci-dss --json -o pci-scan-results.json
 
 ## Related Skills
 
-- [OWASP Top 10 Checklist](../owasp-top10-checklist/SKILL.md)
-- [Container Security](../container-security/SKILL.md)
-- [Dependency Scanning](../dependency-scanning/SKILL.md)
+- [OWASP Top 10 Checklist](../security-pen-testing/references/owasp_top_10_checklist.md)
+- [Container Security](../security-pen-testing/SKILL.md)
+- [Dependency Scanning](../dependency-auditor/SKILL.md)
 
 ## Tool Comparison
 

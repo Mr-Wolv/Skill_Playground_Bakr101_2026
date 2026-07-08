@@ -226,6 +226,8 @@ If 3 cycles is "obviously insufficient" because the artifact is large: the artif
 - **`source-driven-development`**: SDD verifies *facts about frameworks* against official docs. Doubt-driven verifies *your reasoning about the artifact*. SDD checks the API exists; doubt-driven checks you used it correctly under the contract.
 - **`test-driven-development`**: TDD's RED step is doubt made concrete — a failing test is a disproof attempt. When TDD applies, that failing test *is* the doubt step for behavioral claims.
 - **`debugging-and-error-recovery`**: when the reviewer surfaces a real failure mode, drop into the debugging skill to localize and fix.
+- **`assumption-and-bias-check`**: the structured inventory behind the adversarial prompt. When the reviewer keeps finding the same class of gap (unstated premise, overconfidence, a named bias), hand the artifact to `assumption-and-bias-check` for an explicit assumption/bias/confidence report.
+- **`analytical-thinking-patterns` / `systems-thinking`**: supply the reasoning frameworks used to challenge the claim. `systems-thinking` is the deep causal version when the doubt is about ripple effects across a system.
 - **Repo orchestration rules** (`references/orchestration-patterns.md`): this skill orchestrates from the main session. A persona calling another persona is anti-pattern B — see Loading Constraints above.
 
 ## Verification

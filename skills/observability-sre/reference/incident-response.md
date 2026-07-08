@@ -278,10 +278,10 @@ If error rate doesn't improve within 30 minutes:
 - Page @on-call-manager for SEV-1
 
 ## Related Runbooks
-- [Database Connection Issues](database-connection-issues.md)
-- [High Latency Investigation](high-latency.md)
-- [Kubernetes Pod Troubleshooting](k8s-pod-troubleshooting.md)
-```
+
+The per-issue runbooks (Database Connection Issues, High Latency Investigation,
+Kubernetes Pod Troubleshooting) are embedded in the Runbook Template above.
+
 
 ## Incident Communication
 
@@ -535,7 +535,7 @@ queued and eventually timed out, resulting in 500 errors to users.
 ## Appendix
 - [Grafana dashboard during incident](https://grafana.example.com/incident-123)
 - [Slack incident channel](https://slack.com/incident-2025-01-15-api-errors)
-- [Runbook: Database connection issues](runbooks/database-connections.md)
+- [Runbook: Database connection issues](https://example.com/runbooks/database-connections)
 ```
 
 ### Postmortem Best Practices
