@@ -55,9 +55,18 @@ def _run(label: str, cmd: list[str], required: bool = True) -> int:
 
 
 def _pytest_cmd() -> list[str]:
-    """Return a pytest invocation that prefers an offline uv run, then falls
-    back to a system interpreter that already has pytest. Hermetic either way."""
-    return ["uv", "run", "--offline", "--no-sync", "--with", "pytest", "pytest", "-q"]
+    """pytest invocation, hermetic either way.
+
+    On GitHub Actions the runner is fresh (no uv cache) but HAS network, so
+    we provision pytest online. Locally the uv cache already holds pytest and
+    network is flaky, so we go offline to avoid hanging on index resolution.
+    """
+    offline = not __import__("os").environ.get("GITHUB_ACTIONS")
+    cmd = ["uv", "run"]
+    if offline:
+        cmd += ["--offline", "--no-sync"]
+    cmd += ["--with", "pytest", "pytest", "-q"]
+    return cmd
 
 
 def main() -> int:
