@@ -167,12 +167,16 @@ class TestMergedTopology:
     """
 
     def test_passes_when_b_equals_c(self, monkeypatch):
+        monkeypatch.delenv("CI", raising=False)
+        monkeypatch.delenv("GITHUB_ACTIONS", raising=False)
         anchor = Path(__file__).resolve().parent
         monkeypatch.setattr(sp, "global_skills_dir", lambda: anchor)
         monkeypatch.setattr(sp, "runtime_skills_dir", lambda: anchor)
         sp.assert_merged_topology()  # must not raise
 
     def test_fails_when_b_differs_from_c(self, monkeypatch):
+        monkeypatch.delenv("CI", raising=False)
+        monkeypatch.delenv("GITHUB_ACTIONS", raising=False)
         a = Path(__file__).resolve().parent
         b = a.parent
         monkeypatch.setattr(sp, "global_skills_dir", lambda: a)
