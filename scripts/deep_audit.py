@@ -300,6 +300,21 @@ def _store_present() -> bool:
         return False
 
 
+_ALLOW_FILE = ROOT / "scripts" / "import.allow"
+
+
+def _opted_in_imports() -> set[str]:
+    """Skill names explicitly opted-in to the repo via scripts/import.allow."""
+    if not _ALLOW_FILE.exists():
+        return set()
+    out = set()
+    for line in _ALLOW_FILE.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if line and not line.startswith("#"):
+            out.add(line)
+    return out
+
+
 def audit_topology():
     """L6 + L7 + L8. Returns findings list.
 
@@ -329,8 +344,16 @@ def audit_topology():
         if miss_b or extra_b or diffs_b:
             for n in miss_b:
                 findings.append({"level": "L6", "skill": n, "sev": CRIT, "msg": "in repo but missing from B (source of truth)"})
+            # extra_b = skills in B but not in the repo. Under the private-by-default
+            # union model these are EXPECTED (the repo is a curated export, not a
+            # mirror of every private skill). Only opted-in skills (scripts/import.allow)
+            # are meant to be published, so only THEY generate a WARN when missing from
+            # the repo. This keeps the WARN set repo-derived and CI-stable (the local
+            # merged store has private skills that CI never sees).
+            opted_in = _opted_in_imports()
             for n in extra_b:
-                findings.append({"level": "L6", "skill": n, "sev": WARN, "msg": f"in B but not in repo: {n}"})
+                if n in opted_in:
+                    findings.append({"level": "L6", "skill": n, "sev": WARN, "msg": f"in B but not in repo: {n}"})
             for d in diffs_b[:50]:
                 findings.append({"level": "L6", "skill": d[0], "sev": CRIT, "msg": f"parity diff vs B: {d[1]}"})
 

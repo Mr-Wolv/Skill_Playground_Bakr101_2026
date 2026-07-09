@@ -2,64 +2,9 @@
   "_comment": "Reviewed WARN allowlist (mechanical coherence). Each entry is (skill, category, regex-source). A new WARN not listed here is an UNREVIEWED risk and fails `climb --strict`. An entry with no matching finding is STALE and should be pruned. Regenerate with `python scripts/deep_audit.py allowlist --write` AFTER reviewing.",
   "allow": [
     [
-      "airtable",
-      "other",
-      ""
-    ],
-    [
       "api-tester",
       "exfil",
       "curl\\s+-X\\s+POST"
-    ],
-    [
-      "apple-notes",
-      "other",
-      ""
-    ],
-    [
-      "apple-reminders",
-      "other",
-      ""
-    ],
-    [
-      "architecture-diagram",
-      "other",
-      ""
-    ],
-    [
-      "arxiv",
-      "other",
-      ""
-    ],
-    [
-      "ascii-art",
-      "other",
-      ""
-    ],
-    [
-      "ascii-video",
-      "other",
-      ""
-    ],
-    [
-      "audiocraft",
-      "other",
-      ""
-    ],
-    [
-      "baoyu-infographic",
-      "other",
-      ""
-    ],
-    [
-      "blogwatcher",
-      "other",
-      ""
-    ],
-    [
-      "capability-catalog-evolution",
-      "other",
-      ""
     ],
     [
       "ci-cd-and-automation",
@@ -67,39 +12,9 @@
       "(?i)token\\s*=\\s*['\\\"]?[^\\\\s'\\\"]+"
     ],
     [
-      "claude-code",
-      "other",
-      ""
-    ],
-    [
-      "claude-design",
-      "other",
-      ""
-    ],
-    [
       "code-review-excellence",
       "destructive",
       "\\beval\\b"
-    ],
-    [
-      "codebase-inspection",
-      "other",
-      ""
-    ],
-    [
-      "codex",
-      "other",
-      ""
-    ],
-    [
-      "comfyui",
-      "other",
-      ""
-    ],
-    [
-      "computer-use",
-      "other",
-      ""
     ],
     [
       "cryptography",
@@ -117,16 +32,6 @@
       "rm\\s+-rf?\\s"
     ],
     [
-      "design-md",
-      "other",
-      ""
-    ],
-    [
-      "dogfood",
-      "other",
-      ""
-    ],
-    [
       "elasticsearch",
       "exfil",
       "base64\\b"
@@ -135,21 +40,6 @@
       "elasticsearch",
       "secret",
       "(?i)api[_-]?key\\s*=\\s*['\\\"]?[^\\\\s'\\\"]+"
-    ],
-    [
-      "excalidraw",
-      "other",
-      ""
-    ],
-    [
-      "findmy",
-      "other",
-      ""
-    ],
-    [
-      "gif-search",
-      "other",
-      ""
     ],
     [
       "git-advanced-workflows",
@@ -162,39 +52,9 @@
       "git\\s+reset\\s+--hard"
     ],
     [
-      "github-auth",
-      "other",
-      ""
-    ],
-    [
-      "github-code-review",
-      "other",
-      ""
-    ],
-    [
-      "github-issues",
-      "other",
-      ""
-    ],
-    [
-      "github-pr-workflow",
-      "other",
-      ""
-    ],
-    [
-      "github-repo-management",
-      "other",
-      ""
-    ],
-    [
       "gitops-workflow",
       "exfil",
       "base64\\b"
-    ],
-    [
-      "google-workspace",
-      "other",
-      ""
     ],
     [
       "grpc-protobuf",
@@ -210,51 +70,6 @@
       "hashicorp-vault",
       "secret",
       "(?i)token\\s*=\\s*['\\\"]?[^\\\\s'\\\"]+"
-    ],
-    [
-      "heartmula",
-      "other",
-      ""
-    ],
-    [
-      "hermes-agent",
-      "other",
-      ""
-    ],
-    [
-      "hermes-agent-skill-authoring",
-      "other",
-      ""
-    ],
-    [
-      "hermes-skill-store-sync",
-      "other",
-      ""
-    ],
-    [
-      "himalaya",
-      "other",
-      ""
-    ],
-    [
-      "huggingface-hub",
-      "other",
-      ""
-    ],
-    [
-      "humanizer",
-      "other",
-      ""
-    ],
-    [
-      "imessage",
-      "other",
-      ""
-    ],
-    [
-      "jupyter-live-kernel",
-      "other",
-      ""
     ],
     [
       "k6",
@@ -277,31 +92,6 @@
       "(?i)api[_-]?key\\s*=\\s*['\\\"]?[^\\\\s'\\\"]+"
     ],
     [
-      "llama-cpp",
-      "other",
-      ""
-    ],
-    [
-      "llm-wiki",
-      "other",
-      ""
-    ],
-    [
-      "lm-evaluation-harness",
-      "other",
-      ""
-    ],
-    [
-      "manim-video",
-      "other",
-      ""
-    ],
-    [
-      "maps",
-      "other",
-      ""
-    ],
-    [
       "mongodb",
       "destructive",
       "\\bshutdown\\b"
@@ -315,11 +105,6 @@
       "monorepo-management",
       "destructive",
       "rm\\s+-rf?\\s"
-    ],
-    [
-      "nano-pdf",
-      "other",
-      ""
     ],
     [
       "network-tools",
@@ -337,74 +122,9 @@
       "Bearer\\s+[A-Za-z0-9._-]+"
     ],
     [
-      "node-inspect-debugger",
-      "other",
-      ""
-    ],
-    [
-      "notion",
-      "other",
-      ""
-    ],
-    [
-      "obsidian",
-      "other",
-      ""
-    ],
-    [
-      "ocr-and-documents",
-      "other",
-      ""
-    ],
-    [
-      "opencode",
-      "other",
-      ""
-    ],
-    [
-      "openhue",
-      "other",
-      ""
-    ],
-    [
       "owasp-security-check",
       "secret",
       "(?i)api[_-]?key\\s*=\\s*['\\\"]?[^\\\\s'\\\"]+"
-    ],
-    [
-      "p5js",
-      "other",
-      ""
-    ],
-    [
-      "petdex",
-      "other",
-      ""
-    ],
-    [
-      "plan",
-      "other",
-      ""
-    ],
-    [
-      "polymarket",
-      "other",
-      ""
-    ],
-    [
-      "popular-web-designs",
-      "other",
-      ""
-    ],
-    [
-      "powerpoint",
-      "other",
-      ""
-    ],
-    [
-      "pretext",
-      "other",
-      ""
     ],
     [
       "prometheus",
@@ -442,24 +162,9 @@
       "(?i)password\\s*=\\s*['\\\"]?[^\\\\s'\\\"]+"
     ],
     [
-      "python-debugpy",
-      "other",
-      ""
-    ],
-    [
       "python-testing-patterns",
       "secret",
       "(?i)token\\s*=\\s*['\\\"]?[^\\\\s'\\\"]+"
-    ],
-    [
-      "requesting-code-review",
-      "other",
-      ""
-    ],
-    [
-      "research-paper-writing",
-      "other",
-      ""
     ],
     [
       "secrets-management",
@@ -497,61 +202,6 @@
       "\\beval\\b"
     ],
     [
-      "segment-anything",
-      "other",
-      ""
-    ],
-    [
-      "simplify-code",
-      "other",
-      ""
-    ],
-    [
-      "sketch",
-      "other",
-      ""
-    ],
-    [
-      "skill-library-maintenance",
-      "other",
-      ""
-    ],
-    [
-      "skill-store-sync",
-      "other",
-      ""
-    ],
-    [
-      "songsee",
-      "other",
-      ""
-    ],
-    [
-      "songwriting-and-ai-music",
-      "other",
-      ""
-    ],
-    [
-      "spike",
-      "other",
-      ""
-    ],
-    [
-      "systematic-debugging",
-      "other",
-      ""
-    ],
-    [
-      "teams-meeting-pipeline",
-      "other",
-      ""
-    ],
-    [
-      "touchdesigner-mcp",
-      "other",
-      ""
-    ],
-    [
       "typed-holes-refactor",
       "hardcoded-path",
       "[A-Za-z]:\\\\[A-Za-z]"
@@ -560,31 +210,6 @@
       "typescript-advanced-types",
       "secret",
       "(?i)password\\s*=\\s*['\\\"]?[^\\\\s'\\\"]+"
-    ],
-    [
-      "vllm",
-      "other",
-      ""
-    ],
-    [
-      "weights-and-biases",
-      "other",
-      ""
-    ],
-    [
-      "xurl",
-      "other",
-      ""
-    ],
-    [
-      "youtube-content",
-      "other",
-      ""
-    ],
-    [
-      "yuanbao",
-      "other",
-      ""
     ]
   ]
 }
