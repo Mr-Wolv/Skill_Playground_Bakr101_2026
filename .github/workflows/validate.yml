@@ -20,15 +20,12 @@ jobs:
         run: python scripts/validate_catalog.py
 
   # Belt-and-suspenders for the merged-store (oscillation-nuke) invariant.
-  # Only meaningful on THIS machine where HERMES_SKILLS_HOME is set (the
-  # launcher points it at the single merged store). On plain CI it is unset,
-  # so this job is skipped and CI stays the independent auditor. If a future
-  # change ever splits B and C again, this job FAILS loudly.
+  # check_merged_topology.py self-skips on GitHub Actions (where the Windows
+  # junction does not exist and the merged invariant is NOT expected); CI stays
+  # the independent auditor. On THIS machine (local catalog present, not CI) it
+  # asserts B == C and FAILS loudly if a future change ever splits them again.
   merged-store-guard:
     runs-on: ubuntu-latest
-    if: ${{ env.HERMES_SKILLS_HOME != '' }}
-    env:
-      HERMES_SKILLS_HOME: ${{ vars.HERMES_SKILLS_HOME || secrets.HERMES_SKILLS_HOME || '' }}
     steps:
       - uses: actions/checkout@v4
 
