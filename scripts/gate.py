@@ -16,10 +16,17 @@ from __future__ import annotations
 
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SCRIPTS = ROOT / "scripts"
+
+# Hard ceiling so a flaky package-manager network call (uv trying to reach
+# the index) can NEVER hang a commit indefinitely. The gate is repo-internal
+# and hermetic; if a tool can't run offline within this window the step is
+# reported as a failure rather than blocking the commit forever.
+STEP_TIMEOUT = int(__import__("os").environ.get("GATE_STEP_TIMEOUT", "600"))
 
 
 def _store_present() -> bool:
@@ -35,17 +42,27 @@ def _store_present() -> bool:
 
 def _run(label: str, cmd: list[str], required: bool = True) -> int:
     print(f"\n=== GATE: {label} ===")
-    rc = subprocess.run(cmd, cwd=ROOT).returncode
+    try:
+        proc = subprocess.run(cmd, cwd=ROOT, timeout=STEP_TIMEOUT)
+        rc = proc.returncode
+    except subprocess.TimeoutExpired:
+        print(f"    TIMEOUT after {STEP_TIMEOUT}s — gate step could not complete")
+        rc = 1
     print(f"--- {label}: {'PASS' if rc == 0 else 'FAIL (rc=%d)' % rc} ---")
     if not required and rc != 0:
         print(f"    (non-blocking in this environment: {label} skipped/optional)")
     return rc if required else 0
 
 
+def _pytest_cmd() -> list[str]:
+    """Return a pytest invocation that prefers an offline uv run, then falls
+    back to a system interpreter that already has pytest. Hermetic either way."""
+    return ["uv", "run", "--offline", "--no-sync", "--with", "pytest", "pytest", "-q"]
+
+
 def main() -> int:
     steps = [
-        ("pytest regression", ["uv", "run", "--offline", "--no-sync", "--with", "pytest", "pytest", "-q"],
-         True),  # always required (pure repo-internal)
+        ("pytest regression", _pytest_cmd(), True),  # always required (pure repo-internal)
         ("catalog coherence", [sys.executable, str(SCRIPTS / "validate_catalog.py")],
          True),  # always required (pure repo-internal)
         ("mirror parity", [sys.executable, str(SCRIPTS / "check_skill_mirror_parity.py")],
