@@ -17,6 +17,17 @@ This skill is for **catalog integrity**, not general code quality. Use it when t
 - You want a one-pass reconciliation of catalog artifacts after changing the skill set
 - You suspect documentation drift across skill indexes, manifests, and navigation docs
 
+## Scope discipline (HARD RULE)
+
+When the user asks you to "fix everything" / "close all findings" / "make it converge",
+treat **every** defect as in-scope — including ones that pre-existed this session or
+live outside the files you originally touched. "It was already broken" is NOT an
+exemption and must never be offered as a reason to leave a defect standing. If a
+convergence/completeness audit surfaces a gap, fix the gap. Pre-existing state is just
+more of the audit's scope, not a permission to stop. The deliverable is a repo where
+the stated completion claim actually holds, not one where known issues were rationalized
+away.
+
 ## Boundary
 
 Use this skill for repository catalog coherence: source-of-truth discovery, count verification, mirror parity checks, and reconciliation of catalog-bearing documents and manifests.
@@ -145,6 +156,38 @@ Reusable techniques that caught real drift (cheap to re-run; see
    (`| > |`, `| >- |`, `| ~ |`) — unfinished entries in a "complete" deliverable.
 5. **Coverage gaps.** List folders in NO catalog row and NO cheatsheet trigger phrase;
    prioritize surfacing high-value meta/orchestration skills that are undiscoverable.
+
+### Operational pitfalls (learned the hard way)
+
+- **Pre-commit gate blocks foreground commits.** If the repo installs a pre-commit hook
+  that runs the full `gate.py` (~3 min on a 240-skill tree), a foreground `git commit`
+  in a 60s/180s terminal will time out and abort the commit — leaving changes staged but
+  uncommitted. Run the commit in the **background** (notify_on_complete) and poll, or run
+  the gate separately first. The gate failing is a real signal, not a timeout artifact.
+- **A green gate ≠ ready to commit if the gate itself fails.** Read the gate tail:
+  `0 CRITICAL` + `ALL GATES PASS` is the only success state. A single `[CRITICAL]` (even
+  in a deep-audit L-level) blocks the commit.
+- **Manifest tripwire re-pin is an intended change, not a bug.** If you add/rename/modify
+  a tracked file (e.g. publish a stranded `references/*.md`), the manifest hash baseline
+  (`scripts/BASELINE_MANIFEST.sha`) drifts and `TestManifestTripwire` fails. Re-pin with
+  `UPDATE_BASELINE=1 uv run --with pytest pytest tests/test_deep_qc.py::TestManifestTripwire`,
+  then confirm it passes WITHOUT the flag. Only do this for intended changes.
+- **L7 runtime↔global drift is in scope.** `gate.py` runs `deep_audit.py climb --strict`
+  which checks the runtime store (C) against the source of truth (B = `~/.agents/skills`).
+  A `file-set-mismatch` / `content-mismatch` on a *shared* skill means the runtime diverged
+  from the source. Resolve it by making the runtime match the source — usually by
+  publishing the newer/better copy into B, exporting to the repo, then re-syncing runtime
+  (`python scripts/sync_runtime_to_mirror.py --apply`). Do NOT delete a useful file from
+  the runtime to force parity; if B is behind, promote the improvement into B. The 80+
+  `extra_in_C` skills are private/runtime-only and are INFO by design — leave them.
+- **f-string regex quantifier footgun.** Inside `rf"..."` a `*` is the repetition
+  operator, so `\*{0,2}` collapses to `\*(0, 2)` (a buggy pattern). Use a bracketed
+  quantifier `[*]{0,2}` instead, or build the pattern from a plain string. Symptom: a
+  regex that looks correct but matches nothing.
+- **Verify against the real toolchain, not a bare venv.** This repo runs tests via
+  `uv run --with pytest pytest` (pytest is NOT in `.venv`). `python -m pytest` fails with
+  "No module named pytest" regardless of code state — run `python scripts/gate.py` (or
+  `make verify`) for the canonical check.
 
 ## Output expectations
 
