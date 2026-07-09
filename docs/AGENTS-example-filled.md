@@ -72,7 +72,7 @@ If exact counts are mentioned anywhere, verify them from the actual directory co
 
 This repo treats the following directories as a mirrored pair:
 
-- workspace: `D:\Skill-Playground\skills`
+- workspace: `<this-repo>/skills`
 - global: `~/.agents/skills`
 
 Parity means full folder contents, not only matching folder names.

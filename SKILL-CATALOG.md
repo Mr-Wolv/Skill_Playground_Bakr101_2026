@@ -1,7 +1,7 @@
 # SDLC Skills Catalog — 238 Skills
 
 > **Mirrored with the global skill store**
-> 🔄 Verified: 2026-07-08
+> 🔄 Verified: 2026-07-09
 > Organized by SDLC phase
 > 📚 [Documentation Index](docs/index.md) | [Domain Catalog](SKILL-CATALOG-DOMAIN.md) | [Cheatsheet](SDLC-PHRASE-CHEATSHEET.md) | [Root SKILL.md](SKILL.md)
 

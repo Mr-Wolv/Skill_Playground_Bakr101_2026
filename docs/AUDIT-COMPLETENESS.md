@@ -1,6 +1,6 @@
 # Repository Completeness Audit
 
-> Last updated: 2026-07-08
+> Last updated: 2026-07-09
 > Scope: every skill, script, doc, and cross-skill reference in the repository
 > Goal: **completeness, not perfection** — find and close gaps so the repo and its
 > global mirror are coherent and every referenced artifact resolves.
@@ -110,15 +110,13 @@ Healthy clusters intentionally kept distinct (per `docs/merge-proposal.md`):
 
 ## 8. Scripts
 
-- 9 maintenance scripts in `scripts/` (sync, validate, parity, plus the 3
-  temporary `_audit_*` helpers used for this audit — to be removed).
+- 15 maintenance scripts in `scripts/` (sync, validate, parity, deep-audit, gate, plus the gate hook + import allowlist).
 - 20 skill-local scripts across `five-whys-analysis`, `product-discovery`,
   `prompt-engineering-patterns`, `security-pen-testing`, `senior-data-engineer`,
   `typed-holes-refactor`. All compile.
-- `sync_and_validate.py` is the single gate: runs
-  `verify_skill_references.py` → `sync_runtime_to_mirror.py` →
-  `sync_global_to_repo.py` → `validate_catalog.py` →
-  `check_skill_mirror_parity.py`. It passed after the fixes in §3–§4.
+- `gate.py` is the single mechanical gate (used by CI and the pre-commit hook):
+  runs pytest → `validate_catalog.py` → `check_skill_mirror_parity.py` (skipped in
+  CI / when the local catalog B is absent) → `deep_audit.py climb --strict`. It passes.
 
 ## 9. Global mirror
 
@@ -128,7 +126,7 @@ global skills into `skills/` (private skills stay out unless opted in via
 `scripts/import.allow`). After this audit's fixes, parity is exact
 (238 skills, 0 diff).
 
-## 12. Deep pass (added 2026-07-08, second audit wave)
+## 12. Deep pass (added 2026-07-09, second audit wave)
 
 The first audit only scanned each skill's top-level `SKILL.md`. A deeper pass
 scanned **every** `.md` file in the repo (including all `references/`,
@@ -146,7 +144,7 @@ Verified in the deep pass:
   SKILL.md body exists).
 - The 20 skill-local scripts and 9 maintenance scripts all **compile**.
 
-## 13. Content deep pass (added 2026-07-08, third audit wave)
+## 13. Content deep pass (added 2026-07-09, third audit wave)
 
 Beyond structural completeness, a content-health scan ran across all 238
 skills looking for: placeholder/TODO cruft, insecure-by-default patterns

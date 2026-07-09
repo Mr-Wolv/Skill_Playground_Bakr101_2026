@@ -49,7 +49,7 @@ is curated across all your agents. Everything else is a *derived export*:
   store, for this agent only. Derived from global. The actual path is resolved by `runtime_skills_dir()`
   in `scripts/skill_paths.py` via `$HERMES_RUNTIME_SKILLS` → `$HERMES_HOME/skills` → `~/.hermes/skills`,
   so a non-default `HERMES_HOME` (e.g. `<LOCALAPPDATA>/hermes`) is followed automatically.
-- **This repo** (`D:\Skill-Playground`) — a **community/localized export** of
+- **This repo** (this skill-playground repository) — a **community/localized export** of
   the global store. Downstream; never authoritative.
 - **Private store** (`<LOCALAPPDATA>/hermes/skills`) — skills this agent
   authors for itself; excluded from all sync.

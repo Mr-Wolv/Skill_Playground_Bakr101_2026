@@ -1,6 +1,6 @@
 # Catalog Governance and Sync Model
 
-> Last verified: 2026-07-08
+> Last verified: 2026-07-09
 
 ## Purpose
 
@@ -14,7 +14,7 @@ This document defines the source-of-truth and maintenance rules for the Skill Pl
 
 Verified against:
 
-- `D:\Skill-Playground\skills`
+- `<this-repo>/skills`
 - `~/.agents/skills`
 
 ## Source of Truth
