@@ -197,3 +197,55 @@ A new skill should be added only when it clearly beats the alternatives above on
 - engineering value
 
 If the case is ambiguous, do not add the skill. Capture the gap and only act once repeated real usage demonstrates the need.
+
+## Operational Notes (post-Convergence hard rules)
+
+These are the durable, non-obvious lessons from the Convergence Initiative.
+Violating any of them reintroduces the exact pain the initiative removed.
+
+### Counts are DERIVED, never hand-edited
+
+Every human-readable skill count (README/SKILL.md/SKILL-CATALOG.md prose,
+the SKILL-CATALOG.md Summary row, `skills.json` numeric fields) is regenerated
+by `scripts/refresh_derived_catalog.py` from the filesystem + `skills.json`.
+The pre-commit hook runs `refresh --check` and SELF-HEALS (regenerates + stages)
+if any artifact drifted. **Do not** hand-edit a count literal — it will be
+overwritten on next commit, or (worse) if you bypass the hook, flagged by the
+validator. To refresh manually: `make refresh`.
+
+### The regression suite MUST stay fast
+
+`tests/test_catalog_fuzz.py` (Dive 6) builds a CHEAP STUB snapshot (frontmatter-
+only `SKILL.md` + the 7 docs + `skills.json`) and reuses ONE materialized copy
+via surgical file restore. It must NEVER `copytree` the real 241-skill tree per
+trial — that cost ~410s and made every verification unusable. `TestSnapshotIsCheap`
+guards this structurally. Full suite target: **<60s** (currently ~20s). If it
+regresses past ~60s, find the per-trial full-tree copy and kill it.
+
+### Gate timing
+
+`python scripts/gate.py` (the pre-commit gate) is ~35s: pytest ~20s + deep-audit
+climb --strict ~13s + validate/parity ~2s. Not the old ~6 min. The slow part is
+the deep-audit climb over all 240 skills, not the tests.
+
+### Reload invariant (after catalog-affecting work)
+
+After any change to `skills/` or the merged store, RELOAD Hermes and confirm the
+skills load. The merged-store junction (`~/.agents/skills` -> `<LOCALAPPDATA>/hermes/skills`,
+B==C) makes this safe and idempotent. `assert_merged_topology()` (in
+`scripts/skill_paths.py`, run by the gate + CI) fails loudly if B and C ever
+diverge — that is the core oscillation guard; do not remove it.
+
+### Stale verification false-positives
+
+The editor/system stale-check can report "No module named pytest" or flag
+already-committed files as unverified. That snapshot is stale. The trusted
+command is `.venv/Scripts/python -m pytest -q -p no:cacheprovider` (or
+`python scripts/gate.py`). Trust the real run, not the stale banner.
+
+### `--force` sync converges repo<-store
+
+`scripts/sync_global_to_repo.py --force` overwrites repo skills whose content
+differs from the store (backing up first). It only touches `skills/` dirs, not
+root docs. Use it only to intentionally converge the repo export to the store;
+never as a routine step (it can mask intended repo-only edits).

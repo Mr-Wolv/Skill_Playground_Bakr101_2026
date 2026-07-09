@@ -119,6 +119,36 @@ If you encounter ambiguity, record it clearly instead of guessing. Examples:
 - the repo and global stores differ and intentionality is unknown
 - legacy docs use a classification scheme that no longer maps cleanly to the current catalog
 
+### 6. Automate derived counts — never hand-edit the sweep (USER PREFERENCE)
+
+Hard rule from the user: **"automate everything of a hardcoded kind; deep automation
+for anything of such nuisance is needed so I'm not actively pained by it."** When a
+catalog carries counts in many docs (README.md, SKILL.md, SKILL-CATALOG.md,
+SKILL-CATALOG-DOMAIN.md, docs/index.md, docs/catalog-governance.md, skills.json),
+hand-editing all of them on every skill add/remove is the brittle failure mode. The
+resilient pattern is to **derive the counts from the filesystem and regenerate**:
+
+- total = len([p for p in skills_dir.glob('*/') if (p/'SKILL.md').exists()])
+- custom = union of all skills.json categories arrays
+- community = total - custom (community_skill_names enumerates them exactly)
+
+A small generator (e.g. scripts/refresh_derived_catalog.py with --check/--apply) rewrites
+the manifests + prose in one idempotent pass. Wire it into the PRE-COMMIT HOOK so a
+diverged count self-heals and stages before the gate — the commit can never be blocked
+(or silently wrong) by a stale literal. Freeze-tests that assert counts must DERIVE
+expected values from skills.json at runtime, never hardcode 240/241/64/65.
+
+Exclude historical report files (VERSION-1.0-*.md, AUDIT-COMPLETENESS.md) from
+regeneration — they record point-in-time numbers and must not be rewritten. Scripted
+recipe + the exact file map: references/automate-derived-counts.md.
+
+PITFALL — generator corruption from external syncs. A count generator that reads ONLY
+skills/ + skills.json is safe. But a separate sync_global_to_repo.py --force can
+OVERWRITE root docs (README.md/SKILL.md) from the STORE copy, which may be stale (this
+session produced a '0 skills' README). If docs show a wrong count after a sync/force,
+restore from git and re-run the derive-and-regenerate step; do NOT re-edit literals by
+hand. The generator never pulls from the store, so it cannot reintroduce the bad value.
+
 ## Convergence audit (the "many truths → one truth" pass)
 
 When the task is not a one-off reconciliation but a *convergence audit* — declare a
