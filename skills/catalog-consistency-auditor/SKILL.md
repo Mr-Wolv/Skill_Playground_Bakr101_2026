@@ -249,6 +249,26 @@ Reusable techniques that caught real drift (cheap to re-run; see
   tripwire catches. The 80+ `extra_in_C` skills are private/runtime-only and are
   INFO by design — leave them. Do NOT reintroduce the "copy C into B" dance; if
   B != C on path, fix the topology, not the bytes.
+- **A count generator must CORRECT drift, not just confirm it.** A generator built
+  on exact-match no-op pairs (`("241 skills","241 skills")` via `str.replace`) only
+  rewrites a count that is ALREADY correct — it silently leaves a *drifted* literal
+  (`"240 skills"`) untouched, so the pre-commit "self-heal" heals nothing and the
+  commit is then blocked by the validator instead. Use REGEX substitution keyed on
+  the phrase, not the number: `re.sub(r"(\d+) custom skills", f"{cu} custom skills", ...)`.
+  Order specific phrases (`\d+ custom/verified/community skills`, the catalog title)
+  BEFORE the generic bare `(\d+) skills`, so qualifiers are consumed by their own rule
+  and the generic pass only touches remaining bare totals. Unit-test this directly
+  (feed a doc with a WRONG count, assert it becomes the derived one) — the downstream
+  validator catches drift opaquely and late; a generator unit test catches it at source.
+- **The catalog Summary `**Total**` row + the catalog TITLE are easy to miss.** Two
+  real bugs shipped hidden until a unit test: (1) the bold Summary row `| **Total** | **N** |`
+  needs a regex that consumes the surrounding `**` (`\*{0,2}` on both sides of the digits),
+  or it never updates; (2) the title `# SDLC Skills Catalog — N Skills` lived in
+  SKILL-CATALOG.md, which the generator handled ONLY via the summary-table rewriter and
+  EXCLUDED from the prose rewriter — so the title drifted forever. Run the prose rewriter
+  on SKILL-CATALOG.md too (it's safe on the summary rows: no `digit␠skills` adjacency
+  there). Make the title pattern dash-agnostic + case-insensitive (`.*?(\d+) Skills`,
+  `re.IGNORECASE`) so an em-dash/en-dash or case mismatch can't silently skip it.
 - **f-string regex quantifier footgun.** Inside `rf"..."` a `*` is the repetition
   operator, so `\*{0,2}` collapses to `\*(0, 2)` (a buggy pattern). Use a bracketed
   quantifier `[*]{0,2}` instead, or build the pattern from a plain string. Symptom: a
