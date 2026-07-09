@@ -205,6 +205,26 @@ Reusable techniques that caught real drift (cheap to re-run; see
   "No module named pytest" regardless of code state — run `python scripts/gate.py` (or
   `make verify`) for the canonical check.
 
+## Verification discipline — taste, don't promise
+
+A single green gate run is NOT proof a fix holds. Reject "it's fixed" claims that
+rest on one passing run; demand empirical proof. Before declaring a
+convergence/stores fix complete, stress-test it:
+
+1. **Idempotency under reload.** Re-run the reload/re-sync mechanism
+   (e.g. `python scripts/sync_runtime_to_mirror.py --apply`) at least twice;
+   assert B==C each time. A fix that re-diverges on the next boot was not a fix.
+2. **Adversarial injection.** Deliberately reintroduce the exact old failure mode
+   (e.g. append a junk line to C's shared skill, or write a file B lacks) and
+   confirm `gate.py` CATCHES it (non-zero exit + a `[CRITICAL]` line). This proves
+   the safety net is live, not silent. A fix whose guard never fires on a real
+   fault is worthless.
+3. **Restore + confirm green.** Copy B back over the injected file, re-run the
+   gate; assert `ALL GATES PASS, 0 CRITICAL`.
+
+Only after all three pass is "no more drift / no more oscillation" *earned*, not
+*promised*. Scripted recipe: `references/verify-fix-holds.md`.
+
 ## Output expectations
 
 For a reconciliation pass, produce a concise summary with:
