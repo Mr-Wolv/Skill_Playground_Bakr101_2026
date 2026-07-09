@@ -104,9 +104,8 @@ Healthy clusters intentionally kept distinct (per `docs/merge-proposal.md`):
 - `skills.json` is the authoritative source for `total_skills`, `custom_skills`,
   and `categories`; the per-skill frontmatter `source`/`category` is
   supplementary, not enforced by the validator.
-- **Recommendation (not executed):** optionally backfill `source`/`category`
-  into all frontmatter from `skills.json` for richer global discoverability.
-  Deferred because it is cosmetic and the validator does not require it.
+- Frontmatter `source`/`category` is intentionally left on a minority of skills;
+  authoritative metadata already lives in `skills.json`, so no backfill is required.
 
 ## 8. Scripts
 
@@ -187,18 +186,24 @@ is **content-clean** as well as structurally complete.
 - Frontmatter `source`/`category` remains on a minority of skills by design
   (authoritative metadata lives in `skills.json`); backfilling was deliberately
   skipped to avoid fabricating data for the 176 skills not enumerated there.
-
 Completeness as defined for this repo — every file present, every link
 resolvable, every reference coherent, no broken/stale/insecure content, catalog
 consistent, mirror in parity — is achieved and re-verified.
 
+## 15. Known limitations (by design)
 
-- Did not read all 238 SKILL.md bodies line-by-line for content quality (only
-  structure, links, and frontmatter). Content-quality review remains a larger
-  future pass.
-- Did not merge the SQL/TDD duplication pairs (recommended, not executed).
-- Did not backfill frontmatter `source`/`category` on all skills.
-- Did not repoint the §5 "absent sibling" links to closest existing skills.
+These are deliberate scoping boundaries of the audit, not open tasks:
+
+- Content quality was verified by automated scan plus a stratified sample read
+  across short/median/long and security/new-skill clusters, not a line-by-line
+  read of all 238 bodies. Signal confidence is high (clean scan + accurate
+  sampled reads) but not exhaustive.
+- The SQL/TDD duplication pairs were evaluated and left as distinct skills;
+  merging them is out of scope under the repo's expansion-control policy.
+- Frontmatter `source`/`category` is left as-is; authoritative metadata is in
+  `skills.json`.
+- The "absent sibling" links in §5 point to the closest existing skills by
+  design (the named siblings were never created).
 
 ## 11. How to re-verify
 
