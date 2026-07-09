@@ -102,7 +102,7 @@ def rewrite_catalog_summary(text: str, c: dict) -> str:
         flags=re.MULTILINE,
     )
     text = re.sub(
-        r"^(\|\s*\*\*Total\*\*\s*\|\s*\*?)\d+(\*?\s*\|)",
+        r"^(\|\s*\*\*Total\*\*\s*\|\s*\*{0,2})\d+(\*{0,2}\s*\|)",
         rf"\g<1>{c['fs_count']}\g<2>",
         text,
         flags=re.MULTILINE,
@@ -115,43 +115,45 @@ def rewrite_catalog_summary(text: str, c: dict) -> str:
 # Each rule: (compiled regex, replacement template). Numbers are replaced by
 # the derived count. Templates use {total}/{custom}/{community}.
 # --------------------------------------------------------------------------
-def prose_replacements(c: dict) -> list[tuple[str, str]]:
-    """Exact (old, new) string pairs for prose snippets.
+def prose_patterns(c: dict) -> list[tuple[re.Pattern, str]]:
+    """(regex, replacement) pairs that CORRECT any count to the derived value.
 
-    Uses plain string replacement (no regex) so there is no backslash/f-string
-    hazard and the mapping is auditable. Each pair is idempotent: when the
-    artifact already carries the derived count, old == new and nothing changes.
+    Unlike exact-match no-op pairs, these replace the NUMBER wherever it
+    appears in a known count phrase, so a drifted count (e.g. '999 skills')
+    is actually corrected to the derived one -- not merely confirmed. Specific
+    phrases are listed before the generic bare 'N skills' so qualifiers
+    ('verified'/'custom'/'community') are consumed by their own rule and the
+    generic pass only touches remaining bare totals.
     """
     t, cu, co = c["fs_count"], c["custom_count"], c["community_count"]
     return [
-        (f"{cu} custom skills", f"{cu} custom skills"),
-        (f"{t} verified skills", f"{t} verified skills"),
-        (f"{co} community skills", f"{co} community skills"),
-        (f"{t} skills", f"{t} skills"),
-        (f"# SDLC Skills Catalog — {t} Skills",
-         f"# SDLC Skills Catalog — {t} Skills"),
-        (f"Repository skill directories: **{t}**",
-         f"Repository skill directories: **{t}**"),
-        (f"Global skill directories: **{t}**",
-         f"Global skill directories: **{t}**"),
-        (f"{t} verified skills ({cu} custom)",
+        (re.compile(r"(\d+) custom skills"), f"{cu} custom skills"),
+        (re.compile(r"(\d+) verified skills \(\d+ custom\)"),
          f"{t} verified skills ({cu} custom)"),
-        (f"The {cu} custom skills organized by engineering domain",
+        (re.compile(r"(\d+) verified skills"), f"{t} verified skills"),
+        (re.compile(r"(\d+) community skills"), f"{co} community skills"),
+        (re.compile(r"# SDLC Skills Catalog.*?(\d+) Skills", re.IGNORECASE),
+         f"# SDLC Skills Catalog — {t} Skills"),
+        (re.compile(r"Repository skill directories: \*\*(\d+)\*\*"),
+         f"Repository skill directories: **{t}**"),
+        (re.compile(r"Global skill directories: \*\*(\d+)\*\*"),
+         f"Global skill directories: **{t}**"),
+        (re.compile(r"The (\d+) custom skills organized by engineering domain"),
          f"The {cu} custom skills organized by engineering domain"),
-        (f"| Domain catalog entries | {cu} custom skills |",
+        (re.compile(r"\| Domain catalog entries \| (\d+) custom skills \|"),
          f"| Domain catalog entries | {cu} custom skills |"),
-        (f"| **Repository total** | **{t} verified skills** |",
+        (re.compile(r"\| \*\*Repository total\*\* \| \*\*(\d+) verified skills\*\* \|"),
          f"| **Repository total** | **{t} verified skills** |"),
-        (f"# {t} skills (each has SKILL.md)",
+        (re.compile(r"# (\d+) skills \(each has SKILL.md\)"),
          f"# {t} skills (each has SKILL.md)"),
+        # generic bare 'N skills' LAST: every remaining bare count is the total
+        (re.compile(r"(\d+) skills"), f"{t} skills"),
     ]
 
 
 def rewrite_doc(text: str, c: dict) -> str:
-    for old, new in prose_replacements(c):
-        # Only replace the FIRST occurrence of each pattern per doc is undesired;
-        # all occurrences should match. str.replace replaces all.
-        text = text.replace(old, new)
+    for pat, repl in prose_patterns(c):
+        text = pat.sub(repl, text)
     return text
 
 
@@ -169,9 +171,11 @@ def compute_changes(c: dict) -> dict[str, tuple[str, str]]:
     if new_json != old_json:
         changes[str(SKILLS_JSON)] = (old_json, new_json)
 
-    # SKILL-CATALOG.md summary
+    # SKILL-CATALOG.md summary table + any count prose in the body (e.g. the
+    # "# SDLC Skills Catalog — N Skills" title). rewrite_doc is safe on the
+    # summary rows (no "digit skills" adjacency there) and corrects the title.
     cat_text = (ROOT / "SKILL-CATALOG.md").read_text(encoding="utf-8")
-    new_cat = rewrite_catalog_summary(cat_text, c)
+    new_cat = rewrite_doc(rewrite_catalog_summary(cat_text, c), c)
     if new_cat != cat_text:
         changes[str(ROOT / "SKILL-CATALOG.md")] = (cat_text, new_cat)
 

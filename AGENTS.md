@@ -249,3 +249,24 @@ command is `.venv/Scripts/python -m pytest -q -p no:cacheprovider` (or
 differs from the store (backing up first). It only touches `skills/` dirs, not
 root docs. Use it only to intentionally converge the repo export to the store;
 never as a routine step (it can mask intended repo-only edits).
+
+### `make` is absent on the Windows host
+
+The Makefile targets (`make verify`, `make refresh`, `make check`, `make gate`,
+`make install-hook`) are for CI / Linux. On this Windows MSYS box `make` is not
+installed, so run the python invocations directly:
+- full gate: `python scripts/gate.py`
+- refresh counts: `python scripts/refresh_derived_catalog.py --apply`
+- check counts: `python scripts/refresh_derived_catalog.py --check`
+- install hook: `python -c "import shutil,pathlib;p=pathlib.Path('.git/hooks/pre-commit');shutil.copy('scripts/pre-commit.hook',p);p.chmod(0o755)"`
+
+The Makefile now uses the locked `.venv` pytest path (not `uv run --with pytest`),
+matching `gate.py` — so CI and local runs share one flake-free toolchain.
+
+### The count generator CORRECTS drift, it does not just confirm
+
+`refresh_derived_catalog.py` rewrites a drifted count to the derived value
+(e.g. a stale `999 skills` -> `241 skills`), not only a no-op when already
+correct. If a doc count ever disagrees with the filesystem, `refresh --apply`
+fixes it and the pre-commit hook self-heals. `tests/test_refresh_counts.py`
+pins this (and the `**Total**` Summary row + catalog title) at the source.

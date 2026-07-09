@@ -1,14 +1,21 @@
 # Convenience targets. uv is the only dependency (no global install needed).
-# Run `make verify` for the full regression gate used in CI.
+# NOTE: `make` is NOT present on the Windows MSYS host used for this repo, so
+# these targets are for CI / Linux runners. On Windows-without-make, run the
+# python invocations directly, e.g. `python scripts/gate.py` and
+# `python scripts/refresh_derived_catalog.py --check`.
 
 PYTHON := python
 UV := uv
+# Canonical, flake-free pytest invocation: use the locked .venv directly
+# (NEVER `uv run --with pytest`, which re-resolves and can hang on network).
+VENV_PY := $(PYTHON) -c "import pathlib,sys;print(pathlib.Path('.venv/Scripts/python' if sys.platform=='win32' else '.venv/bin/python').resolve())" 2>/dev/null || echo "$(PYTHON)"
+PYTEST := $(VENV_PY) -m pytest -q -p no:cacheprovider
 
-.PHONY: verify test validate parity sync shortcut clean qcaudit qcaudit-baseline gate install-hook
+.PHONY: verify test validate parity sync shortcut clean qcaudit qcaudit-baseline gate install-hook refresh check
 
 # Full regression suite (catalog + sync/parity + import.allow parser + QC dives).
 verify test:
-	$(UV) run --with pytest pytest
+	$(PYTEST)
 
 # Catalog coherence gate (the part CI also runs standalone).
 validate:
@@ -24,7 +31,7 @@ qcaudit:
 # Pin/re-pin the manifest tripwire baseline after an intentional change:
 #   make qcaudit-baseline
 qcaudit-baseline:
-	UPDATE_BASELINE=1 $(UV) run --with pytest pytest tests/test_deep_qc.py::TestManifestTripwire
+	UPDATE_BASELINE=1 $(PYTEST) tests/test_deep_qc.py::TestManifestTripwire
 
 # Single mechanical gate used by CI AND the pre-commit hook (same toolchain,
 # so local commits cannot bypass what CI enforces).
@@ -44,9 +51,14 @@ sync:
 	$(PYTHON) scripts/sync_global_to_repo.py --apply
 
 # Regenerate derived count artifacts (skills.json, catalog Summary, doc prose)
-# from the filesystem. Add --check to fail (no write) if any artifact diverges.
+# from the filesystem. Add `check` to fail (no write) if any artifact diverges.
 refresh:
 	$(PYTHON) scripts/refresh_derived_catalog.py --apply
+
+# Fail (no write) if any derived count artifact diverges from the filesystem.
+# CI-safe; also what the pre-commit hook runs before self-healing.
+check:
+	$(PYTHON) scripts/refresh_derived_catalog.py --check
 
 clean:
 	find . -type d -name __pycache__ -prune -exec rm -rf {} +
