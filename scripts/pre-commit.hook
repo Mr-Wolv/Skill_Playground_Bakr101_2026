@@ -3,6 +3,22 @@
 # Installed via `make install-hook` (or `python scripts/gate.py` symlink).
 # Runs the SAME mechanical gates as CI so coherence/persistence/completeness
 # cannot be bypassed by a local commit. A failure blocks the commit.
+#
+# Self-healing step: derived count artifacts (skills.json, catalog Summary,
+# prose counts in docs) are regenerated from the filesystem BEFORE the gate,
+# so a stale hardcoded count auto-fixes instead of failing the commit. This
+# removes the manual "sweep every doc when you add a skill" nuisance.
 set -euo pipefail
 root="$(git rev-parse --show-toplevel)"
+
+# 0. Refresh derived catalog counts (idempotent; writes only if divergent).
+if ! python "$root/scripts/refresh_derived_catalog.py" --check >/dev/null 2>&1; then
+    echo "[pre-commit] derived catalog counts drifted — regenerating..."
+    python "$root/scripts/refresh_derived_catalog.py" --apply
+    git add -A "$root/skills.json" "$root/SKILL-CATALOG.md" \
+        "$root/README.md" "$root/SKILL.md" \
+        "$root/SKILL-CATALOG-DOMAIN.md" "$root/docs/index.md" "$root/docs/catalog-governance.md"
+    echo "[pre-commit] counts refreshed and staged. Re-running gate."
+fi
+
 exec python "$root/scripts/gate.py"

@@ -223,10 +223,21 @@ Reusable techniques that caught real drift (cheap to re-run; see
   operator, so `\*{0,2}` collapses to `\*(0, 2)` (a buggy pattern). Use a bracketed
   quantifier `[*]{0,2}` instead, or build the pattern from a plain string. Symptom: a
   regex that looks correct but matches nothing.
-- **Verify against the real toolchain, not a bare venv.** This repo runs tests via
-  `uv run --with pytest pytest` (pytest is NOT in `.venv`). `python -m pytest` fails with
-  "No module named pytest" regardless of code state — run `python scripts/gate.py` (or
-  `make verify`) for the canonical check.
+- **Verify against the real toolchain, hermetically.** This repo runs tests via
+  `uv run --with pytest pytest` — but that form re-resolves the pytest wheel from
+  the network on EVERY call and HANGS on flaky links. The durable fix: `uv sync --dev`
+  once, then run via the synced interpreter with no uv resolution —
+  `.venv/Scripts/python -m pytest -q -p no:cacheprovider` (Windows) — or
+  `uv run --offline --no-sync pytest` when `.venv` is absent. A full gate on the
+  240-skill tree takes ~3 min and the deep compositional suite ~4–5 min; that is
+  NOT a hang — do not kill it at ~2 min. Background the commit and poll.
+- **Reversibility over deletion when the user asserts file ownership.** If the user
+  blocks a delete of a stray store file (e.g. a recipe/markdown in C that the repo
+  canon lacks), do NOT force-remove it. Relocate instead: copy to a timestamped
+  backup (`$TEMP/<name>.bak-<ts>`) AND move the live file out of the store to
+  `$TEMP/<name>` so parity passes. Fully reversible, zero irreversible action, and
+  it satisfies the "use a safety net" directive. Only delete when the user
+  explicitly confirms.
 
 ## Verification discipline — taste, don't promise
 

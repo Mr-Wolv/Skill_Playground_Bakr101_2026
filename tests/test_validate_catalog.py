@@ -242,37 +242,59 @@ class TestOrphanSkills:
 
 class TestExpectedSnippets:
     def test_readme_missing_count_fails(self, repo):
+        import json as _json
+        sj = _json.loads((repo / "skills.json").read_text(encoding="utf-8"))
+        fs_count = sj["total_skills"]  # derived, never hardcoded
         rm = repo / "README.md"
         orig = rm.read_bytes()
         try:
-            _patch(rm, "241 skills", "0 skills", count=0)
+            _patch(rm, f"{fs_count} skills", "0 skills", count=0)
             errs = vc.validate(repo)
-            assert any("README.md missing expected text: 241 skills" in e for e in errs)
+            assert any(f"README.md missing expected text: {fs_count} skills" in e
+                       for e in errs)
         finally:
             rm.write_bytes(orig)
 
 
 class TestCatalogSummaryCounts:
-    """SKILL-CATALOG.md Summary table must match folder-derived counts (F-02/F-09)."""
+    """SKILL-CATALOG.md Summary table must match folder-derived counts (F-02/F-09).
+
+    Expected counts are DERIVED from skills.json so the test never rots when
+    the catalog grows/shrinks — no hardcoded totals.
+    """
 
     def test_custom_summary_drift_fails(self, repo):
+        import json as _json
+        sj = _json.loads((repo / "skills.json").read_text(encoding="utf-8"))
+        custom_count = sj["custom_skills"]
+        wrong = custom_count - 2  # any wrong value triggers the drift check
         cat = repo / "SKILL-CATALOG.md"
         orig = cat.read_bytes()
         try:
-            _patch(cat, "| Custom skills | 65 |", "| Custom skills | 63 |")
+            _patch(cat, f"| Custom skills | {custom_count} |",
+                   f"| Custom skills | {wrong} |")
             errs = vc.validate(repo)
-            assert any("SKILL-CATALOG.md Summary 'Custom skills'=63 but expected 65" in e
-                       for e in errs)
+            assert any(
+                f"SKILL-CATALOG.md Summary 'Custom skills'={wrong} but expected {custom_count}" in e
+                for e in errs
+            )
         finally:
             cat.write_bytes(orig)
 
     def test_total_summary_drift_fails(self, repo):
+        import json as _json
+        sj = _json.loads((repo / "skills.json").read_text(encoding="utf-8"))
+        fs_count = sj["total_skills"]
+        wrong = fs_count - 2
         cat = repo / "SKILL-CATALOG.md"
         orig = cat.read_bytes()
         try:
-            _patch(cat, "| **Total** | **241** |", "| **Total** | **239** |")
+            _patch(cat, f"| **Total** | **{fs_count}** |",
+                   f"| **Total** | **{wrong}** |")
             errs = vc.validate(repo)
-            assert any("SKILL-CATALOG.md Summary '**Total**'=239 but expected 241" in e
-                       for e in errs)
+            assert any(
+                f"SKILL-CATALOG.md Summary '**Total**'={wrong} but expected {fs_count}" in e
+                for e in errs
+            )
         finally:
             cat.write_bytes(orig)

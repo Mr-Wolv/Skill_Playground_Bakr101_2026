@@ -43,5 +43,10 @@ shortcut:
 sync:
 	$(PYTHON) scripts/sync_global_to_repo.py --apply
 
+# Regenerate derived count artifacts (skills.json, catalog Summary, doc prose)
+# from the filesystem. Add --check to fail (no write) if any artifact diverges.
+refresh:
+	$(PYTHON) scripts/refresh_derived_catalog.py --apply
+
 clean:
 	find . -type d -name __pycache__ -prune -exec rm -rf {} +

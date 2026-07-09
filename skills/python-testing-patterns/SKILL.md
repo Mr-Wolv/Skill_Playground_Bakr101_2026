@@ -276,3 +276,29 @@ pytest --cov=myapp --cov-report=term-missing tests/
 ```
 
 For advanced patterns (async testing, monkeypatching, property-based testing, database testing, CI/CD integration, and configuration), see [references/advanced-patterns.md](references/advanced-patterns.md)
+
+## Hermetic, flake-free pytest runs in uv-managed repos
+
+`uv run --with pytest <tests>` re-resolves the pytest wheel from the network on
+**every** call. On flaky links it hangs for minutes. Never use it as a default.
+
+**Fix (do once, then hermetic forever):**
+1. `uv sync --dev` — installs the locked `pytest` dev-dependency into `.venv`.
+2. Run tests with **no `uv` resolution at all**:
+   - `.venv/Scripts/python -m pytest -q -p no:cacheprovider` (Windows; `.venv/bin/python` on POSIX), or
+   - `uv run --offline --no-sync pytest -q` (falls back to this if `.venv` is absent, e.g. a fresh CI runner).
+
+If `uv run --offline` itself hangs, the offline cache was evicted — re-run
+`uv sync --dev` (needs network once) then retry offline. The `--no-sync` flag is
+what stops uv from re-locking; without it, `uv run` still hits the network.
+
+**Pitfall — "slow suite" is not "hung":** a real full suite with deep
+compositional/audit tests can take 4–5 minutes. A bare `timeout 120` will
+**kill it falsely**. When a commit runs a pre-commit gate that executes the
+whole suite, let it run to completion (poll with long waits); do NOT kill the
+process at ~2–3 min thinking it hung. Reserve killing for when output has truly
+stalled with no CPU progress.
+
+**CI note:** on GitHub Actions the runner is fresh (no `.venv`), so the offline
+`.venv` path is absent — fall back to `uv run --offline --no-sync pytest`
+( runner has network for the one-time sync).
