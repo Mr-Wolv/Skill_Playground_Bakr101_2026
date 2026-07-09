@@ -159,6 +159,22 @@ Reusable techniques that caught real drift (cheap to re-run; see
 
 ### Operational pitfalls (learned the hard way)
 
+- **EDITING SHARED SKILLS: write to B, never to C (this is the #1 oscillation source).**
+  The source of truth is `B = ~/.agents/skills`. On a Windows install, Hermes's
+  runtime load path `C = <LOCALAPPDATA>/hermes/skills` resolves to the **same
+  directory** as the Hermes *private* store. `skill_manage` (create/patch/edit)
+  defaults to writing into `~/AppData/Local/hermes/skills` = **C**, NOT B. If you
+  improve an *existing shared/curated* skill (one already under B) via `skill_manage`
+  or by writing into the runtime store, C diverges from B and the very next
+  `gate.py` throws an L7 `content-mismatch` CRITICAL on that skill — the runtime/global
+  oscillation. RULE: when editing a shared skill, write the change directly into
+  `B` with plain file tools on `~/.agents/skills/<name>/`, NOT via `skill_manage`.
+  Then run the sync chain so repo + C regenerate from B:
+  `python scripts/sync_global_to_repo.py --apply` THEN
+  `python scripts/sync_runtime_to_mirror.py --apply`.
+  The ~23 private skills living only in C are legitimately private (the gate marks
+  them INFO/expected) — never promote those into B. Only brand-new *private/experimental*
+  skills belong in C via `skill_manage`.
 - **Pre-commit gate blocks foreground commits.** If the repo installs a pre-commit hook
   that runs the full `gate.py` (~3 min on a 240-skill tree), a foreground `git commit`
   in a 60s/180s terminal will time out and abort the commit — leaving changes staged but
