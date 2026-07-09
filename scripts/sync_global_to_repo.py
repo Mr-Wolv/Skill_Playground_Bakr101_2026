@@ -42,7 +42,9 @@ from datetime import datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from skill_paths import global_skills_dir  # noqa: E402
+from skill_paths import global_skills_dir, assert_merged_topology  # noqa: E402
+
+assert_merged_topology()  # core-oscillation guard: B must equal C
 
 ROOT = Path(__file__).resolve().parents[1]
 REPO = ROOT / "skills"

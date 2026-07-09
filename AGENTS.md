@@ -66,10 +66,20 @@ If exact counts are mentioned anywhere, verify them from the actual directory co
 This repo treats the following directories as a mirrored pair:
 
 - workspace: `skills/` (this repo) — a downstream export of the global store
-- global: `~/.agents/skills` — the single source of truth
+- global: the SHARED CATALOG — the single source of truth
+
+**Topology (post-oscillation-fix, 2026-07):** on this machine the global
+catalog is the SAME physical directory as Hermes's runtime load path. The
+pointer `$HERMES_SKILLS_HOME` (set persistently in the Windows user environment,
+inherited by the Hermes launcher) makes `global_skills_dir()` resolve to
+`<LOCALAPPDATA>/hermes/skills` — i.e. B and C are one store. This is the core
+fix for the B<->C oscillation: there is no second place for the truth to
+diverge into. In CI / a fresh checkout `HERMES_SKILLS_HOME` is unset, so B
+falls back to `~/.agents/skills` and CI remains an independent auditor against
+the default global store (see `assert_merged_topology()` in `scripts/skill_paths.py`).
 
 Parity means full folder contents, not only matching folder names.
-The global store (`~/.agents/skills`) is authoritative; `skills/` is derived from it.
+The shared catalog is authoritative; `skills/` is derived from it.
 Changes should preserve parity unless a task explicitly says otherwise.
 
 After catalog-affecting work, run:
@@ -91,26 +101,38 @@ new finding.
 
 ## Skill Store Ownership & Boundaries
 
-There are four skill stores. Ownership and the load/sync rules for each are fixed to remove ambiguity:
+There are THREE skill stores that matter. Ownership and the load/sync rules for
+each are fixed to remove ambiguity:
 
-- **Shared catalog** `~/.agents/skills` — the single SOURCE OF TRUTH. A neutral directory owned by the human. Every agent reads from it; nobody auto-writes into it. Publishing is opt-in and human-approved.
-- **Public repo** `skills/` in this repo — a downstream export of the shared catalog. Never authoritative; never pushed back into the catalog.
-- **Runtime** `$HERMES_HOME/skills` (default `~/.hermes/skills`) — Hermes's load path, DERIVED from the shared catalog (via `sync_runtime_to_mirror.py`). Auto-rebuilt; never a write target, never a source of truth. The exact path is resolved by `runtime_skills_dir()` in `scripts/skill_paths.py` through `$HERMES_RUNTIME_SKILLS` → `$HERMES_HOME/skills` → `~/.hermes/skills`, so when `HERMES_HOME` points at `<LOCALAPPDATA>/hermes` the runtime follows it. Other agents have their own equivalent runtime, derived from the shared catalog + their own private store.
-- **Hermes private** `<LOCALAPPDATA>/hermes/skills` — Hermes's own experimental/agent-authored skills. Excluded from all sync. Never read by other agents.
+- **Shared catalog = runtime (ONE store).** Resolved by `global_skills_dir()` /
+  `runtime_skills_dir()` in `scripts/skill_paths.py`. On this machine both
+  resolve to `<LOCALAPPDATA>/hermes/skills` (via `$HERMES_SKILLS_HOME`), so the
+  source of truth and Hermes's live load path are the SAME directory. Skills
+  created via the agent's own tooling (`skill_manage`) land here too — which is
+  correct, because here IS the truth. The merged invariant is enforced by
+  `assert_merged_topology()`; the pre-commit gate fails loudly if B and C ever
+  point at different directories again.
+- **Public repo** `skills/` in this repo — a downstream export of the shared
+  catalog. Never authoritative; never pushed back into the catalog.
+- **Human private** `~/skills` — the human's own experiments, deliberately
+  ASIDE from every agent: NOT in any agent load path, NOT synced, NOT read or
+  written by Hermes or any other agent. Not part of the catalog.
 
-Separately, the human's own private directory `~/skills` is deliberately ASIDE from every agent: NOT in any agent load path, NOT synced, NOT read or written by Hermes or any other agent. It holds the human's personal experiments and is **not** one of the four stores above.
-
-Hermes is NOT the source of truth. The human owns the catalog; agents are derived from it.
+The documented DEFAULT global (`~/.agents/skills`) is used only where
+`$HERMES_SKILLS_HOME` is unset (CI, other machines). The repo's own QC is
+portable and username-free.
 
 Routing rule (no ambiguity):
 
-- shared/curated skill -> shared catalog (the one truth); derives to runtime + exports to repo
-- private/experimental skill -> its owner's private store (yours: `~/skills`; Hermes's: `<LOCALAPPDATA>/hermes/skills`)
-- NEVER write into a runtime store as an origin
-- NEVER cross into another owner's private store
-- sync is additive, hash-detect-don't-overwrite, backup-before-write, private stores excluded
+- shared/curated skill -> the shared catalog, which IS the runtime on this
+  machine. Write into it directly (file tools on the resolved dir, or
+  `skill_manage` — both land in the same truth here).
+- human private skill -> `~/skills` (never in any agent load path).
+- The runtime is NOT a separate write target anymore; it is the truth itself.
+- sync is additive, hash-detect-don't-overwrite, backup-before-write, private
+  stores excluded.
 
-The human manages exactly two things: the shared catalog (what they publish) and their own `~/skills`. Runtimes are auto-derived and never monitored.
+The human owns the catalog; agents read and write into the single merged store.
 
 ## Documentation Style
 

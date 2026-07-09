@@ -38,7 +38,17 @@ def check_parity(repo_root: Path, global_root: Path):
     extra_in_global   : skill dirs present in global but absent from repo
     diffs             : per-skill (name, kind, ...) where kind is
                        "file-set-mismatch" or "content-mismatch"
+
     Pure (no printing) so it is unit-testable against synthetic trees.
+
+    Semantics under the private-by-default union model (post-2026-07):
+      * `missing_in_global` and `diffs` are the REAL oscillation signal.
+        A repo skill absent from global, or differing in content, means the
+        exported copy has diverged from the source of truth -> fail.
+      * `extra_in_global` (global-only skills) are PRIVATE by default and are
+        expected to be absent from the repo. They must NOT fail parity; the
+        repo is a curated export, not a mirror of every private skill. The
+        published subset is tracked separately via scripts/import.allow.
     """
     repo_dirs = skill_dirs(repo_root)
     global_dirs = skill_dirs(global_root)
@@ -88,7 +98,7 @@ def main() -> int:
     for item in diffs[:100]:
         print(item)
 
-    if missing_in_global or extra_in_global or diffs:
+    if missing_in_global or diffs:
         return 1
 
     print("FULL_MIRROR_PARITY_CONFIRMED")

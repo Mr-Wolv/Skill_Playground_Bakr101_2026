@@ -1,25 +1,18 @@
 """Keep Hermes's runtime skill store in sync with the mirror store.
 
-Topology this script operates on (all resolved portably via scripts/skill_paths.py
-so nothing is hardcoded to a username):
+Topology this script operates on (post-2026-07 oscillation fix):
 
-    repo  --(one-way mirror)-->  B = ~/.agents/skills   (source of truth)
-                                 |
-                                 |  sync_runtime_to_mirror.py
-                                 v
-                                 C = <runtime skills dir>  (Hermes's live load path)
+    On THIS machine the "global" store (B) and the runtime load path (C) are the
+    SAME physical directory (B == C via $HERMES_SKILLS_HOME). So this sync is a
+    no-op by construction — the runtime already IS the truth. The script still
+    runs for portability on layouts where B and C genuinely differ (e.g. a
+    default install with B=~/.agents/skills and C=~/.hermes/skills), where it
+    performs the additive, non-destructive one-way mirror B -> C.
 
-    The runtime load path is resolved by runtime_skills_dir() as:
-        $HERMES_RUNTIME_SKILLS  (explicit override)
-        else $HERMES_HOME/skills  (e.g. <LOCALAPPDATA>/hermes/skills)
-        else ~/.hermes/skills    (default install)
-
-    NOTE: On this machine HERMES_HOME points at <LOCALAPPDATA>/hermes, so the
-    live runtime is that path -- NOT ~/.hermes/skills. The scripts follow
-    HERMES_HOME, so a sync here lands where Hermes actually reads.
-
-    User private (~/skills) and any other agent's private store are NEVER
-    touched by this sync.
+    The core-oscillation guard `assert_merged_topology()` (imported and run at
+    module import) fails the script if B and C ever resolve to different
+    directories on THIS machine, so the B<->C contradiction cannot silently
+    return.
 
 Guarantees (intact / secure / non-breaking):
   * ADDITIVE: skills present in the runtime dir but absent from B are NEVER removed.
@@ -59,7 +52,11 @@ from skill_paths import (  # noqa: E402
     runtime_skills_dir,
     local_skills_dir,
     user_skills_dir,
+    assert_merged_topology,
 )
+
+
+assert_merged_topology()  # core-oscillation guard: B must equal C
 
 
 # --------------------------------------------------------------------------- #
