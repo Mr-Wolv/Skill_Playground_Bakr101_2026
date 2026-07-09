@@ -8,3 +8,5 @@
 # Equivalent to:  python scripts/sync_skills_union.py --import <name>
 #
 # Only list skills here when you intend to PUBLISH them to this repo.
+compositional-deep-audit
+pytest-regression-suite

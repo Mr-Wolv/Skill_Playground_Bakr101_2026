@@ -1,9 +1,9 @@
 {
   "version": 1,
   "name": "skill-playground",
-  "description": "Curated collection of 238 verified skills spanning testing, architecture, design review, repository intelligence, documentation, code quality, engineering workflow, and long-term engineering judgment.",
-  "total_skills": 238,
-  "custom_skills": 62,
+  "description": "Curated collection of 240 verified skills spanning testing, architecture, design review, repository intelligence, documentation, code quality, engineering workflow, and long-term engineering judgment.",
+  "total_skills": 240,
+  "custom_skills": 64,
   "community_skills": 176,
   "meta_skills": 0,
   "community_skill_names": [
@@ -190,7 +190,8 @@
       "integration-test-writer",
       "test-fixture-generator",
       "react-testing-library-patterns",
-      "java-testing-patterns"
+      "java-testing-patterns",
+      "pytest-regression-suite"
     ],
     "architecture": [
       "clean-architecture-principles",
@@ -253,7 +254,8 @@
       "capability-router",
       "engineering-phase-detector",
       "assumption-and-bias-check",
-      "systems-thinking"
+      "systems-thinking",
+      "compositional-deep-audit"
     ],
     "security": [
       "spring-security-patterns",

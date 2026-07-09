@@ -1,0 +1,59 @@
+# Copy-pasteable CI wiring for a pytest regression suite.
+# Two gaps this fixes (hit in the Skill-Playground session):
+#   1. Pre-existing workflows ran only the OLD ad-hoc validate script and would
+#      NEVER gate the new `tests/` suite -> a regression merged between sessions
+#      slips past. This workflow runs `uv run --with pytest pytest` so the suite
+#      is enforced on every push/PR.
+#   2. A local alias (`make verify`) so humans run the same gate without uv flags.
+
+# .github/workflows/tests.yml
+name: Regression Suite
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+
+      - name: Run pytest regression suite
+        run: uv run --with pytest pytest
+
+      - name: Validate catalog coherence
+        run: python scripts/validate_catalog.py
+
+# Makefile (keep it KISS; uv is the only dependency)
+# PYTHON := python
+# UV := uv
+#
+# .PHONY: verify test validate parity shortcut sync clean
+#
+# verify test:
+# 	$(UV) run --with pytest pytest
+#
+# validate:
+# 	$(PYTHON) scripts/validate_catalog.py
+#
+# parity:
+# 	$(PYTHON) scripts/check_skill_mirror_parity.py
+#
+# shortcut:
+# 	$(PYTHON) scripts/sync_and_validate.py
+#
+# sync:
+# 	$(PYTHON) scripts/sync_global_to_repo.py --apply
+#
+# clean:
+# 	find . -type d -name __pycache__ -prune -exec rm -rf {} +
+
+# Validating this file locally with PyYAML: `on:` parses as boolean True under
+# YAML 1.1, so keys become ['name', True, 'jobs']. Don't assert on the string
+# "on"; use `True in d` or `str(k).lower() == "on"`. The file is still valid GH Actions.

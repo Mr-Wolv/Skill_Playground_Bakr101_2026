@@ -7,7 +7,7 @@
 
 ## 1. Method
 
-Automated passes over all 238 skill directories plus the root docs and scripts:
+Automated passes over all 240 skill directories plus the root docs and scripts:
 
 - frontmatter integrity (name/description presence, name==folder)
 - body presence (no empty SKILL.md)
@@ -19,7 +19,7 @@ Automated passes over all 238 skill directories plus the root docs and scripts:
 
 ## 2. Headline Result
 
-- **238 skills** on disk, all with valid `name` + `description`, all `name == folder`.
+- **240 skills** on disk, all with valid `name` + `description`, all `name == folder`.
 - **0 empty bodies.** 2 short bodies (`grill-me`, `grill-with-docs`) — both
   legitimate (they load external interview resources; not defects).
 - **All scripts compile** (9 maintenance scripts + 20 skill scripts).
@@ -98,7 +98,7 @@ Healthy clusters intentionally kept distinct (per `docs/merge-proposal.md`):
 
 ## 7. Frontmatter consistency
 
-- All 238 skills have `name` + `description`.
+- All 240 skills have `name` + `description`.
 - Only 5 skills carried `source` and 9 carried `category` in frontmatter (the 5
   newly added custom skills plus a few pre-existing ones).
 - `skills.json` is the authoritative source for `total_skills`, `custom_skills`,
@@ -123,7 +123,7 @@ The global store (`~/.agents/skills`) is the source of truth. This repository is
 a downstream community export. `scripts/sync_global_to_repo.py` exports public
 global skills into `skills/` (private skills stay out unless opted in via
 `scripts/import.allow`). After this audit's fixes, parity is exact
-(238 skills, 0 diff).
+(240 skills, 0 diff).
 
 ## 12. Deep pass (added 2026-07-09, second audit wave)
 
@@ -138,14 +138,14 @@ Verified in the deep pass:
 - **0 broken local links** across every `.md` in the repo (code blocks and
   inline code excluded from the scan).
 - **0 empty SKILL.md** bodies.
-- **0 duplicate `description` fields** (exact match) across 238 skills.
+- **0 duplicate `description` fields** (exact match) across 240 skills.
 - **0 referenced `scripts/*.py` files missing** (every script named in a
   SKILL.md body exists).
 - The 20 skill-local scripts and 9 maintenance scripts all **compile**.
 
 ## 13. Content deep pass (added 2026-07-09, third audit wave)
 
-Beyond structural completeness, a content-health scan ran across all 238
+Beyond structural completeness, a content-health scan ran across all 240
 skills looking for: placeholder/TODO cruft, insecure-by-default patterns
 (pipe-to-shell, disabled TLS verification, chmod 777), stale/EOL tech
 (Python 2, old Node/Ubuntu, deprecated TLS), and abnormally thin bodies.
@@ -177,7 +177,7 @@ is **content-clean** as well as structurally complete.
 ## 14. Honest limits of this audit (final)
 
 - Semantic quality was verified by **scan + stratified sample read**, not a
-  line-by-line read of all 238 bodies. Confidence in content soundness is high
+  line-by-line read of all 240 bodies. Confidence in content soundness is high
   (multiple independent signals: clean scan, accurate sampled reads) but not
   100% exhaustive.
 - The 20 skill-local scripts were **compiled and reference-checked**, not
@@ -196,7 +196,7 @@ These are deliberate scoping boundaries of the audit, not open tasks:
 
 - Content quality was verified by automated scan plus a stratified sample read
   across short/median/long and security/new-skill clusters, not a line-by-line
-  read of all 238 bodies. Signal confidence is high (clean scan + accurate
+  read of all 240 bodies. Signal confidence is high (clean scan + accurate
   sampled reads) but not exhaustive.
 - The SQL/TDD duplication pairs were evaluated and left as distinct skills;
   merging them is out of scope under the repo's expansion-control policy.

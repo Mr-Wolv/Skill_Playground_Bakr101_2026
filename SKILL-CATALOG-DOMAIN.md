@@ -1,10 +1,10 @@
 # Domain Engineering Catalog — Custom Skills
 
-> **62 custom skills organized by engineering domain**
-> 📚 [Documentation Index](docs/index.md) | [SDLC Catalog](SKILL-CATALOG.md) (full 238-skill listing) | [Cheatsheet](SDLC-PHRASE-CHEATSHEET.md) | [Repo Root](SKILL.md)
+> **64 custom skills organized by engineering domain**
+> 📚 [Documentation Index](docs/index.md) | [SDLC Catalog](SKILL-CATALOG.md) (full 240-skill listing) | [Cheatsheet](SDLC-PHRASE-CHEATSHEET.md) | [Repo Root](SKILL.md)
 
-> This catalog lists the **62 custom skills** organized by engineering domain.
-> For the complete 238-skill listing, see [SKILL-CATALOG.md](SKILL-CATALOG.md).
+> This catalog lists the **64 custom skills** organized by engineering domain.
+> For the complete 240-skill listing, see [SKILL-CATALOG.md](SKILL-CATALOG.md).
 
 ---
 
@@ -119,6 +119,7 @@
 | `test-fixture-generator` | Generate reusable test factories and seed data |
 | `java-testing-patterns` | JUnit 5, Mockito, Spring Boot Test, Testcontainers |
 | `react-testing-library-patterns` | Vitest + RTL, user interactions, async behavior |
+| `pytest-regression-suite` | Hermetic pytest regression suite for repos that ship validation/audit scripts but have no tests |
 
 ## Domain 15: Debugging & Analysis
 *RCA, logging, profiling, incident investigation, failure analysis*
@@ -198,6 +199,7 @@
 | Skill | What it does |
 |-------|-------------|
 | `long-term-engineering-mindset` | Ownership, accountability, curiosity, evidence-based |
+| `compositional-deep-audit` | Ocean-deep repo/skill-store audit ascending a compositional pyramid (file→folder→cluster→category→set→collection→topology) |
 | `autonomous-learner` | Continuous learning across domains |
 | `analytical-thinking-patterns` | Evidence-based decision making |
 | `clean-code-principles` | Simplicity and maintainability |
@@ -239,9 +241,9 @@ These operate as orchestration or guidance layers rather than narrow engineering
 
 | Category | Count |
 |----------|-------|
-| Domain catalog entries | 62 custom skills |
+| Domain catalog entries | 64 custom skills |
 | Meta/workflow skills | present in repository but not exhaustively enumerated here |
-| **Repository total** | **238 verified skills** |
+| **Repository total** | **240 verified skills** |
 
 ---
 

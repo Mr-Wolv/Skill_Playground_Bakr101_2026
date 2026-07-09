@@ -8,8 +8,8 @@ This document defines the source-of-truth and maintenance rules for the Skill Pl
 
 ## Current Verified State
 
-- Repository skill directories: **238**
-- Global skill directories: **238**
+- Repository skill directories: **240**
+- Global skill directories: **240**
 - Full recursive parity between repo and global store: **yes**
 
 Verified against:

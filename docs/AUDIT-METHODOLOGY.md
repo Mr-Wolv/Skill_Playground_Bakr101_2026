@@ -16,7 +16,7 @@ L1  single skill folder (SKILL.md + scripts/references/templates/assets)
 L2  thematic cluster   (e.g. script-bearing skills, "security") — overlap/trigger
                                                    collisions, duplicate capability
 L3  category           (skills.json group)    — completeness, no orphans
-L4  full skills/ (238)                        — manifest/catalog/domain parity,
+L4  full skills/ (240)                        — manifest/catalog/domain parity,
                                                    duplicate capability
 L5  repo collection    (skills/ + docs + scripts + catalogs) — global coherence
 L6  repo <-> B         (source of truth)      — one-way mirror integrity
@@ -72,7 +72,7 @@ incrementally, re-verifying parents at each step.
 
 - `python scripts/deep_audit.py categories` — **L3**: every `skills.json`
   category member exists on disk; no phantom members.
-- `python scripts/deep_audit.py all` — **L4**: L0/L1 over **all 238**
+- `python scripts/deep_audit.py all` — **L4**: L0/L1 over **all 240**
   skills (unit) + L2 overlap (e2e) + parent re-verify.
 - `python scripts/deep_audit.py topology` — **L6/L7/L8**: repo<->B mirror
   parity, B<->C derived-copy parity, four-store boundary + privacy-leak scan.
@@ -95,7 +95,7 @@ Genuine defects found and remediated this pass:
   files absent from B. Re-derived C from B (additive; C's 22 private skills
   left untouched), backing up B and C first.
 
-Residual WARNs (5 on the full 238) are all benign pattern hits in
+Residual WARNs (5 on the full 240) are all benign pattern hits in
 instructional text (e.g. `token=` in VAULT_TOKEN examples, `base64` in
 crypto how-tos, `rm -rf` in documented "nuclear reset" steps) — not
 violations. They are reported, not failed.

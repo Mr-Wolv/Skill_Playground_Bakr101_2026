@@ -44,7 +44,7 @@ def _run(label: str, cmd: list[str], required: bool = True) -> int:
 
 def main() -> int:
     steps = [
-        ("pytest regression", ["uv", "run", "--with", "pytest", "pytest", "-q"],
+        ("pytest regression", ["uv", "run", "--offline", "--no-sync", "--with", "pytest", "pytest", "-q"],
          True),  # always required (pure repo-internal)
         ("catalog coherence", [sys.executable, str(SCRIPTS / "validate_catalog.py")],
          True),  # always required (pure repo-internal)

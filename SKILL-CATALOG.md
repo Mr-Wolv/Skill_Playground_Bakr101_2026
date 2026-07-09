@@ -1,4 +1,4 @@
-# SDLC Skills Catalog — 238 Skills
+# SDLC Skills Catalog — 240 Skills
 
 > **Mirrored with the global skill store**
 > 🔄 Verified: 2026-07-09
@@ -172,6 +172,7 @@
 | `visual-regression-testing` | community | Screenshot diffing and visual testing |
 | `api-contract-testing` | community | Consumer-driven contract tests |
 | `k6` | community | Load and performance testing |
+| `pytest-regression-suite` | **custom** | Hermetic pytest regression suite for repos that ship validation/audit scripts but have no tests |
 | `qa` | community | Interactive QA session → file GitHub issues |
 
 ## ✅ Phase 11: Code Review & Quality
@@ -364,6 +365,7 @@
 | `autonomous-learner` | **custom** | Self-directed knowledge acquisition |
 | `adjacent-disciplines` | **custom** | Systems eng, HCI, cognitive psych, leadership |
 | `long-term-engineering-mindset` | **custom** | Ownership, accountability, evidence-based |
+| `compositional-deep-audit` | **custom** | Ocean-deep repo/skill-store audit ascending a compositional pyramid (file→folder→cluster→category→set→collection→topology) |
 | `analytical-thinking-patterns` | **custom** | First-principles, systems thinking, tradeoff analysis |
 | `research-methodology` | **custom** | Source hierarchy, CRAAP test, RFC analysis |
 | `sql-optimization-patterns` | community | SQL query optimization and indexing |
@@ -397,7 +399,7 @@ This repository includes workflow-oriented and orchestration-focused skills, but
 | Community skills | 176 |
 | Custom skills | 62 |
 | Meta/workflow skills | present in repository but not exhaustively separated here |
-| **Total** | **238** |
+| **Total** | **240** |
 
 This catalog is the canonical SDLC-phase view of the full repository skill set.
 

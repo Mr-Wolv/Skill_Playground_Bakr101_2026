@@ -20,25 +20,37 @@ def list_files(root: Path):
     )
 
 
+def skill_dirs(root: Path):
+    """Recursively find skill directories (dirs containing SKILL.md) by basename.
+
+    Layout-agnostic: Hermes runtimes may nest skills under category
+    subfolders (e.g. engineering-mindset/compositional-deep-audit),
+    while the shared catalog (B) and repo mirror (D) store them flat.
+    A skill is identified by its basename so parity holds across both layouts.
+    """
+    return {p.parent.name for p in root.rglob("SKILL.md") if p.is_file()}
+
+
 def check_parity(repo_root: Path, global_root: Path):
     """Compare two skill trees; return (missing_in_global, extra_in_global, diffs).
 
     missing_in_global : skill dirs present in repo but absent from global
     extra_in_global   : skill dirs present in global but absent from repo
     diffs             : per-skill (name, kind, ...) where kind is
-                        "file-set-mismatch" or "content-mismatch"
+                       "file-set-mismatch" or "content-mismatch"
     Pure (no printing) so it is unit-testable against synthetic trees.
     """
-    repo_dirs = {p.name for p in repo_root.iterdir() if p.is_dir()}
-    global_dirs = {p.name for p in global_root.iterdir() if p.is_dir()}
+    repo_dirs = skill_dirs(repo_root)
+    global_dirs = skill_dirs(global_root)
 
     missing_in_global = sorted(repo_dirs - global_dirs)
     extra_in_global = sorted(global_dirs - repo_dirs)
     diffs = []
 
     for name in sorted(repo_dirs & global_dirs):
-        rdir = repo_root / name
-        gdir = global_root / name
+        # resolve the actual (possibly nested) dir for this basename
+        rdir = next((p.parent for p in repo_root.rglob(f"{name}/SKILL.md")), repo_root / name)
+        gdir = next((p.parent for p in global_root.rglob(f"{name}/SKILL.md")), global_root / name)
         rfiles = list_files(rdir)
         gfiles = list_files(gdir)
         if rfiles != gfiles:

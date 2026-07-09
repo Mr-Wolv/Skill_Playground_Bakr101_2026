@@ -4,7 +4,7 @@
 [![Mirror Parity Guidance](https://github.com/Mr-Wolv/Skill_Playground_Bakr101_2026/actions/workflows/mirror-parity.yml/badge.svg?branch=main)](https://github.com/Mr-Wolv/Skill_Playground_Bakr101_2026/actions/workflows/mirror-parity.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-> **A curated skill repository — 238 skills, mirrored with the global skill store.**
+> **A curated skill repository — 240 skills, mirrored with the global skill store.**
 > Current supported operating model: manage `skills/` in this repo and sync into `~/.agents/skills/`.
 
 ---
@@ -34,7 +34,7 @@ open SDLC-PHRASE-CHEATSHEET.md
 
 ## What is this?
 
-Skill Playground is a **skills repository** for the agent skills ecosystem. It currently contains **238 skills**, organized by both [SDLC phase](SKILL-CATALOG.md) and [engineering domain](SKILL-CATALOG-DOMAIN.md).
+Skill Playground is a **skills repository** for the agent skills ecosystem. It currently contains **240 skills**, organized by both [SDLC phase](SKILL-CATALOG.md) and [engineering domain](SKILL-CATALOG-DOMAIN.md).
 
 All skills are treated as a mirrored pair between this project's `skills/` directory and the global skill store at `~/.agents/skills/`.
 
@@ -180,7 +180,7 @@ Include:
 ## Project Structure
 
 ```
-├── skills/                       # 238 skills (each has SKILL.md)
+├── skills/                       # 240 skills (each has SKILL.md)
 ├── SKILL.md                      # Root overview for the mirrored skill catalog
 ├── SKILL-CATALOG.md              # Skills by SDLC phase (full listing)
 ├── SKILL-CATALOG-DOMAIN.md       # Custom skills by engineering domain

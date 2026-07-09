@@ -245,8 +245,8 @@ class TestExpectedSnippets:
         rm = repo / "README.md"
         orig = rm.read_bytes()
         try:
-            _patch(rm, "238 skills", "0 skills", count=0)
+            _patch(rm, "240 skills", "0 skills", count=0)
             errs = vc.validate(repo)
-            assert any("README.md missing expected text: 238 skills" in e for e in errs)
+            assert any("README.md missing expected text: 240 skills" in e for e in errs)
         finally:
             rm.write_bytes(orig)

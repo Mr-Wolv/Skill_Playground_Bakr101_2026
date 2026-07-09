@@ -4,3 +4,5 @@
 __pycache__/
 *.pyc
 .deep_audit_report.json
+# Timestamped sync/export backups are machine-local artifacts, never committed.
+*.backup-*/
