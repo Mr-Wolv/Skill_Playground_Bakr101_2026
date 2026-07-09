@@ -151,7 +151,7 @@ A new skill should be added only when it clearly beats the alternatives above on
 - maintainability
 - engineering value
 
-If the case is ambiguous, do not add the skill yet. Capture the gap, observe real usage, and revisit later.
+If the case is ambiguous, do not add the skill. Capture the gap and only act once repeated real usage demonstrates the need.
 ```
 
 ## When to Use This Example

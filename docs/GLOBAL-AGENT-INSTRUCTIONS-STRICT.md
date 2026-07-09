@@ -54,8 +54,8 @@ Prefer this order:
 4. merge when overlap is the real problem
 5. add something new only when it is clearly distinct, reusable, and repeatedly valuable
 
-If the case is ambiguous, do not add something new yet.
-Capture the gap, observe repeated need, and revisit later.
+If the case is ambiguous, do not add something new.
+Capture the gap and only act once repeated need demonstrates the value.
 
 ## Output Discipline
 
