@@ -25,8 +25,8 @@ It reflects both:
 | `code-review`, `code-review-and-quality`, `code-review-excellence` | Keep all three with current clarified boundary | Healthy enough now |
 | `documentation-and-adrs`, `architecture-decision-records` | Keep both with current generalist/specialist split | Healthy enough now |
 | `research-note`, `research-methodology` | Keep both | Healthy |
-| `incident-response`, `postmortem` | Keep both, but tighten handoff boundary later | Candidate for future cleanup |
-| `incident-runbook-templates`, incident workflow skills | Keep, but tighten wording later | Candidate for future cleanup |
+| `incident-response`, `postmortem` | Keep both; handoff boundary already clarified in skill bodies | Decision: no merge |
+| `incident-runbook-templates`, incident workflow skills | Keep; wording already tightened in skill bodies | Decision: no merge |
 | `planning-and-task-breakdown`, `request-refactor-plan` | Keep both | Acceptable split |
 
 ## Remaining consolidation candidates
@@ -67,13 +67,7 @@ No immediate simplification is worth the risk.
 
 ## Rename watchlist
 
-No rename is recommended immediately.
-
-If discoverability becomes a bigger concern later, possible candidates remain:
-- `code-review-and-quality` → `quality-code-review`
-- `documentation-and-adrs` → `engineering-documentation`
-
-These remain optional, not recommended now.
+No rename is recommended. The current names are accepted.
 
 ## Recommendation
 
