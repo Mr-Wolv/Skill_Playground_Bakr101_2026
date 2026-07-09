@@ -9,7 +9,7 @@ level AS YOU ASCEND, and each level runs unit (isolated) -> e2e (collective)
   L1  single skill folder:    internal integrity + script syntax + destructive/exfil/secret scan
   L2  thematic cluster:       overlap / trigger collisions across the cluster
   L3  category grouping:      every skills.json category member is a real disk skill; keys sane
-  L4  full skills/ (238):     ocean-deep L0/L1 over EVERY skill (not just script-bearing)
+  L4  full skills/ (240):     ocean-deep L0/L1 over EVERY skill (not just script-bearing)
   L5  repo collection:        reused canonical gates (validate_catalog + parity)  [done in prior turn]
   L6  repo <-> B:             one-way mirror integrity (check_skill_mirror_parity)
   L7  B <-> C:                derived-copy parity (runtime is rebuilt from B)
@@ -19,7 +19,7 @@ Commands:
   python scripts/deep_audit.py skill <name>     # L0/L1 one skill
   python scripts/deep_audit.py cluster [--scope <glob>]
   python scripts/deep_audit.py categories        # L3
-  python scripts/deep_audit.py all               # L4 (all 238)
+  python scripts/deep_audit.py all               # L4 (all 240)
   python scripts/deep_audit.py topology          # L6 + L7 + L8
   python scripts/deep_audit.py climb             # run L3,L4,L6,L7,L8 in order (unit->e2e->reverify)
   python scripts/deep_audit.py report
@@ -404,7 +404,7 @@ def run_cluster(scope=None):
 
 
 def run_all():
-    return run_unit_e2e(all_skills(), "all-238")
+    return run_unit_e2e(all_skills(), "all-240")
 
 
 def run_unit_e2e(names, label):
@@ -496,7 +496,7 @@ def main():
         total_crit = total_warn = 0
         print("############ COMPOSITIONAL DEEP-AUDIT CLIMB ############")
         for label, fn in [("L3 categories", lambda: audit_categories()),
-                          ("L4 all-238", lambda: run_all()[2]),
+                          ("L4 all-240", lambda: run_all()[2]),
                           ("L6/L7/L8 topology", lambda: audit_topology())]:
             print(f"\n############ {label} ############")
             f = fn()

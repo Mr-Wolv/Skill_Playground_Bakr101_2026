@@ -125,7 +125,7 @@ global skills into `skills/` (private skills stay out unless opted in via
 `scripts/import.allow`). After this audit's fixes, parity is exact
 (240 skills, 0 diff).
 
-## 12. Deep pass (added 2026-07-09, second audit wave)
+## 10. Deep pass (added 2026-07-09, second audit wave)
 
 The first audit only scanned each skill's top-level `SKILL.md`. A deeper pass
 scanned **every** `.md` file in the repo (including all `references/`,
@@ -143,7 +143,7 @@ Verified in the deep pass:
   SKILL.md body exists).
 - The 20 skill-local scripts and 9 maintenance scripts all **compile**.
 
-## 13. Content deep pass (added 2026-07-09, third audit wave)
+## 11. Content deep pass (added 2026-07-09, third audit wave)
 
 Beyond structural completeness, a content-health scan ran across all 240
 skills looking for: placeholder/TODO cruft, insecure-by-default patterns
@@ -174,7 +174,7 @@ Results:
 Net content defects fixed in this wave: 1 (gitops hardening note). The library
 is **content-clean** as well as structurally complete.
 
-## 14. Honest limits of this audit (final)
+## 12. Honest limits of this audit (final)
 
 - Semantic quality was verified by **scan + stratified sample read**, not a
   line-by-line read of all 240 bodies. Confidence in content soundness is high
@@ -190,7 +190,7 @@ Completeness as defined for this repo — every file present, every link
 resolvable, every reference coherent, no broken/stale/insecure content, catalog
 consistent, mirror in parity — is achieved and re-verified.
 
-## 15. Known limitations (by design)
+## 13. Known limitations (by design)
 
 These are deliberate scoping boundaries of the audit, not open tasks:
 
@@ -205,7 +205,7 @@ These are deliberate scoping boundaries of the audit, not open tasks:
 - The "absent sibling" links in §5 point to the closest existing skills by
   design (the named siblings were never created).
 
-## 11. How to re-verify
+## 14. How to re-verify
 
 ```
 python scripts/sync_and_validate.py

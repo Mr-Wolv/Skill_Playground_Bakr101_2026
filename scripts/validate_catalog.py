@@ -236,6 +236,44 @@ def validate(root: Path = ROOT) -> list[str]:
     for skill in custom_set - custom_catalog_rows:
         fail(f"SKILL-CATALOG.md missing custom label for `{skill}` (or labeled community)")
 
+    # SKILL-CATALOG.md Summary table must agree with the folder-derived counts.
+    # The aggregate json checks above catch total drift, but the catalog's own
+    # human-readable summary row can still disagree (e.g. "62 custom" vs 64) while
+    # the body lists all skills. This closes that failure mode (F-02/F-09).
+    community_count = len(community_set) if "community_set" in dir() else (
+        len(set(community_list)) if "community_list" in dir() else None
+    )
+    if community_count is None:
+        # community_set is in scope from the block above; fall back to json-derived.
+        community_count = data.get("community_skills", 0)
+
+    def _summary_int(label: str):
+        m = re.search(
+            rf"^\|\s*{label}\s*\|\s*[*]{{0,2}}(\d+)[*]{{0,2}}\s*\|",
+            catalog_text,
+            re.MULTILINE,
+        )
+        return int(m.group(1)) if m else None
+
+    summ_comm = _summary_int("Community skills")
+    summ_cust = _summary_int("Custom skills")
+    summ_total = _summary_int(r"\*\*Total\*\*")
+    if summ_comm is not None and summ_comm != community_count:
+        fail(
+            f"SKILL-CATALOG.md Summary 'Community skills'={summ_comm} "
+            f"but expected {community_count}"
+        )
+    if summ_cust is not None and summ_cust != custom_count:
+        fail(
+            f"SKILL-CATALOG.md Summary 'Custom skills'={summ_cust} "
+            f"but expected {custom_count}"
+        )
+    if summ_total is not None and summ_total != fs_count:
+        fail(
+            f"SKILL-CATALOG.md Summary '**Total**'={summ_total} "
+            f"but expected {fs_count}"
+        )
+
     # SKILL-CATALOG-DOMAIN.md claims to list the custom skills by domain. The
     # domain tables (excluding the meta-skills block) must enumerate exactly the
     # canonical custom set and nothing else.

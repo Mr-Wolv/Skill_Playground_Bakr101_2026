@@ -95,7 +95,7 @@
 | Skill | Source | What it does |
 |-------|--------|-------------|
 | `apollo-graphql` | community | Guidelines for developing GraphQL APIs and React applications using Apollo Client for state management, data fetching, and caching |
-| `elasticsearch` | community | > |
+| `elasticsearch` | community | Elasticsearch search/analytics — queries, aggregations, mappings, and index lifecycle management |
 | `grpc-protobuf` | community | gRPC and Protocol Buffers - use for service-to-service communication, API definitions, streaming, and inter-service contracts |
 | `jpa-patterns` | community | JPA/Hibernate patterns and common pitfalls (N+1, lazy loading, transactions, queries). Use when user has JPA performance issues, LazyInitializationException, or asks about entity relationships and fetching strategies. |
 | `mongodb` | community | MongoDB - NoSQL document database with flexible schema design, aggregation pipelines, indexing strategies, and Spring Data integration |
@@ -120,7 +120,7 @@
 | `electron-desktop` | community | Desktop application development with Electron for Windows, macOS, and Linux. Use when building cross-platform desktop apps, implementing native OS features, or packaging web apps for desktop. |
 | `lazy-loading` | community | Use when loading all data upfront. Use when initial page load is slow. Use when fetching data that might not be needed. |
 | `storybook` | community | Storybook 스토리 작성 및 CSF 3.0 베스트 프랙티스 스킬. 다음 상황에서 사용: (1) 새 스토리 파일(.stories.tsx, .stories.ts) 작성 시, (2) 기존 스토리 수정 시, (3) Args, Decorators, Parameters 설정 시, (4) Storybook 설정 파일(.storybook/) 작업 시, (5) 'story', 'stories', 'storybook', 'CSF' 키워드가 포함된 작업 시 |
-| `tauri-desktop` | community | >- |
+| `tauri-desktop` | community | Rust-based Tauri desktop apps — windowing, updater, native bridges, and packaging |
 | `frontend-ui-engineering` | community | Production-quality UIs |
 | `nextjs-app-router-patterns` | community | Server Components, streaming, parallel routes |
 | `react-state-management` | community | Redux Toolkit, Zustand, Jotai, React Query |
@@ -397,7 +397,7 @@ This repository includes workflow-oriented and orchestration-focused skills, but
 | Category | Count |
 |----------|-------|
 | Community skills | 176 |
-| Custom skills | 62 |
+| Custom skills | 64 |
 | Meta/workflow skills | present in repository but not exhaustively separated here |
 | **Total** | **240** |
 

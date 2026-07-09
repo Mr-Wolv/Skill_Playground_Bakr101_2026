@@ -108,14 +108,54 @@ If you encounter ambiguity, record it clearly instead of guessing. Examples:
 - the repo and global stores differ and intentionality is unknown
 - legacy docs use a classification scheme that no longer maps cleanly to the current catalog
 
+## Convergence audit (the "many truths → one truth" pass)
+
+When the task is not a one-off reconciliation but a *convergence audit* — declare a
+catalog "complete", "coherent", or "Version 1.0" — produce a **report**, not just a
+fix-list. The deliverable is a findings table where every finding carries
+**impact / recommended action / priority / architectural justification**, plus a
+go/no-go verdict on the completion claim. Framing: the goal is to find *inconsistencies,
+ambiguity, duplication, drift, architectural debt, simplification opportunities* — not
+to add capabilities.
+
+Run the repo's own QC gate first and report its result as ground truth. A green
+`gate.py` / `make verify` is strong evidence the *mechanical* foundation is converged
+even when prose docs contradict each other. Convergence findings are almost always in
+the *documents*, not the validator.
+
+Reusable techniques that caught real drift (cheap to re-run; see
+`references/convergence-audit-recipe.md` for the scripted versions):
+
+1. **Source-of-truth contradiction check.** Grep every governance/doc for "source of
+   truth" and confirm they agree on WHICH directory is authoritative. This session found
+   `docs/catalog-governance.md` calling `skills/` the source of truth while
+   `AGENTS.md`/`README.md`/`docs/index.md` called `~/.agents/skills` the source of truth
+   — a direct "many similar truths" violation and the single highest-value finding. Check
+   it first.
+2. **Prose-count lint.** Docs hard-code totals that drift from the folder set (a catalog
+   summary said "62 custom / 176 community = 238" while the validator confirmed 240/64/176).
+   Cross-reference every literal count in markdown against `len(os.listdir('skills'))` and
+   the json `total_skills`.
+3. **Cross-artifact token cross-reference.** Parse every backtick-coded skill token out of
+   each catalog/doc (skipping fenced code blocks), then diff against the folder set:
+   orphans (token with no folder), missing (folder never mentioned), duplicates (token
+   listed >1×). Diff `skills.json` `community_skill_names` vs folders to derive the implied
+   custom set; compare to any `custom` markers in the catalogs.
+4. **Placeholder-description finder.** Regex the catalog table for empty/truncated cells
+   (`| > |`, `| >- |`, `| ~ |`) — unfinished entries in a "complete" deliverable.
+5. **Coverage gaps.** List folders in NO catalog row and NO cheatsheet trigger phrase;
+   prioritize surfacing high-value meta/orchestration skills that are undiscoverable.
+
 ## Output expectations
 
-Produce a concise reconciliation summary with:
+For a reconciliation pass, produce a concise summary with:
 
 - verified total skill count
 - mirror parity result
 - artifacts updated
 - remaining ambiguities, if any
+
+For a convergence audit, produce the report described in the section above.
 
 ## Anti-patterns
 
@@ -124,3 +164,5 @@ Produce a concise reconciliation summary with:
 - inventing precise category breakdowns without verification
 - silently ignoring repo/global divergence
 - treating mirrored stores as synced without checking
+- declaring a catalog "complete" from a green gate alone — prose-doc contradictions are
+  the convergence defects a passing validator does not see

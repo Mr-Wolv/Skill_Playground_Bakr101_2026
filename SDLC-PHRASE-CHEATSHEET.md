@@ -63,6 +63,19 @@
 | 🧠 **Engineering mindset** | *"Long-term thinking"* / *"Engineering mindset"* | `long-term-engineering-mindset` |
 | 🧠 **Learn** | *"I want to learn X"* / *"Teach me"* | `autonomous-learner` |
 | 🧠 **Adjacent fields** | *"Cross-disciplinary insights"* / *"Related fields"* | `adjacent-disciplines` |
+| 🧩 **Orchestrate** | *"Plan and sequence these capabilities"* / *"Compose a multi-step plan"* | `capability-orchestrator` |
+| 🧭 **Route** | *"Which skill fits this request"* / *"Map this to a capability"* | `capability-router` |
+| 🔭 **Detect phase** | *"What SDLC phase is this"* / *"Which phase are we in"* | `engineering-phase-detector` |
+| 🛡️ **Assumptions** | *"Check my assumptions"* / *"Surface hidden bias"* | `assumption-and-bias-check` |
+| 🔁 **Systems** | *"Model the feedback loops"* / *"Second-order effects"* | `systems-thinking` |
+| 🪞 **Deep audit** | *"Audit this skill store"* / *"Compositional deep audit"* | `compositional-deep-audit` |
+| 📜 **Contract test** | *"Consumer-driven contract test"* / *"API contract test"* | `api-contract-testing` |
+| 🔐 **Threat model** | *"Derive security requirements"* / *"Map threats to controls"* | `security-requirement-extraction` |
+| 🗺️ **Threat map** | *"Map threats to mitigations"* / *"Threat-to-control matrix"* | `threat-mitigation-mapping` |
+| 🔭 **Distributed trace** | *"Trace requests across services"* / *"Jaeger/Tempo setup"* | `distributed-tracing` |
+| 🔗 **Correlation** | *"Add correlation IDs"* / *"Propagate trace context"* | `correlation-tracing` |
+| 📈 **SLO** | *"Define SLOs/SLIs"* / *"Error budget policy"* | `slo-implementation` |
+| 📡 **Observability** | *"Set up SRE observability"* / *"Prometheus/Grafana/OTel"* | `observability-sre` |
 
 ---
 

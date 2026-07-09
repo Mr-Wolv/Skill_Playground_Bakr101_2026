@@ -65,11 +65,11 @@ If exact counts are mentioned anywhere, verify them from the actual directory co
 
 This repo treats the following directories as a mirrored pair:
 
-- workspace: `skills/` (this repo)
-- global: `~/.agents/skills`
+- workspace: `skills/` (this repo) — a downstream export of the global store
+- global: `~/.agents/skills` — the single source of truth
 
 Parity means full folder contents, not only matching folder names.
-
+The global store (`~/.agents/skills`) is authoritative; `skills/` is derived from it.
 Changes should preserve parity unless a task explicitly says otherwise.
 
 After catalog-affecting work, run:

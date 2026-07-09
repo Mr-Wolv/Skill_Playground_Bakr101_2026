@@ -19,15 +19,15 @@ Verified against:
 
 ## Source of Truth
 
-The primary structural source of truth is the actual set of folders under:
+The single authority is the human-owned global skill store:
+
+- `~/.agents/skills` — the source of truth. Every agent reads from it; publishing is opt-in and human-approved.
+
+This repository's `skills/` directory is a **downstream community export** of that store, not the authority. The structural working copy the validator inspects is the set of folders under:
 
 - `skills/` in this repository
 
-The global directory is treated as a synchronized mirror:
-
-- `~/.agents/skills`
-
-If any document count disagrees with the folder set, the folder set wins and the document must be updated.
+If any document count disagrees with the folder set, the folder set wins and the document must be updated. The folder set itself is reconciled against `~/.agents/skills` by the parity check.
 
 ## Required Consistency Targets
 

@@ -250,3 +250,29 @@ class TestExpectedSnippets:
             assert any("README.md missing expected text: 240 skills" in e for e in errs)
         finally:
             rm.write_bytes(orig)
+
+
+class TestCatalogSummaryCounts:
+    """SKILL-CATALOG.md Summary table must match folder-derived counts (F-02/F-09)."""
+
+    def test_custom_summary_drift_fails(self, repo):
+        cat = repo / "SKILL-CATALOG.md"
+        orig = cat.read_bytes()
+        try:
+            _patch(cat, "| Custom skills | 64 |", "| Custom skills | 62 |")
+            errs = vc.validate(repo)
+            assert any("SKILL-CATALOG.md Summary 'Custom skills'=62 but expected 64" in e
+                       for e in errs)
+        finally:
+            cat.write_bytes(orig)
+
+    def test_total_summary_drift_fails(self, repo):
+        cat = repo / "SKILL-CATALOG.md"
+        orig = cat.read_bytes()
+        try:
+            _patch(cat, "| **Total** | **240** |", "| **Total** | **238** |")
+            errs = vc.validate(repo)
+            assert any("SKILL-CATALOG.md Summary '**Total**'=238 but expected 240" in e
+                       for e in errs)
+        finally:
+            cat.write_bytes(orig)
