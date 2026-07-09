@@ -61,7 +61,11 @@ def dir_hash(d: Path) -> str:
     for f in sorted(d.rglob("*")):
         if f.is_file() and "__pycache__" not in f.parts and f.suffix != ".pyc":
             h.update(f.relative_to(d).as_posix().encode())
-            h.update(f.read_bytes())
+            # Normalize CRLF->LF so the hash is identical on Windows (CRLF) and
+            # Linux (LF). The tripwire must be platform-independent; otherwise a
+            # pinned baseline computed on one OS fails on the other.
+            data = f.read_bytes().decode("utf-8", errors="replace")
+            h.update(data.replace(chr(13) + chr(10), "\n").encode("utf-8"))
     return h.hexdigest()
 
 

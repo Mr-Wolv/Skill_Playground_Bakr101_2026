@@ -283,8 +283,25 @@ def load_paths():
     return mod
 
 
+def _store_present() -> bool:
+    """Whether the local catalog B exists. Cross-store parity is only
+    meaningful on the curator's machine; CI / fresh checkouts lack B."""
+    try:
+        return load_paths().global_skills_dir().exists()
+    except Exception:
+        return False
+
+
 def audit_topology():
-    """L6 + L7 + L8. Returns findings list."""
+    """L6 + L7 + L8. Returns findings list.
+
+    The store topology (repo <-> B <-> C) is a LOCAL-MACHINE concern: the
+    shared catalog B (`~/.agents/skills`) only exists on the curator's machine,
+    NOT in CI or a fresh checkout. So when B is absent we skip the cross-store
+    checks (they're meaningless without a source of truth) instead of crashing,
+    and emit an INFO note. Repo-internal coherence (L8 username/leakage scan
+    over the repo) still always runs.
+    """
     findings = []
     sp = load_paths()
     B = sp.global_skills_dir()
@@ -292,29 +309,36 @@ def audit_topology():
     private = sp.local_skills_dir()
     user = sp.user_skills_dir()
 
-    # L6: repo <-> B (one-way mirror: repo must be subset of B; parity expected)
-    miss_b, extra_b, diffs_b = store_parity(SK, B)
-    if miss_b or extra_b or diffs_b:
-        for n in miss_b:
-            findings.append({"level": "L6", "skill": n, "sev": CRIT, "msg": "in repo but missing from B (source of truth)"})
-        for n in extra_b:
-            findings.append({"level": "L6", "skill": n, "sev": WARN, "msg": f"in B but not in repo: {n}"})
-        for d in diffs_b[:50]:
-            findings.append({"level": "L6", "skill": d[0], "sev": CRIT, "msg": f"parity diff vs B: {d[1]}"})
+    if not B.exists():
+        findings.append({"level": "L6", "skill": "-", "sev": INFO,
+                         "msg": f"local catalog B absent ({B}); skipping cross-store "
+                                f"parity (local-machine concern, not a repo defect). "
+                                f"Repo-internal coherence is still fully validated."})
+        # fall through to L8 over the repo only
+    else:
+        # L6: repo <-> B (one-way mirror: repo must be subset of B; parity expected)
+        miss_b, extra_b, diffs_b = store_parity(SK, B)
+        if miss_b or extra_b or diffs_b:
+            for n in miss_b:
+                findings.append({"level": "L6", "skill": n, "sev": CRIT, "msg": "in repo but missing from B (source of truth)"})
+            for n in extra_b:
+                findings.append({"level": "L6", "skill": n, "sev": WARN, "msg": f"in B but not in repo: {n}"})
+            for d in diffs_b[:50]:
+                findings.append({"level": "L6", "skill": d[0], "sev": CRIT, "msg": f"parity diff vs B: {d[1]}"})
 
-    # L7: B <-> C (runtime is a derived copy of B). C is ADDITIVE by design:
-    # skills present in C but absent from B are the agent's private/extra skills
-    # and must NEVER be deleted, so extra_in_C is expected (INFO, not CRIT).
-    # A genuine defect is when B has a skill C lacks (runtime fell behind) or a
-    # content mismatch in a shared skill.
-    miss_c, extra_c, diffs_c = store_parity(B, C)
-    if miss_c or diffs_c:
-        for n in miss_c:
-            findings.append({"level": "L7", "skill": n, "sev": CRIT, "msg": "in B but missing from runtime C (runtime fell behind)"})
-        for d in diffs_c[:50]:
-            findings.append({"level": "L7", "skill": d[0], "sev": CRIT, "msg": f"runtime diff vs B: {d[1]}"})
-    for n in extra_c:
-        findings.append({"level": "L7", "skill": n, "sev": INFO, "msg": f"in runtime C but not in B (private/extra skill, additive — expected)"})
+        # L7: B <-> C (runtime is a derived copy of B). C is ADDITIVE by design:
+        # skills present in C but absent from B are the agent's private/extra skills
+        # and must NEVER be deleted, so extra_in_C is expected (INFO, not CRIT).
+        # A genuine defect is when B has a skill C lacks (runtime fell behind) or a
+        # content mismatch in a shared skill.
+        miss_c, extra_c, diffs_c = store_parity(B, C)
+        if miss_c or diffs_c:
+            for n in miss_c:
+                findings.append({"level": "L7", "skill": n, "sev": CRIT, "msg": "in B but missing from runtime C (runtime fell behind)"})
+            for d in diffs_c[:50]:
+                findings.append({"level": "L7", "skill": d[0], "sev": CRIT, "msg": f"runtime diff vs B: {d[1]}"})
+        for n in extra_c:
+            findings.append({"level": "L7", "skill": n, "sev": INFO, "msg": f"in runtime C but not in B (private/extra skill, additive — expected)"})
 
     # L8: boundary + leakage
     # (a) The PRIVATE store must NOT be nested inside a shared store. This only
@@ -339,6 +363,8 @@ def audit_topology():
     # "text:\n{var}" newlines).
     USER_PATH = re.compile(r"C:\\Users\\" + re.escape(USERNAME) if USERNAME else r"(?!x)x")
     for store_name, store in [("repo", SK), ("B", B), ("C", C)]:
+        if not store.exists():
+            continue
         for p in store.rglob("*"):
             if not p.is_file() or "__pycache__" in p.parts or p.suffix == ".pyc":
                 continue
@@ -472,9 +498,12 @@ def main():
             r = subprocess.run([sys.executable, str(ROOT / "scripts" / "validate_catalog.py")],
                                capture_output=True, text=True)
             print("   validate_catalog.py:", "OK" if r.returncode == 0 else "FAIL")
-            r = subprocess.run([sys.executable, str(ROOT / "scripts" / "check_skill_mirror_parity.py")],
-                               capture_output=True, text=True)
-            print("   check_skill_mirror_parity.py:", "OK" if r.returncode == 0 else "FAIL")
+            if _store_present():
+                r = subprocess.run([sys.executable, str(ROOT / "scripts" / "check_skill_mirror_parity.py")],
+                                   capture_output=True, text=True)
+                print("   check_skill_mirror_parity.py:", "OK" if r.returncode == 0 else "FAIL")
+            else:
+                print("   check_skill_mirror_parity.py: SKIP (local catalog B absent)")
         # WARN allowlist enforcement (mechanical coherence): only WARNs that are
         # explicitly reviewed are tolerated. --strict turns any new/un-allowed
         # WARN and any stale allowlist entry into a failure -> climb is 0/0.

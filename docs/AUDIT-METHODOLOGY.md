@@ -157,6 +157,25 @@ Two layers make the above automatic:
 Run `make gate` to self-check before pushing; `make install-hook` to make it
 unavoidable.
 
+## CI MUST NOT DEPEND ON THE LOCAL MIRROR STORE (B)
+
+The shared catalog B (`~/.agents/skills`) exists only on the curator's machine
+— NEVER in GitHub Actions or a fresh checkout. Any gate/test that touches B
+will `FileNotFoundError` in CI. Two rules keep CI green:
+
+- **Cross-store parity is a local-machine concern.** `gate.py` marks the
+  `check_skill_mirror_parity.py` step *required only when B exists*
+  (`_store_present()`); in CI it is SKIPPED with a notice. `audit_topology()`
+  (L6/L7/L8) self-skips the cross-store checks when B is absent and emits an
+  INFO note, while the repo-internal L8 username/leakage scan always runs.
+- **Tripwire baseline must be platform-independent.** `dir_hash()` now
+  normalises CRLF→LF before hashing, so a baseline pinned on Windows matches
+  the Linux CI hash. (A CRLF/LF mismatch was the second CI failure.)
+
+The public repo is validated purely on its OWN coherence (catalog ↔ disk ↔
+docs, WARN allowlist, frontmatter + whole-catalog fuzz, tripwire of the repo
+itself). Local-store drift is validated on the curator's machine, not in CI.
+
 ## Whole-catalog fuzz — proving `validate_catalog` can't be drifted
 
 `tests/test_catalog_fuzz.py` (Dive 6) materialises a faithful snapshot of the
