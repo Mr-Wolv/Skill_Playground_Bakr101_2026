@@ -135,3 +135,24 @@ QC so no gate is a rubber stamp. See `tests/test_deep_qc.py`.
 All QC tests are hermetic (synthetic `tmp_path`, sandboxed execution, no live
 stores touched). Run with `uv run --with pytest pytest`. CI also runs
 `deep_audit.py climb`, `validate_catalog.py`, and `check_skill_mirror_parity.py`.
+
+## Mechanical enforcement — making coherence PERSISTENT
+
+Manual re-verification is not enough; a gate you can forget is not a gate.
+Two layers make the above automatic:
+
+- **WARN allowlist (drift-fail):** `scripts/warn_allowlist.json` records every
+  reviewed WARN as a `(skill, category, regex-source)` triple. `climb --strict`
+  fails on any WARN NOT in the allowlist (an unreviewed risk) AND on any
+  allowlist entry with no matching finding (stale -> prune). Regenerate with
+  `python scripts/deep_audit.py allowlist --write` after a human review. This
+  turns the WARN tier into a hard 0/0 contract, not a soft advisory.
+- **Single gate + pre-commit hook:** `scripts/gate.py` runs pytest,
+  `validate_catalog.py`, `check_skill_mirror_parity.py`, and `climb --strict`
+  in order; CI invokes it directly. `make install-hook` installs
+  `scripts/pre-commit.hook` so EVERY local commit is gated by the identical
+  toolchain — you cannot bypass in a commit what CI would block. Coherence,
+  persistence, and completeness are enforced by the tooling, not by memory.
+
+Run `make gate` to self-check before pushing; `make install-hook` to make it
+unavoidable.

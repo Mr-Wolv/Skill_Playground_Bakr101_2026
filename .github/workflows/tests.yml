@@ -15,14 +15,5 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v3
 
-      - name: Run pytest regression suite
-        run: uv run --with pytest pytest
-
-      - name: Validate catalog coherence
-        run: python scripts/validate_catalog.py
-
-      - name: Verify store mirror parity
-        run: python scripts/check_skill_mirror_parity.py
-
-      - name: Compositional deep-audit climb (L3->L8)
-        run: python scripts/deep_audit.py climb
+      - name: Mechanical QC gate (pytest + coherence + parity + strict climb)
+        run: python scripts/gate.py

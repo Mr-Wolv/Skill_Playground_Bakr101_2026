@@ -82,6 +82,13 @@ Or use the shortcut:
 
 - `python scripts/sync_and_validate.py`
 
+For the full mechanical QC gate (pytest + coherence + parity + strict
+compositional climb), run `python scripts/gate.py` (also wired into CI and the
+local pre-commit hook via `make install-hook`). The WARN tier is a hard 0/0
+contract enforced by `scripts/warn_allowlist.json`; regenerate it with
+`python scripts/deep_audit.py allowlist --write` after a human review of any
+new finding.
+
 ## Skill Store Ownership & Boundaries
 
 There are four skill stores. Ownership and the load/sync rules for each are fixed to remove ambiguity:

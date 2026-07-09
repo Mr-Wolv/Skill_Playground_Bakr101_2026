@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Pre-commit gate for Skill Playground.
+# Installed via `make install-hook` (or `python scripts/gate.py` symlink).
+# Runs the SAME mechanical gates as CI so coherence/persistence/completeness
+# cannot be bypassed by a local commit. A failure blocks the commit.
+set -euo pipefail
+root="$(git rev-parse --show-toplevel)"
+exec python "$root/scripts/gate.py"

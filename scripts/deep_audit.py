@@ -51,6 +51,56 @@ SECRET = [r"AKIA[0-9A-Z]{16}", r"-----BEGIN [A-Z ]*PRIVATE KEY-----",
 # --- absolute/leaky path (WARN) --- require a real path segment after the drive colon
 HARDCODED_PATH = [r"[A-Za-z]:\\[A-Za-z]", r"/home/[a-z]+/[A-Za-z]", r"/Users/[a-z]+/[A-Za-z]", r"C:\\Users\\"]
 
+# Tagged pattern catalogue: each regex source mapped to a stable category so a
+# WARN finding can be matched against a reviewed allowlist by (skill, cat, rel).
+PATTERN_CATS = [
+    ("destructive", DESTRUCTIVE),
+    ("exfil", EXFIL),
+    ("secret", SECRET),
+    ("hardcoded-path", HARDCODED_PATH),
+]
+WARN_CAT_DEFAULT = "other"
+
+# Reviewed WARN allowlist: a finding is "accepted" when its (skill, cat, rel)
+# triple appears in scripts/warn_allowlist.json. `rel` is the regex source that
+# triggered it, so the allowlist is specific to the exact risky token, not a
+# whole skill. New (un-allowlisted) WARNs mean an unreviewed risk -> fail in
+# --strict. Allowlist entries with no matching finding are STALE -> prune.
+ALLOWLIST = ROOT / "scripts" / "warn_allowlist.json"
+
+
+def load_allowlist():
+    if not ALLOWLIST.exists():
+        return set()
+    try:
+        data = json.loads(ALLOWLIST.read_text(encoding="utf-8"))
+    except Exception:
+        return set()
+    return {tuple(e) for e in data.get("allow", [])}
+
+
+def finding_key(skill, cat, rel):
+    return (skill, cat or WARN_CAT_DEFAULT, rel or "")
+
+
+def apply_allowlist(findings):
+    """Split WARN findings into (allowed, new_unmatched, stale_entries)."""
+    allow = load_allowlist()
+    allowed, new_unmatched = [], []
+    seen_keys = set()
+    for f in findings:
+        if f["sev"] != WARN:
+            continue
+        key = finding_key(f["skill"], f.get("cat"), f.get("rel"))
+        seen_keys.add(key)
+        if key in allow:
+            allowed.append(f)
+        else:
+            new_unmatched.append(f)
+    stale = sorted(allow - seen_keys)
+    return allowed, new_unmatched, stale
+
+
 # machine username (resolved at runtime; repo is public -> must never appear in shared stores)
 USERNAME = os.environ.get("USERNAME") or os.environ.get("USER") or ""
 
@@ -82,7 +132,9 @@ def audit_skill(name: str):
     """L0 + L1 for one skill folder. Returns list of findings."""
     f = SK / name
     findings = []
-    def add(sev, msg): findings.append({"level": "L0/L1", "skill": name, "sev": sev, "msg": msg})
+    def add(sev, msg, cat=None, rel=None):
+        findings.append({"level": "L0/L1", "skill": name, "sev": sev, "msg": msg,
+                         "cat": cat, "rel": rel})
 
     if not f.is_dir():
         add(CRIT, f"skill folder missing: {f}"); return findings
@@ -132,11 +184,13 @@ def audit_skill(name: str):
     for i, (lang, body) in enumerate(fenced_blocks(text)):
         if not body.strip():
             add(INFO, f"empty fenced block #{i} (lang={lang})")
-        for pat in DESTRUCTIVE + EXFIL + SECRET + HARDCODED_PATH:
-            if re.search(pat, body):
-                add(WARN, f"fenced block #{i} ({lang}) pattern: {pat}")
+        for cat, pats in PATTERN_CATS:
+            for pat in pats:
+                if re.search(pat, body):
+                    add(WARN, f"fenced block #{i} ({lang}) pattern: {pat}", cat=cat, rel=pat)
         if USERNAME and re.search(re.escape(USERNAME), body):
-            add(WARN, f"fenced block #{i} ({lang}) contains machine username `{USERNAME}`")
+            add(WARN, f"fenced block #{i} ({lang}) contains machine username `{USERNAME}`",
+                cat="username", rel=USERNAME)
 
     # scripts/ dir: syntax check each (no working-tree pollution: compile, no pyc)
     sd = f / "scripts"
@@ -154,11 +208,13 @@ def audit_skill(name: str):
                 body = sf.read_text(encoding="utf-8", errors="replace")
             except Exception:
                 continue
-            for pat in DESTRUCTIVE + EXFIL + SECRET + HARDCODED_PATH:
-                if re.search(pat, body):
-                    add(WARN, f"{sf.name}: pattern {pat}")
+            for cat, pats in PATTERN_CATS:
+                for pat in pats:
+                    if re.search(pat, body):
+                        add(WARN, f"{sf.name}: pattern {pat}", cat=cat, rel=pat)
             if USERNAME and re.search(re.escape(USERNAME), body):
-                add(WARN, f"{sf.name}: contains machine username `{USERNAME}`")
+                add(WARN, f"{sf.name}: contains machine username `{USERNAME}`",
+                    cat="username", rel=USERNAME)
     return findings
 
 
@@ -360,7 +416,15 @@ def main():
     sub.add_parser("categories")
     sub.add_parser("all")
     sub.add_parser("topology")
-    sub.add_parser("climb")
+    s_climb = sub.add_parser("climb")
+    s_climb.add_argument("--strict", action="store_true",
+                         help="treat new (un-allowlisted) WARNs and stale allowlist "
+                              "entries as failures -> enforces 0/0 across climb")
+    s_allow = sub.add_parser("allowlist",
+                             help="(re)generate scripts/warn_allowlist.json from "
+                                  "current WARN findings (review-then-commit)")
+    s_allow.add_argument("--write", action="store_true",
+                         help="write the allowlist file (default: print only)")
     sub.add_parser("report")
     args = ap.parse_args()
 
@@ -411,11 +475,47 @@ def main():
             r = subprocess.run([sys.executable, str(ROOT / "scripts" / "check_skill_mirror_parity.py")],
                                capture_output=True, text=True)
             print("   check_skill_mirror_parity.py:", "OK" if r.returncode == 0 else "FAIL")
-        print(f"\n=== CLIMB COMPLETE: {total_crit} CRITICAL, {total_warn} WARN ===")
-        sys.exit(1 if total_crit else 0)
+        # WARN allowlist enforcement (mechanical coherence): only WARNs that are
+        # explicitly reviewed are tolerated. --strict turns any new/un-allowed
+        # WARN and any stale allowlist entry into a failure -> climb is 0/0.
+        allowed, new_unmatched, stale = apply_allowlist(
+            audit_categories() + run_all()[2] + audit_topology())
+        if new_unmatched:
+            print(f"\n!!! {len(new_unmatched)} NEW (un-reviewed) WARN(s) not in allowlist:")
+            for x in new_unmatched:
+                print(f"    {x['skill']} [{x.get('cat')}] {x['msg']}")
+        if stale:
+            print(f"\n!!! {len(stale)} STALE allowlist entr(y/ies) — no matching finding:")
+            for e in stale:
+                print(f"    {e}")
+        print(f"\n=== CLIMB COMPLETE: {total_crit} CRITICAL, {total_warn} WARN "
+              f"({len(allowed)} allowed, {len(new_unmatched)} new) ===")
+        failed = total_crit > 0 or (args.strict and (new_unmatched or stale))
+        if new_unmatched or stale:
+            print("WARN allowlist drift detected"
+                  + (" (strict -> FAIL)" if args.strict else " (non-strict: tolerated)"))
+        sys.exit(1 if failed else 0)
 
-    elif args.cmd == "report":
-        print(REPORT.read_text() if REPORT.exists() else "no report yet")
+    elif args.cmd == "allowlist":
+        findings = audit_categories() + run_all()[2] + audit_topology()
+        warns = [f for f in findings if f["sev"] == WARN]
+        entries = sorted({finding_key(f["skill"], f.get("cat"), f.get("rel"))
+                          for f in warns})
+        payload = {
+            "_comment": "Reviewed WARN allowlist (mechanical coherence). Each entry is "
+                        "(skill, category, regex-source). A new WARN not listed here is an "
+                        "UNREVIEWED risk and fails `climb --strict`. An entry with no "
+                        "matching finding is STALE and should be pruned. Regenerate with "
+                        "`python scripts/deep_audit.py allowlist --write` AFTER reviewing.",
+            "allow": [list(e) for e in entries],
+        }
+        text_out = json.dumps(payload, indent=2, ensure_ascii=False) + "\n"
+        if args.write:
+            ALLOWLIST.write_text(text_out, encoding="utf-8")
+            print(f"wrote {ALLOWLIST} ({len(entries)} entries)")
+        else:
+            print(text_out)
+        sys.exit(0)
 
 
 if __name__ == "__main__":

