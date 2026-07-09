@@ -2,8 +2,8 @@
   "version": 1,
   "name": "skill-playground",
   "description": "Curated collection of 240 verified skills spanning testing, architecture, design review, repository intelligence, documentation, code quality, engineering workflow, and long-term engineering judgment.",
-  "total_skills": 240,
-  "custom_skills": 64,
+  "total_skills": 241,
+  "custom_skills": 65,
   "community_skills": 176,
   "meta_skills": 0,
   "community_skill_names": [
@@ -255,7 +255,8 @@
       "engineering-phase-detector",
       "assumption-and-bias-check",
       "systems-thinking",
-      "compositional-deep-audit"
+      "compositional-deep-audit",
+      "engineering-learning-lifecycle"
     ],
     "security": [
       "spring-security-patterns",

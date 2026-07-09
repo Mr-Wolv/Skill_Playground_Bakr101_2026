@@ -1,6 +1,6 @@
 # Skill Playground — Documentation
 
-> Navigation hub for the **Skill Playground** skill catalog: 240 verified skills (64 custom), mirrored with your global agent skill store.
+> Navigation hub for the **Skill Playground** skill catalog: 241 verified skills (65 custom), mirrored with your global agent skill store.
 > Last updated: 2026-07-09
 
 ---
@@ -11,8 +11,8 @@
 |----------|---------------|
 | [README](../README.md) | What this repo is, how to sync it into your agent, and how to contribute a skill. **Read this first.** |
 | [SKILL.md](../SKILL.md) | The root catalog overview and skill categories at a glance. |
-| [Skill Catalog (SDLC Phases)](../SKILL-CATALOG.md) | All 240 skills organized by where they fit in the software development lifecycle. |
-| [Skill Catalog (Domains)](../SKILL-CATALOG-DOMAIN.md) | The 64 custom skills organized by engineering domain. |
+| [Skill Catalog (SDLC Phases)](../SKILL-CATALOG.md) | All 241 skills organized by where they fit in the software development lifecycle. |
+| [Skill Catalog (Domains)](../SKILL-CATALOG-DOMAIN.md) | The 65 custom skills organized by engineering domain. |
 | [SDLC Phrase Cheatsheet](../SDLC-PHRASE-CHEATSHEET.md) | "Say this → get that" — natural-language phrases that map to specific skills. |
 
 ## How to use the skills

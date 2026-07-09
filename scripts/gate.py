@@ -55,18 +55,24 @@ def _run(label: str, cmd: list[str], required: bool = True) -> int:
 
 
 def _pytest_cmd() -> list[str]:
-    """pytest invocation, hermetic either way.
+    """pytest invocation, hermetic and flake-free.
 
     pytest is a locked dev dependency (dependency-groups.dev in pyproject.toml,
-    pinned in uv.lock). We run it via `uv run [--offline] pytest` — NEVER
-    `uv run --with pytest`, which re-resolves the wheel from the network on
-    every call and hangs on flaky connections. The dev group is installed once
-    via `uv sync --dev`; after that offline is hermetic and instant.
+    pinned in uv.lock). We run it via the synced `.venv` interpreter directly
+    (`<.venv>/python -m pytest`) when the venv exists — this bypasses `uv run`
+    entirely and removes any chance of a network re-resolution hang.
 
-    On GitHub Actions the runner is fresh (no uv cache yet) but HAS network,
-    so we allow online resolution there; locally we go offline to avoid the hang.
+    On a fresh CI runner the venv is absent, so we fall back to
+    `uv run [--offline] pytest`. NEVER `uv run --with pytest`, which re-resolves
+    the wheel from the network on every call and hangs on flaky links.
     """
-    offline = not __import__("os").environ.get("GITHUB_ACTIONS")
+    import os
+    from pathlib import Path
+
+    venv_py = Path(ROOT, ".venv", "Scripts", "python.exe")
+    if venv_py.exists():
+        return [str(venv_py), "-m", "pytest", "-q"]
+    offline = not os.environ.get("GITHUB_ACTIONS")
     cmd = ["uv", "run"]
     if offline:
         cmd += ["--offline", "--no-sync"]

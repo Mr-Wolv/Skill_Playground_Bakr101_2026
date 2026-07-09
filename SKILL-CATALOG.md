@@ -1,4 +1,4 @@
-# SDLC Skills Catalog — 240 Skills
+# SDLC Skills Catalog — 241 Skills
 
 > **Mirrored with the global skill store**
 > 🔄 Verified: 2026-07-09
@@ -385,6 +385,7 @@ This repository includes workflow-oriented and orchestration-focused skills, but
 | Skill | Source | What it does |
 |-------|--------|-------------|
 | `capability-orchestrator` | **custom** | Select, sequence, and compose capabilities into an executable plan for a multi-phase request |
+| `engineering-learning-lifecycle` | **custom** | Post-task reflection + decision gate; composes existing skills, defaults to "no change" |
 | `capability-router` | **custom** | Map a request to the right capability(s) by SDLC phase |
 | `engineering-phase-detector` | **custom** | Detect which SDLC phase(s) a request or artifact is operating in |
 | `assumption-and-bias-check` | **custom** | Surface hidden assumptions, cognitive bias, and overconfidence before a decision stands |
@@ -397,9 +398,9 @@ This repository includes workflow-oriented and orchestration-focused skills, but
 | Category | Count |
 |----------|-------|
 | Community skills | 176 |
-| Custom skills | 64 |
+| Custom skills | 65 |
 | Meta/workflow skills | present in repository but not exhaustively separated here |
-| **Total** | **240** |
+| **Total** | **241** |
 
 This catalog is the canonical SDLC-phase view of the full repository skill set.
 

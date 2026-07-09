@@ -1,9 +1,9 @@
 # Domain Engineering Catalog — Custom Skills
 
-> **64 custom skills organized by engineering domain**
-> 📚 [Documentation Index](docs/index.md) | [SDLC Catalog](SKILL-CATALOG.md) (full 240-skill listing) | [Cheatsheet](SDLC-PHRASE-CHEATSHEET.md) | [Repo Root](SKILL.md)
+> **65 custom skills organized by engineering domain**
+> 📚 [Documentation Index](docs/index.md) | [SDLC Catalog](SKILL-CATALOG.md) (full 241-skill listing) | [Cheatsheet](SDLC-PHRASE-CHEATSHEET.md) | [Repo Root](SKILL.md)
 
-> This catalog lists the **64 custom skills** organized by engineering domain.
+> This catalog lists the **65 custom skills** organized by engineering domain.
 > For the complete 240-skill listing, see [SKILL-CATALOG.md](SKILL-CATALOG.md).
 
 > **Scope:** this catalog covers the 64 curated custom skills only. The 176 community
@@ -209,6 +209,7 @@
 | `clean-code-principles` | Simplicity and maintainability |
 | `clean-architecture-principles` | Long-term thinking at the architecture level |
 | `capability-orchestrator` | Select, sequence, compose engineering capabilities into a plan |
+| `engineering-learning-lifecycle` | Post-task reflection + decision gate; composes existing skills, defaults to "no change" |
 | `capability-router` | Route a request to the right capability by SDLC phase |
 | `engineering-phase-detector` | Detect the active SDLC phase of a request or artifact |
 | `assumption-and-bias-check` | Surface hidden assumptions, bias, and overconfidence |
@@ -245,9 +246,9 @@ These operate as orchestration or guidance layers rather than narrow engineering
 
 | Category | Count |
 |----------|-------|
-| Domain catalog entries | 64 custom skills |
+| Domain catalog entries | 65 custom skills |
 | Meta/workflow skills | present in repository but not exhaustively enumerated here |
-| **Repository total** | **240 verified skills** |
+| **Repository total** | **241 verified skills** |
 
 ---
 

@@ -245,9 +245,9 @@ class TestExpectedSnippets:
         rm = repo / "README.md"
         orig = rm.read_bytes()
         try:
-            _patch(rm, "240 skills", "0 skills", count=0)
+            _patch(rm, "241 skills", "0 skills", count=0)
             errs = vc.validate(repo)
-            assert any("README.md missing expected text: 240 skills" in e for e in errs)
+            assert any("README.md missing expected text: 241 skills" in e for e in errs)
         finally:
             rm.write_bytes(orig)
 
@@ -259,9 +259,9 @@ class TestCatalogSummaryCounts:
         cat = repo / "SKILL-CATALOG.md"
         orig = cat.read_bytes()
         try:
-            _patch(cat, "| Custom skills | 64 |", "| Custom skills | 62 |")
+            _patch(cat, "| Custom skills | 65 |", "| Custom skills | 63 |")
             errs = vc.validate(repo)
-            assert any("SKILL-CATALOG.md Summary 'Custom skills'=62 but expected 64" in e
+            assert any("SKILL-CATALOG.md Summary 'Custom skills'=63 but expected 65" in e
                        for e in errs)
         finally:
             cat.write_bytes(orig)
@@ -270,9 +270,9 @@ class TestCatalogSummaryCounts:
         cat = repo / "SKILL-CATALOG.md"
         orig = cat.read_bytes()
         try:
-            _patch(cat, "| **Total** | **240** |", "| **Total** | **238** |")
+            _patch(cat, "| **Total** | **241** |", "| **Total** | **239** |")
             errs = vc.validate(repo)
-            assert any("SKILL-CATALOG.md Summary '**Total**'=238 but expected 240" in e
+            assert any("SKILL-CATALOG.md Summary '**Total**'=239 but expected 241" in e
                        for e in errs)
         finally:
             cat.write_bytes(orig)
