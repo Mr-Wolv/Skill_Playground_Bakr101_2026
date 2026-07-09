@@ -109,7 +109,17 @@ def assert_merged_topology() -> None:
     """
     if os.environ.get("CI") or os.environ.get("GITHUB_ACTIONS"):
         return
-    b, c = global_skills_dir(), runtime_skills_dir()
+    try:
+        b, c = global_skills_dir(), runtime_skills_dir()
+    except Exception as e:
+        # A failure to even RESOLVE B/C is itself a topology break (e.g. HOME
+        # / profile vars unset). Fail loud with context instead of an opaque
+        # RuntimeError traceback that could mask a real store split.
+        raise AssertionError(
+            f"Oscillation guard could not resolve store paths ({type(e).__name__}: {e}). "
+            f"B and C are NOT confirmed merged — fix the environment "
+            f"(HERMES_HOME / USERPROFILE / HOME must be set)."
+        ) from e
     assert b.resolve() == c.resolve(), (
         f"Oscillation guard tripped: global (B) resolves to {b} but runtime (C) "
         f"resolves to {c}. They MUST be the same physical directory (set "

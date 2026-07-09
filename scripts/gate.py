@@ -57,19 +57,45 @@ def _run(label: str, cmd: list[str], required: bool = True) -> int:
 def _pytest_cmd() -> list[str]:
     """pytest invocation, hermetic either way.
 
-    On GitHub Actions the runner is fresh (no uv cache) but HAS network, so
-    we provision pytest online. Locally the uv cache already holds pytest and
-    network is flaky, so we go offline to avoid hanging on index resolution.
+    pytest is a locked dev dependency (dependency-groups.dev in pyproject.toml,
+    pinned in uv.lock). We run it via `uv run [--offline] pytest` — NEVER
+    `uv run --with pytest`, which re-resolves the wheel from the network on
+    every call and hangs on flaky connections. The dev group is installed once
+    via `uv sync --dev`; after that offline is hermetic and instant.
+
+    On GitHub Actions the runner is fresh (no uv cache yet) but HAS network,
+    so we allow online resolution there; locally we go offline to avoid the hang.
     """
     offline = not __import__("os").environ.get("GITHUB_ACTIONS")
     cmd = ["uv", "run"]
     if offline:
         cmd += ["--offline", "--no-sync"]
-    cmd += ["--with", "pytest", "pytest", "-q"]
+    cmd += ["pytest", "-q"]
     return cmd
 
 
+def _merged_store_guard() -> int:
+    """Belt-and-suspenders: assert the merged-store invariant at commit time.
+
+    Calls scripts/check_merged_topology.py, which only FAILS loudly where the
+    merged invariant is SUPPOSED to hold (HERMES_SKILLS_HOME set — i.e. this
+    machine). On CI / a fresh checkout HERMES_SKILLS_HOME is unset so it is a
+    no-op (CI stays the independent auditor). This is the local-commit layer that
+    makes a B<->C split structurally impossible to commit silently.
+    """
+    return _run(
+        "merged-store guard (B == C)",
+        [sys.executable, str(SCRIPTS / "check_merged_topology.py")],
+        True,
+    )
+
+
 def main() -> int:
+    # Merged-store (oscillation-nuke) guard first. Self-skips in CI / when
+    # HERMES_SKILLS_HOME is unset; fails loud where the invariant must hold.
+    if _merged_store_guard() != 0:
+        print("\nGATE FAILED — commit blocked (merged-store guard).")
+        return 1
     steps = [
         ("pytest regression", _pytest_cmd(), True),  # always required (pure repo-internal)
         ("catalog coherence", [sys.executable, str(SCRIPTS / "validate_catalog.py")],

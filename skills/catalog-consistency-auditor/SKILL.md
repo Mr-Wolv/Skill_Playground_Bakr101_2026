@@ -135,7 +135,9 @@ even when prose docs contradict each other. Convergence findings are almost alwa
 the *documents*, not the validator.
 
 Reusable techniques that caught real drift (cheap to re-run; see
-`references/convergence-audit-recipe.md` for the scripted versions):
+`references/convergence-audit-recipe.md` for the scripted versions and
+`references/merge-b-c-one-store.md` for the root-cause B<->C oscillation fix).
+
 
 1. **Source-of-truth contradiction check.** Grep every governance/doc for "source of
    truth" and confirm they agree on WHICH directory is authoritative. This session found
@@ -159,22 +161,40 @@ Reusable techniques that caught real drift (cheap to re-run; see
 
 ### Operational pitfalls (learned the hard way)
 
-- **EDITING SHARED SKILLS: write to B, never to C (this is the #1 oscillation source).**
-  The source of truth is `B = ~/.agents/skills`. On a Windows install, Hermes's
-  runtime load path `C = <LOCALAPPDATA>/hermes/skills` resolves to the **same
-  directory** as the Hermes *private* store. `skill_manage` (create/patch/edit)
-  defaults to writing into `~/AppData/Local/hermes/skills` = **C**, NOT B. If you
-  improve an *existing shared/curated* skill (one already under B) via `skill_manage`
-  or by writing into the runtime store, C diverges from B and the very next
-  `gate.py` throws an L7 `content-mismatch` CRITICAL on that skill — the runtime/global
-  oscillation. RULE: when editing a shared skill, write the change directly into
-  `B` with plain file tools on `~/.agents/skills/<name>/`, NOT via `skill_manage`.
-  Then run the sync chain so repo + C regenerate from B:
-  `python scripts/sync_global_to_repo.py --apply` THEN
-  `python scripts/sync_runtime_to_mirror.py --apply`.
-  The ~23 private skills living only in C are legitimately private (the gate marks
-  them INFO/expected) — never promote those into B. Only brand-new *private/experimental*
-  skills belong in C via `skill_manage`.
+- **B AND C ARE ONE STORE (post-2026-07 core nuke) — the old "write to B, never to C" rule is RETIRED.**
+  The recurring B↔C oscillation was NEVER fixed by hand-promoting C→B; that was
+  symptom-patching. The real root cause: B, C, AND the `~/.agents/skills` fallback
+  resolved to **three distinct physical directories** (B=`~/.agents/skills` 240,
+  C=`<LOCALAPPDATA>/hermes/skills` 263 nested, plus a separate real fallback
+  `~/.agents/skills`). The runtime auto-wrote into C while B was a distinct place
+  nobody wrote to; the one-directional additive sync (B→C, skipping differing
+  content) meant C's versions could never reconcile back. The structural fix:
+  junction `~/.agents/skills` → `<LOCALAPPDATA>/hermes/skills` (back up the 240
+  first) AND make `global_skills_dir()`/`runtime_skills_dir()` `.resolve()` so B
+  and C are string-identical. Now the runtime IS the source of truth — `skill_manage`
+  AND file tools both land in the single store, so no second place can diverge.
+  `assert_merged_topology()` in `scripts/skill_paths.py` fails the gate loudly if B
+  and C ever resolve to different directories again. **Do NOT reintroduce
+  "write to B not C" advice** — that rule was itself the oscillation source.
+- **Detect multi-directory divergence before "fixing" anything.** When gate.py
+  reports an L7 `runtime diff vs B`, do not immediately copy C→B. First run
+  `python -c "import sys;sys.path.insert(0,'scripts');import skill_paths as s;print(s.global_skills_dir());print(s.runtime_skills_dir())"` and compare the RESOLVED paths. If they point at two different real dirs (or B falls back to a separate `~/.agents/skills`), the topology itself is split — the durable fix is the junction/`.resolve()` merge above, not a content copy. A content copy only treats the symptom; the next reload re-diverges.
+- **L6 "in B but not in repo" WARNs are expected for private-by-default skills — keep the allowlist CI-stable.**
+  The merged store exposes global-only skills the repo legitimately excludes
+  (private-by-default union model). If the L6 check emits a WARN for every
+  `extra_b` skill, the local finding set grows and a regenerated `warn_allowlist.json`
+  becomes STALE on CI (where B is empty) → `TestWarnAllowlist` fails with
+  "stale allowlist entries". Fix in `scripts/deep_audit.py`: L6 should WARN only for
+  opted-in skills (`scripts/import.allow`); all other `extra_b` are expected (like
+  L7's `extra_c`, already INFO). Then regenerate the allowlist with
+  `python scripts/deep_audit.py allowlist --write` — it collapses to the
+  repo-derived, CI-identical set (~42 entries, not 117). The WARN contract must be
+  repo-derived so local and CI agree.
+- **"Nuke it at the core" means remove the structural contradiction, not patch symptoms.**
+  When the user insists on a root-cause fix ("whatever the cost"), prefer the
+  one-store/one-truth collapse (junction + `.resolve()` + guard) over repeated
+  C→B promotion. Promotion is a stopgap that the next reload undoes. The merged
+  topology + `assert_merged_topology()` guard is the only durable end-state.
 - **Pre-commit gate blocks foreground commits.** If the repo installs a pre-commit hook
   that runs the full `gate.py` (~3 min on a 240-skill tree), a foreground `git commit`
   in a 60s/180s terminal will time out and abort the commit — leaving changes staged but
@@ -188,14 +208,17 @@ Reusable techniques that caught real drift (cheap to re-run; see
   (`scripts/BASELINE_MANIFEST.sha`) drifts and `TestManifestTripwire` fails. Re-pin with
   `UPDATE_BASELINE=1 uv run --with pytest pytest tests/test_deep_qc.py::TestManifestTripwire`,
   then confirm it passes WITHOUT the flag. Only do this for intended changes.
-- **L7 runtime↔global drift is in scope.** `gate.py` runs `deep_audit.py climb --strict`
-  which checks the runtime store (C) against the source of truth (B = `~/.agents/skills`).
-  A `file-set-mismatch` / `content-mismatch` on a *shared* skill means the runtime diverged
-  from the source. Resolve it by making the runtime match the source — usually by
-  publishing the newer/better copy into B, exporting to the repo, then re-syncing runtime
-  (`python scripts/sync_runtime_to_mirror.py --apply`). Do NOT delete a useful file from
-  the runtime to force parity; if B is behind, promote the improvement into B. The 80+
-  `extra_in_C` skills are private/runtime-only and are INFO by design — leave them.
+- **L7 runtime↔global drift means the topology is split — merge, don't promote.**
+  `gate.py` runs `deep_audit.py climb --strict` which checks the runtime store (C)
+  against the source of truth (B). A `file-set-mismatch` / `content-mismatch` on a
+  *shared* skill historically meant "runtime diverged from source; promote C→B".
+  That promotion pattern is now OBSOLETE: B and C are intentionally the SAME
+  physical directory (junction + `.resolve()`), so a genuine L7 mismatch means
+  either (a) B and C resolved to different dirs — re-apply the junction/`.resolve()`
+  merge — or (b) a real content fault in a shared skill, which the manifest
+  tripwire catches. The 80+ `extra_in_C` skills are private/runtime-only and are
+  INFO by design — leave them. Do NOT reintroduce the "copy C into B" dance; if
+  B != C on path, fix the topology, not the bytes.
 - **f-string regex quantifier footgun.** Inside `rf"..."` a `*` is the repetition
   operator, so `\*{0,2}` collapses to `\*(0, 2)` (a buggy pattern). Use a bracketed
   quantifier `[*]{0,2}` instead, or build the pattern from a plain string. Symptom: a

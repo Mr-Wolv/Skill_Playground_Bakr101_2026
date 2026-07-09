@@ -18,3 +18,23 @@ jobs:
 
       - name: Validate catalog coherence
         run: python scripts/validate_catalog.py
+
+  # Belt-and-suspenders for the merged-store (oscillation-nuke) invariant.
+  # Only meaningful on THIS machine where HERMES_SKILLS_HOME is set (the
+  # launcher points it at the single merged store). On plain CI it is unset,
+  # so this job is skipped and CI stays the independent auditor. If a future
+  # change ever splits B and C again, this job FAILS loudly.
+  merged-store-guard:
+    runs-on: ubuntu-latest
+    if: ${{ env.HERMES_SKILLS_HOME != '' }}
+    env:
+      HERMES_SKILLS_HOME: ${{ vars.HERMES_SKILLS_HOME || secrets.HERMES_SKILLS_HOME || '' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Assert merged store (B == C)
+        run: python scripts/check_merged_topology.py

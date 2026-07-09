@@ -23,6 +23,7 @@ and need no restore. They assert:
 
 import sys
 from pathlib import Path
+import os
 
 import pytest
 
@@ -30,6 +31,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 import sync_global_to_repo as sync  # noqa: E402
 import check_skill_mirror_parity as parity  # noqa: E402
+import skill_paths as sp  # noqa: E402
 
 
 def _make_skill(base: Path, name: str, content: str = "body\n"):
@@ -152,3 +154,38 @@ class TestCheckParity:
         missing, extra, diffs = parity.check_parity(tmp_path / "repo", tmp_path / "global")
         assert len(diffs) == 1
         assert diffs[0][1] == "file-set-mismatch"
+
+
+class TestMergedTopology:
+    """Belt-and-suspenders for the oscillation-nuke invariant.
+
+    assert_merged_topology() must PASS when global_skills_dir() (B) and
+    runtime_skills_dir() (C) resolve to the SAME physical directory, and
+    RAISE AssertionError when they differ. The two synthetic tests patch the
+    resolvers via monkeypatch (auto-restored), so the live test below sees
+    the REAL resolvers (the junction: B resolves into C on this machine).
+    """
+
+    def test_passes_when_b_equals_c(self, monkeypatch):
+        anchor = Path(__file__).resolve().parent
+        monkeypatch.setattr(sp, "global_skills_dir", lambda: anchor)
+        monkeypatch.setattr(sp, "runtime_skills_dir", lambda: anchor)
+        sp.assert_merged_topology()  # must not raise
+
+    def test_fails_when_b_differs_from_c(self, monkeypatch):
+        a = Path(__file__).resolve().parent
+        b = a.parent
+        monkeypatch.setattr(sp, "global_skills_dir", lambda: a)
+        monkeypatch.setattr(sp, "runtime_skills_dir", lambda: b)
+        with pytest.raises(AssertionError):
+            sp.assert_merged_topology()
+
+    def test_real_resolvers_agree_on_this_machine(self):
+        # The actual guard, as the commit path runs it (CI self-skips; if no
+        # local catalog B is present it is a no-op). On this machine the
+        # junction makes B resolve into C.
+        if os.environ.get("CI") or os.environ.get("GITHUB_ACTIONS"):
+            return
+        if not sp.global_skills_dir().exists():
+            return
+        sp.assert_merged_topology()
