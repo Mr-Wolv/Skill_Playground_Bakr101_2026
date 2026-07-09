@@ -15,6 +15,33 @@ def read_text(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
 
+def _read(path: Path) -> tuple[str | None, str | None]:
+    """Read text safely. Returns (text, None) on success or (None, error_msg)
+    if the file is missing/unreadable. Keeps validate() crash-free so any
+    drift (corrupt/missing doc) is REPORTED, never thrown."""
+    try:
+        return path.read_text(encoding="utf-8"), None
+    except FileNotFoundError:
+        try:
+            rel = path.relative_to(ROOT)
+        except ValueError:
+            rel = path
+        return None, f"{rel}: missing required file"
+    except OSError as e:
+        return None, f"{path}: unreadable ({e})"
+
+
+def _load_json(path: Path) -> tuple[dict, str | None]:
+    """Load JSON safely. Returns (data, None) or ({}, error_msg)."""
+    text, err = _read(path)
+    if err:
+        return {}, err
+    try:
+        return json.loads(text), None
+    except json.JSONDecodeError as e:
+        return {}, f"{path.name}: invalid JSON ({e})"
+
+
 def validate(root: Path = ROOT) -> list[str]:
     """Return a list of validation errors (empty == PASS).
 
@@ -32,7 +59,10 @@ def validate(root: Path = ROOT) -> list[str]:
     skill_files = sorted(skills_dir.glob("*/SKILL.md"))
     skill_names: list[str] = []
     for file in skill_files:
-        text = read_text(file)
+        text, err = _read(file)
+        if err:
+            fail(err)
+            continue
         if not text.startswith("---\n"):
             fail(f"{file.relative_to(root)}: missing opening frontmatter delimiter")
             continue
@@ -49,10 +79,26 @@ def validate(root: Path = ROOT) -> list[str]:
     fs_skills = sorted(set(skill_names))
     fs_count = len(fs_skills)
 
-    catalog_text = read_text(root / "SKILL-CATALOG.md")
-    domain_text = read_text(root / "SKILL-CATALOG-DOMAIN.md")
-    cheatsheet_text = read_text(root / "SDLC-PHRASE-CHEATSHEET.md")
-    readme_text = read_text(root / "README.md")
+    catalog_text, err = _read(root / "SKILL-CATALOG.md")
+    if err:
+        fail(err)
+        catalog_text = ""
+    domain_text, err = _read(root / "SKILL-CATALOG-DOMAIN.md")
+    if err:
+        fail(err)
+        domain_text = ""
+    cheatsheet_text, err = _read(root / "SDLC-PHRASE-CHEATSHEET.md")
+    if err:
+        fail(err)
+        cheatsheet_text = ""
+    readme_text, err = _read(root / "README.md")
+    if err:
+        fail(err)
+        readme_text = ""
+    skill_md_text, err = _read(root / "SKILL.md")
+    if err:
+        fail(err)
+        skill_md_text = ""
 
     # README only lists skills inside its category table rows (`| ... | ... |`);
     # scanning the whole file would false-positive on command/fence code-spans
@@ -84,7 +130,6 @@ def validate(root: Path = ROOT) -> list[str]:
 
     # SKILL.md "Skill Categories" table lists representative skills in plain-text
     # cells (comma-separated). They must all be real on-disk skills.
-    skill_md_text = read_text(root / "SKILL.md")
     skill_md_repr = set()
     for ln in skill_md_text.splitlines():
         if not ln.strip().startswith("|"):
@@ -105,7 +150,11 @@ def validate(root: Path = ROOT) -> list[str]:
     # named in skills.json (custom categories or community list) or referenced
     # by backtick in one of the catalog/overview docs. A skill present on disk
     # but absent from both is silently undocumented.
-    _jdata = json.loads(read_text(skills_json))
+    _jdata, err = _load_json(skills_json)
+    if err:
+        fail(err)
+        # cannot proceed without the manifest; remaining checks are meaningless
+        return errors
     _json_names = {
         s for arr in _jdata.get("categories", {}).values() for s in arr
     } | set(_jdata.get("community_skill_names", []))
@@ -116,7 +165,9 @@ def validate(root: Path = ROOT) -> list[str]:
         if skill not in mentioned:
             fail(f"orphan skill (on disk, documented nowhere): {skill}")
 
-    data = json.loads(read_text(skills_json))
+    data, err = _load_json(skills_json)
+    if err:
+        return errors
     # custom count is DERIVED from the manifest (not hardcoded) so union sync that
     # adds skills under the "imported" bucket keeps the gate green automatically.
     custom_count = len(
@@ -229,7 +280,10 @@ def validate(root: Path = ROOT) -> list[str]:
     }
 
     for label, snippets in expected_snippets.items():
-        text = read_text(doc_files[label])
+        text, err = _read(doc_files[label])
+        if err:
+            fail(err)
+            continue
         for snippet in snippets:
             if snippet not in text:
                 fail(f"{label} missing expected text: {snippet}")
@@ -252,10 +306,10 @@ if __name__ == "__main__":
     fs_count = len(
         sorted({p.name for p in (root / "skills").glob("*/") if (p / "SKILL.md").exists()})
     )
-    data = json.loads(read_text(root / "skills.json"))
+    _summary, _err = _load_json(root / "skills.json")
     custom_count = len(
-        {s for arr in data.get("categories", {}).values() for s in arr}
-    )
+        {s for arr in _summary.get("categories", {}).values() for s in arr}
+    ) if not _err else 0
     print("VALIDATION PASSED")
     print(f"- filesystem skills: {fs_count}")
     print(f"- custom skills (documented): {custom_count}")

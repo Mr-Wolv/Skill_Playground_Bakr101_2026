@@ -156,3 +156,25 @@ Two layers make the above automatic:
 
 Run `make gate` to self-check before pushing; `make install-hook` to make it
 unavoidable.
+
+## Whole-catalog fuzz — proving `validate_catalog` can't be drifted
+
+`tests/test_catalog_fuzz.py` (Dive 6) materialises a faithful snapshot of the
+committed tree into a tmp dir (copytree of `skills/`, `skills.json`, the root
+docs and the two `docs/*.md` files `validate()` actually reads — never the
+tracked tree) and injects ONE drift at a time across every redundancy axis:
+`skills.json` (drop/rename a category skill, wrong counts, ghosted/omitted/
+overlapping community names, invalid JSON) and the docs/disk (orphan skill
+dir, deleted skill dir, corrupted frontmatter, dropped custom-label row,
+wrong count snippet, missing doc, empty SKILL.md). 14 operators, hundreds of
+trials. Two invariants are asserted for EVERY mutation:
+
+- **CRASH-SAFETY** — `validate()` always returns `list[str]`; it never raises,
+  even on corrupt JSON or a missing required doc. (This caught a real bug: a
+  missing doc left a `None` text and crashed the gate instead of reporting —
+  fixed so `_read` yields `""` + an error on missing files.)
+- **SOUNDNESS** — every genuine drift is REPORTED (non-empty errors). The
+  catalog cannot be silently green-washed into approval.
+
+The fuzz is hermetic (tmp_path + rmtree) and slow on MSYS; run it alone with
+`uv run --with pytest pytest tests/test_catalog_fuzz.py -v` (longer timeout).
