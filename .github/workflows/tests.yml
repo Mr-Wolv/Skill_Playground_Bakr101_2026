@@ -20,3 +20,9 @@ jobs:
 
       - name: Validate catalog coherence
         run: python scripts/validate_catalog.py
+
+      - name: Verify store mirror parity
+        run: python scripts/check_skill_mirror_parity.py
+
+      - name: Compositional deep-audit climb (L3->L8)
+        run: python scripts/deep_audit.py climb

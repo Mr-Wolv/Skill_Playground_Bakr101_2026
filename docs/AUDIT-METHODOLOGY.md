@@ -103,3 +103,35 @@ violations. They are reported, not failed.
 Canonical gates at pass: `validate_catalog.py` consistent,
 `check_skill_mirror_parity.py` FULL_MIRROR_PARITY_CONFIRMED, `pytest` 31
 passed.
+
+## QC hardening — three dives beyond structural green-washing
+
+After the first climb, the audit was extended from *structural* to *behavioral*
+QC so no gate is a rubber stamp. See `tests/test_deep_qc.py`.
+
+- **Dive 1 (negative / mutation):** prove the gates have teeth. Each test
+  injects a broken artifact (dead fenced ref, missing frontmatter, python
+  syntax error, parity file-set/content mismatch) and asserts the relevant
+  gate FAILS. Running these surfaced a **real factory bug**: `deep_audit.
+  fenced_blocks()` left `cur=None` on the opening fence, so every fenced
+  block's body was silently dropped — the harness was blind to fenced-block
+  references and dangerous patterns. Fixed; the climb WARN count is now the
+  true surface (was under-reported).
+- **Dive 2 (behavioral execution):** run the safety-critical tooling as a real
+  subprocess against synthetic trees and assert exact behavior — sync is
+  additive, non-overwriting by default, never deletes repo-extra, dry-run is a
+  no-op; validate passes on a faithful repo and fails on a ghost reference.
+  Also sandbox-execute every *suspicious* embedded script (those that trip the
+  destructive/exfil scan) with the dangerous binaries stubbed, and assert NONE
+  invoked a destructive/exfil call. One vetted self-authored script
+  (`sast-configuration/scripts/run-sast.sh`) is executed end-to-end and
+  asserted to print its documented header.
+- **Dive 3 (CI tripwire + cross-ref graph):** pin a stable `dir_hash` of
+  `skills/` (`scripts/BASELINE_MANIFEST.sha`); any drift fails the run until
+  re-pinned with `UPDATE_BASELINE=1` (or `make qcaudit-baseline`). Build the
+  global reference graph and assert zero dead-ends and no cross-skill cycles;
+  project-relative example paths (`../src/...`) are correctly excluded.
+
+All QC tests are hermetic (synthetic `tmp_path`, sandboxed execution, no live
+stores touched). Run with `uv run --with pytest pytest`. CI also runs
+`deep_audit.py climb`, `validate_catalog.py`, and `check_skill_mirror_parity.py`.

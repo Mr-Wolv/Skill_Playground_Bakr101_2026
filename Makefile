@@ -6,7 +6,7 @@ UV := uv
 
 .PHONY: verify test validate parity sync shortcut clean
 
-# Full regression suite (catalog + sync/parity + import.allow parser).
+# Full regression suite (catalog + sync/parity + import.allow parser + QC dives).
 verify test:
 	$(UV) run --with pytest pytest
 
@@ -16,6 +16,15 @@ validate:
 
 parity:
 	$(PYTHON) scripts/check_skill_mirror_parity.py
+
+# Compositional deep-audit climb (L3->L8) — the standing QC gate.
+qcaudit:
+	$(PYTHON) scripts/deep_audit.py climb
+
+# Pin/re-pin the manifest tripwire baseline after an intentional change:
+#   make qcaudit-baseline
+qcaudit-baseline:
+	UPDATE_BASELINE=1 $(UV) run --with pytest pytest tests/test_deep_qc.py::TestManifestTripwire
 
 # End-to-end dry-run shortcut (no writes unless --apply).
 shortcut:

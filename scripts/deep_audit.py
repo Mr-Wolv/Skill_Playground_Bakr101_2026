@@ -56,18 +56,25 @@ USERNAME = os.environ.get("USERNAME") or os.environ.get("USER") or ""
 
 
 def fenced_blocks(md: str):
+    """Yield (lang, body) for each ``` fenced block.
+
+    State machine: cur is None while OUTSIDE a fence, a list while INSIDE.
+    Opening a fence starts a new list; closing flushes it. Prose before the
+    first fence is correctly ignored (cur is None).
+    """
     out, cur, lang = [], None, None
     for line in md.splitlines():
         m = re.match(r"^```(\w+)?\s*$", line)
         if m:
-            if cur:
-                out.append((lang, "\n".join(cur))); cur, lang = [], None
+            if cur is None:
+                cur, lang = [], m.group(1)       # start of a block
             else:
-                lang = m.group(1)
+                out.append((lang, "\n".join(cur)))  # end of a block
+                cur, lang = None, None
         elif cur is not None:
             cur.append(line)
-    if cur:
-        out.append((lang, "\n".join(cur)))
+    if cur is not None:
+        out.append((lang, "\n".join(cur)))       # unterminated final block
     return out
 
 
