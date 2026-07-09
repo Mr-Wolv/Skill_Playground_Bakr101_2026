@@ -103,6 +103,14 @@ def apply_allowlist(findings):
 
 # machine username (resolved at runtime; repo is public -> must never appear in shared stores)
 USERNAME = os.environ.get("USERNAME") or os.environ.get("USER") or ""
+# The username-leak check is a LOCAL-MACHINE privacy guard: it exists to stop
+# the curator's real username from being committed to a PUBLIC repo. On CI the
+# runner's username (e.g. `runner`, `root`) is NOT a privacy leak and appears
+# legitimately in CI docs, so flagging it there is pure noise that would break
+# the shared strict allowlist. Only treat the username as a leak target when it
+# is a "real" human name (not a known CI/service account).
+_CI_USERNAMES = {"runner", "runneradmin", "root", "github", "github-actions", "circleci", "Administrator", "container"}
+LEAK_USER = USERNAME if (USERNAME and USERNAME not in _CI_USERNAMES) else ""
 
 
 def fenced_blocks(md: str):
@@ -188,9 +196,9 @@ def audit_skill(name: str):
             for pat in pats:
                 if re.search(pat, body):
                     add(WARN, f"fenced block #{i} ({lang}) pattern: {pat}", cat=cat, rel=pat)
-        if USERNAME and re.search(re.escape(USERNAME), body):
-            add(WARN, f"fenced block #{i} ({lang}) contains machine username `{USERNAME}`",
-                cat="username", rel=USERNAME)
+        if LEAK_USER and re.search(re.escape(LEAK_USER), body):
+            add(WARN, f"fenced block #{i} ({lang}) contains machine username `{LEAK_USER}`",
+                cat="username", rel=LEAK_USER)
 
     # scripts/ dir: syntax check each (no working-tree pollution: compile, no pyc)
     sd = f / "scripts"
@@ -212,9 +220,9 @@ def audit_skill(name: str):
                 for pat in pats:
                     if re.search(pat, body):
                         add(WARN, f"{sf.name}: pattern {pat}", cat=cat, rel=pat)
-            if USERNAME and re.search(re.escape(USERNAME), body):
-                add(WARN, f"{sf.name}: contains machine username `{USERNAME}`",
-                    cat="username", rel=USERNAME)
+            if LEAK_USER and re.search(re.escape(LEAK_USER), body):
+                add(WARN, f"{sf.name}: contains machine username `{LEAK_USER}`",
+                    cat="username", rel=LEAK_USER)
     return findings
 
 
@@ -360,9 +368,12 @@ def audit_topology():
     # (b) no machine username / C:\Users paths in SHARED stores (privacy + portability).
     # Tightened: only flag a *real* Windows-user path or the resolved username,
     # not the generic `[A-Za-z]:\` drive pattern (it false-positives on f-string
-    # "text:\n{var}" newlines).
-    USER_PATH = re.compile(r"C:\\Users\\" + re.escape(USERNAME) if USERNAME else r"(?!x)x")
-    for store_name, store in [("repo", SK), ("B", B), ("C", C)]:
+    # "text:\n{var}" newlines). The username scan is a LOCAL-MACHINE privacy
+    # guard: on CI the runner username (`runner`) is not a leak, so use
+    # LEAK_USER (empty on CI) and skip the scan entirely when B is absent.
+    USER_PATH = re.compile(r"C:\\Users\\" + re.escape(LEAK_USER) if LEAK_USER else r"(?!x)x")
+    scanned_stores = [("repo", SK)] if not B.exists() else [("repo", SK), ("B", B), ("C", C)]
+    for store_name, store in scanned_stores:
         if not store.exists():
             continue
         for p in store.rglob("*"):
@@ -372,10 +383,10 @@ def audit_topology():
                 t = p.read_text(encoding="utf-8", errors="replace")
             except Exception:
                 continue
-            if USERNAME and re.search(re.escape(USERNAME), t):
+            if LEAK_USER and re.search(re.escape(LEAK_USER), t):
                 findings.append({"level": "L8", "skill": f"{store_name}/{p.relative_to(store)}",
-                                 "sev": WARN, "msg": f"contains machine username `{USERNAME}`"})
-            if USERNAME and USER_PATH.search(t):
+                                 "sev": WARN, "msg": f"contains machine username `{LEAK_USER}`"})
+            if LEAK_USER and USER_PATH.search(t):
                 findings.append({"level": "L8", "skill": f"{store_name}/{p.relative_to(store)}",
                                  "sev": CRIT, "msg": f"hardcoded C:\\Users\\{USERNAME} path"})
     return findings
