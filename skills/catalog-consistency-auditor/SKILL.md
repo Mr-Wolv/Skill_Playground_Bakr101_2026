@@ -142,12 +142,17 @@ Exclude historical report files (VERSION-1.0-*.md, AUDIT-COMPLETENESS.md) from
 regeneration — they record point-in-time numbers and must not be rewritten. Scripted
 recipe + the exact file map: references/automate-derived-counts.md.
 
-PITFALL — generator corruption from external syncs. A count generator that reads ONLY
-skills/ + skills.json is safe. But a separate sync_global_to_repo.py --force can
-OVERWRITE root docs (README.md/SKILL.md) from the STORE copy, which may be stale (this
-session produced a '0 skills' README). If docs show a wrong count after a sync/force,
-restore from git and re-run the derive-and-regenerate step; do NOT re-edit literals by
-hand. The generator never pulls from the store, so it cannot reintroduce the bad value.
+PITFALL — `sync_global_to_repo.py --force` is a SILENT NO-OP without `--apply`. The
+apply block is nested inside `if args.apply`, so `--force` alone prints a plan and writes
+nothing (you burn a run). Correct convergence invocation under merged (B==C) topology:
+`python scripts/sync_global_to_repo.py --apply --force` (takes a timestamped backup at
+`skills.backup-<ts>` first). It only overwrites SKILL DIRS whose content differs — root
+docs (README.md/SKILL.md) are NOT touched, so count governance stays with
+`refresh_derived_catalog.py`. Because the store IS the truth post-merge, `--apply --force`
+is the SAFE way to converge a lagging export to the truth; do NOT hand-re-edit drifted
+literals after a sync, re-run `refresh --apply`. The older "restore from git, the store
+may be stale" warning was written pre-merge when B≠C — in merged topology the store cannot
+be stale relative to itself.
 
 ## Convergence audit (the "many truths → one truth" pass)
 
@@ -164,9 +169,11 @@ Run the repo's own QC gate first and report its result as ground truth. A green
 even when prose docs contradict each other. Convergence findings are almost always in
 the *documents*, not the validator.
 
-Reusable techniques that caught real drift (cheap to re-run; see
+reusable techniques that caught real drift (cheap to re-run; see
 `references/convergence-audit-recipe.md` for the scripted versions and
 `references/merge-b-c-one-store.md` for the root-cause B<->C oscillation fix).
+Recovery recipe when an in-place mutation test corrupts the working tree:
+`references/test-suite-hygiene.md`.
 
 
 1. **Source-of-truth contradiction check.** Grep every governance/doc for "source of
@@ -236,8 +243,9 @@ Reusable techniques that caught real drift (cheap to re-run; see
 - **Manifest tripwire re-pin is an intended change, not a bug.** If you add/rename/modify
   a tracked file (e.g. publish a stranded `references/*.md`), the manifest hash baseline
   (`scripts/BASELINE_MANIFEST.sha`) drifts and `TestManifestTripwire` fails. Re-pin with
-  `UPDATE_BASELINE=1 uv run --with pytest pytest tests/test_deep_qc.py::TestManifestTripwire`,
-  then confirm it passes WITHOUT the flag. Only do this for intended changes.
+  `UPDATE_BASELINE=1 .venv/Scripts/python -m pytest -q -p no:cacheprovider tests/test_deep_qc.py::TestManifestTripwire`,
+  then confirm it passes WITHOUT the flag. The tripwire ALSO fires after an `--apply --force`
+  convergence pull (any `skills/` content change drifts the hash). Only re-pin for intended changes.
 - **L7 runtime↔global drift means the topology is split — merge, don't promote.**
   `gate.py` runs `deep_audit.py climb --strict` which checks the runtime store (C)
   against the source of truth (B). A `file-set-mismatch` / `content-mismatch` on a
@@ -260,6 +268,7 @@ Reusable techniques that caught real drift (cheap to re-run; see
   and the generic pass only touches remaining bare totals. Unit-test this directly
   (feed a doc with a WRONG count, assert it becomes the derived one) — the downstream
   validator catches drift opaquely and late; a generator unit test catches it at source.
+- **A green count guard is NOT proof the guard covers every surface — blind spots pass silently.** A guard built on prose regexes over a *fixed file list* will report CONSISTENT while authoritative artifacts outside that list still contradict the folder set. This session: `refresh_derived_catalog.py --check` passed GREEN while `skills.json` free-text `description` ("240 verified skills") and `SKILL-CATALOG-DOMAIN.md` scope ("64 curated custom skills") + its "complete 240-skill listing" phrasing had all drifted — because the rewriter never touched the JSON description and the domain file's qualified wording ("N curated custom skills", "complete N-skill listing") fell outside the bare `(\d+) skills` rule. Fix: enumerate EVERY count-bearing surface and add a derived-correcting rule for each — JSON `description` (regex `\b\d+ verified skills\b`), the domain catalog's `(\d+) curated custom skills`, and `complete (\d+)-skill listing` (hyphenated, missed by the bare rule). Then prove the fix with a GUARD-LEVEL adversarial test (below). A green `refresh --check` only means "the surfaces I wired up agree" — it cannot assert coverage of a surface you forgot to wire.
 - **The catalog Summary `**Total**` row + the catalog TITLE are easy to miss.** Two
   real bugs shipped hidden until a unit test: (1) the bold Summary row `| **Total** | **N** |`
   needs a regex that consumes the surrounding `**` (`\*{0,2}` on both sides of the digits),
@@ -288,6 +297,10 @@ Reusable techniques that caught real drift (cheap to re-run; see
   `$TEMP/<name>` so parity passes. Fully reversible, zero irreversible action, and
   it satisfies the "use a safety net" directive. Only delete when the user
   explicitly confirms.
+- **Grep for references BEFORE deleting a "stale" artifact — it may be a skill dependency.** A report that looks like dead drift can be referenced from a skill's `references/`. One session found `VERSION-1.0-CONVERGENCE-REPORT.md` looked stale (its 240/64 counts were overtaken by growth) but `skills/catalog-consistency-auditor/references/automate-derived-counts.md` lists it as a frozen historical input — deleting it would break a skill. Correct move when an artifact is referenced: KEEP it and add a `> ⚠️ SUPERSEDED by <newer-artifact>` header pointing at the current file; do NOT delete. This is grep-driven, not assumption-driven, and complements the Reversibility-over-deletion rule above.
+- **Run parity as a SEPARATE gate — count gates and `gate.py` are disjoint in coverage.** `refresh_derived_catalog.py --check` AND `gate.py` were both GREEN while `check_skill_mirror_parity.py` independently caught a `content-mismatch` (the export lagged the truth by 2 learned lines in one skill). None of the count/coherence gates checks repo↔store byte parity. After ANY convergence change run ALL FOUR independently and confirm each: `refresh_derived_catalog.py --check` (derived counts), `validate_catalog.py` (structural), `check_skill_mirror_parity.py` (repo↔store parity), `check_merged_topology.py` (B==C). Green on one is NOT green on all.
+- **In-place mutation tests are a HAZARD, not a wart — eliminate them, don't recover.** `tests/test_validate_catalog.py` patched shared root files directly — `skills.json` via `json.dumps(data)` (NO `indent=2`, collapsing it to one line) and `data["custom_skills"] = 1` (writing a corrupt count) — to exercise drift checks. When one of these tests FAILED mid-run, its `try/finally` restore did NOT run, leaving the tree dirty; the NEXT run then failed on the *corruption*, not the code. This session 3 validate tests failed purely because a prior run left `skills.json` as a collapsed `custom_skills: 1`. User mandate: **"hazards > anything; be fool-proof; do not sleep on a hazard."** So the durable fix is structural, not a recovery recipe: **run the test against a throwaway COPY of the repo** (a `scratch` fixture clones the tree into `tmp_path`, excluding `.venv`/`.git`/`*.backup-*` so it stays small and avoids `OSError: [Errno 28] No space left on device`). All mutations target `scratch/...`; the committed tree is physically impossible to corrupt, and there is no shared-file `try/finally` to skip. This is now the shipped design — if you touch that suite again, KEEP the scratch model; do not reintroduce real-tree mutation. Recovery (only if you inherit the old design): `python scripts/refresh_derived_catalog.py --apply` rebuilds `skills.json`+prose from disk, then re-run on the healed tree. Full fix + proof recipe: `references/test-suite-hygiene.md`.
+- **Reload itself is a safe no-op on merged topology — reload-regression checks watch the EXPORT, not the store.** `python scripts/sync_runtime_to_mirror.py --apply` prints `applied: false, "nothing to add"` and writes nothing when source==dest (B==C junction), so it cannot mutate the truth. Run it TWICE and assert `check_merged_topology.py` → `resolved-identical: True` each time (idempotency). The real regression surface a reload exercise exposes is a *lagging export* (the export had older learned lines than the truth) — which `check_skill_mirror_parity.py` catches independently. So a "reload to check regression" pass = assert reload no-ops + assert parity, not "does the runtime change."
 
 ## Verification discipline — taste, don't promise
 
@@ -298,6 +311,10 @@ convergence/stores fix complete, stress-test it:
 1. **Idempotency under reload.** Re-run the reload/re-sync mechanism
    (e.g. `python scripts/sync_runtime_to_mirror.py --apply`) at least twice;
    assert B==C each time. A fix that re-diverges on the next boot was not a fix.
+1c. **Count-guard blind-spot test (after touching the regenerator).** The general
+   adversarial step (2) below tests `gate.py`, but the *count guard* deserves its
+   own injection because its blind spots pass as GREEN. Re-inject a stale literal into
+   a surface the guard claims to cover — e.g. `sed -i 's/65 curated custom skills/64 curated custom skills/' SKILL-CATALOG-DOMAIN.md` — then run `python scripts/refresh_derived_catalog.py --check` and assert it exits NON-ZERO ("DIVERGENT"); restore the file and assert `--check` is GREEN (exit 0). If the injected drift is NOT caught, the guard has a coverage hole — add the missing rule (see the blind-spot pitfall above) until the guard fails closed. This is the only way to prove the guard actually watches the surfaces you think it watches.
 2. **Adversarial injection.** Deliberately reintroduce the exact old failure mode
    (e.g. append a junk line to C's shared skill, or write a file B lacks) and
    confirm `gate.py` CATCHES it (non-zero exit + a `[CRITICAL]` line). This proves
@@ -308,6 +325,21 @@ convergence/stores fix complete, stress-test it:
 
 Only after all three pass is "no more drift / no more oscillation" *earned*, not
 *promised*. Scripted recipe: `references/verify-fix-holds.md`.
+
+## Hazard discipline — "hazards > anything"
+
+The user's standing instruction for this class of work: **a hazard outweighs any
+convenience or speedup; make the bad state structurally impossible rather than
+recover from it; never sleep on a hazard.** Concretely:
+
+- If a fix removes a failure mode only by adding cleanup/restore logic, it is NOT
+  done. Prefer a design where the failure cannot occur (e.g. tests run on a throwaway
+  copy instead of mutating shared files in place).
+- When the user flags a hazard ("don't sleep on THAT", "fool-proof", "hazard > anything"),
+  treat it as a P0: chase it to root cause and close it, even if other work is pending.
+- A hazard that can corrupt the repo or the toolchain (in-place test mutation,
+  disk-exhausting copies, irreversible deletes) is worse than a missing feature.
+  Eliminate it; do not document-and-defer it.
 
 ## Output expectations
 

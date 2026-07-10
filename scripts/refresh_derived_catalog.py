@@ -82,6 +82,12 @@ def rewrite_skills_json(data: dict, c: dict) -> str:
     data["community_skills"] = c["community_count"]
     # community_skill_names must enumerate exactly the non-custom skills.
     data["community_skill_names"] = sorted(c["community_set"])
+    # The free-text description also carries a count; keep it derived so a
+    # hand-edited "240 verified skills" can't silently contradict the folder set.
+    desc = data.get("description", "")
+    data["description"] = re.sub(
+        r"\b\d+ verified skills\b", f"{c['fs_count']} verified skills", desc
+    )
     return json.dumps(data, indent=2, ensure_ascii=False) + "\n"
 
 
@@ -140,9 +146,14 @@ def prose_patterns(c: dict) -> list[tuple[re.Pattern, str]]:
          f"Global skill directories: **{t}**"),
         (re.compile(r"The (\d+) custom skills organized by engineering domain"),
          f"The {cu} custom skills organized by engineering domain"),
+        # domain-catalog scope variants ("64 curated custom skills") and the
+        # "complete 240-skill listing" phrasing (hyphenated, not caught by the
+        # bare 'N skills' rule) — both must track the derived counts.
+        (re.compile(r"(\d+) curated custom skills"), f"{cu} curated custom skills"),
+        (re.compile(r"complete (\d+)-skill listing"), f"complete {t}-skill listing"),
         (re.compile(r"\| Domain catalog entries \| (\d+) custom skills \|"),
          f"| Domain catalog entries | {cu} custom skills |"),
-        (re.compile(r"\| \*\*Repository total\*\* \| \*\*(\d+) verified skills\*\* \|"),
+        (re.compile(r"\|\s*\*\*Repository total\*\*\s*\| \*\*(\d+) verified skills\*\*\s*\|"),
          f"| **Repository total** | **{t} verified skills** |"),
         (re.compile(r"# (\d+) skills \(each has SKILL.md\)"),
          f"# {t} skills (each has SKILL.md)"),

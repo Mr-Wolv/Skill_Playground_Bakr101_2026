@@ -226,7 +226,7 @@ regresses past ~60s, find the per-trial full-tree copy and kill it.
 
 `python scripts/gate.py` (the pre-commit gate) is ~35s: pytest ~20s + deep-audit
 climb --strict ~13s + validate/parity ~2s. Not the old ~6 min. The slow part is
-the deep-audit climb over all 240 skills, not the tests.
+the deep-audit climb over all 241 skills, not the tests.
 
 ### Reload invariant (after catalog-affecting work)
 

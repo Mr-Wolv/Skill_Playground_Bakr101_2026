@@ -4,9 +4,9 @@
 > 📚 [Documentation Index](docs/index.md) | [SDLC Catalog](SKILL-CATALOG.md) (full 241-skill listing) | [Cheatsheet](SDLC-PHRASE-CHEATSHEET.md) | [Repo Root](SKILL.md)
 
 > This catalog lists the **65 custom skills** organized by engineering domain.
-> For the complete 240-skill listing, see [SKILL-CATALOG.md](SKILL-CATALOG.md).
+> For the complete 241-skill listing, see [SKILL-CATALOG.md](SKILL-CATALOG.md).
 
-> **Scope:** this catalog covers the 64 curated custom skills only. The 176 community
+> **Scope:** this catalog covers the 65 curated custom skills only. The 176 community
 > skills are listed in [SKILL-CATALOG.md](SKILL-CATALOG.md) (SDLC view) and `skills.json`;
 > their absence here is intentional, not a gap.
 

@@ -1,4 +1,10 @@
 # Version 1.0 Convergence Report — Engineering Intelligence Platform
+> ⚠️ **SUPERSEDED** by `VERSION-1.0-RELEASE-READINESS.md` (final stewardship review).
+> Numbers below (240 skills / 64 custom) were accurate at audit time (2026-07-09) but
+> the repository has since grown; the authoritative current counts are **241 total /
+> 65 custom / 176 community**, confirmed by `python scripts/refresh_derived_catalog.py --check`.
+> The 9 findings here were largely closed by the subsequent source-of-truth alignment and the
+> hardened count guard; see the Release Readiness Report for the disposition of each.
 
 > Repository: `D:\Skill-Playground` (240 skills, mirrored with `~/.agents/skills`)
 > Audit date: 2026-07-09
