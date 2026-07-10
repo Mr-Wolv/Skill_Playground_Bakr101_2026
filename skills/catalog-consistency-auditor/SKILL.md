@@ -173,7 +173,9 @@ reusable techniques that caught real drift (cheap to re-run; see
 `references/convergence-audit-recipe.md` for the scripted versions and
 `references/merge-b-c-one-store.md` for the root-cause B<->C oscillation fix).
 Recovery recipe when an in-place mutation test corrupts the working tree:
-`references/test-suite-hygiene.md`.
+`references/test-suite-hygiene.md`. The `*.backup-*` junk the syncs leave and the
+background-commit + `gh run watch` CI tail of a finalization pass:
+`references/finalization-operational-pitfalls.md`.
 
 
 1. **Source-of-truth contradiction check.** Grep every governance/doc for "source of
